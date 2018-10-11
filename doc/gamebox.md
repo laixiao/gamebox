@@ -6,7 +6,7 @@
 
 ### 一、命名规范：
 
-**1.规范内容:** 
+**1.使用方法:** 
 
 > 项目唯一标识 + xxx
 
@@ -20,7 +20,7 @@
 - 预制体文件
 
 
-**3.规范示例：asset目录结构**
+**3.使用示例：asset目录结构**
 
 ![](https://laixiao.github.io/gamebox/doc/gamebox.png)
 
