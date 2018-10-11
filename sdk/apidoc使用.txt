@@ -1,0 +1,9 @@
+1.安装apidoc，参考链接：
+	http://apidocjs.com
+
+2.按照格式弄好后，执行命令
+	apidoc -i ../demo/ -o api/
+ 
+3.访问地址
+	https://game.zuiqiangyingyu.net/wb_webview/common/doc/api/index.html
+ 
