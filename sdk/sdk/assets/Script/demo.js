@@ -11,9 +11,10 @@ cc.Class({
         cc.debug.setDisplayStats(false);
 
         // 1.启动页：初始化游戏
-        sdk.init({ debug: true }).then((res)=>{
-            console.log('sdk初始化结果：', res)
-        })
+        // sdk.init({ debug: true }).then((res)=>{
+        //     console.log('sdk初始化结果：', res)
+        // })
+
 
         // // 2.登录页：获取用户信息
         // var user = sdk.getUser();
@@ -28,7 +29,17 @@ cc.Class({
         //     });
         // }
 
-      
+        var kvDataList = new Array();
+        kvDataList.push({key:"score",value:"520"});
+        sdk.setUserCloudStorage({
+            kvDataList:kvDataList,
+            success: function(res){
+                console.log(res)
+            },
+            fail: function(res){
+                console.log(res)
+            }
+        })
 
     },
 

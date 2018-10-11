@@ -12,7 +12,7 @@
 
 **2.使用范围:**
 - 场景文件（强制）
--  js或ts文件（强制）
+- js或ts文件（强制）
 - 图片文件
 - 声音文件
 - 字体文件
@@ -26,7 +26,39 @@
 
 ### 二、接口规范（强制）:
 
-- 使用SDK接口：开放数据域的key、数据存储、向子域传递的参数。
+- 使用方法：下载SDK文件夹，拖到项目中。
+
+- 使用范围：开放数据、开放数据域、数据存储
+    
+- 使用示例：
+    ```javascript
+    开放数据：
+        var kvDataList = new Array();
+        kvDataList.push({key:"score",value:"520"});
+        sdk.setUserCloudStorage({
+            kvDataList:kvDataList,
+            success: function(res){
+                console.log(res)
+            },
+            fail: function(res){
+                console.log(res)
+            }
+        })
+    开放数据域：
+        //发送
+        sdk.postMessage("hello")
+        //监听
+        sdk.onMessage((d)=>{
+            console.log(d)
+        })
+    数据存储：
+        //存
+        sdk.setItem("nick","hello")
+        //取
+        var nick = sdk.getItem("nick")
+    ```
+  
+
 
 ### 三、其它规范（强制）：
 

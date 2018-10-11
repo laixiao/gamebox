@@ -310,7 +310,7 @@
     "name": "createRewardedVideoAd",
     "type": "微信登录",
     "url": "创建banner广告组件",
-    "title": "createRewardedVideoAd（广告）",
+    "title": "createRewardedVideoAd",
     "parameter": {
       "fields": {
         "Parameter": [
@@ -403,6 +403,105 @@
   },
   {
     "group": "C",
+    "name": "getFriendCloudStorage",
+    "type": "同玩好友的托管数据",
+    "url": "拉取当前用户所有同玩好友的托管数据。该接口只可在开放数据域下使用",
+    "title": "getFriendCloudStorage",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "Array",
+            "optional": false,
+            "field": "keyList",
+            "description": "<p>要获取的 key 列表</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "callback",
+            "optional": false,
+            "field": "success",
+            "description": "<p>成功回调</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "callback",
+            "optional": false,
+            "field": "fail",
+            "description": "<p>失败回调</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "示例:",
+          "content": "sdk.getFriendCloudStorage({\n    keyList: [\"score\"],\n    success: function(res){\n        console.log(res)\n    },\n    fail: function(res){\n        console.log(res)\n    }\n})",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "sdk/assets/Sdk/sdk.js",
+    "groupTitle": "C"
+  },
+  {
+    "group": "C",
+    "name": "getGroupCloudStorage",
+    "type": "获取群同玩成员的游戏数据",
+    "url": "获取群同玩成员的游戏数据",
+    "title": "getGroupCloudStorage",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "shareTicket",
+            "description": "<p>群分享对应的 shareTicket</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "Array",
+            "optional": false,
+            "field": "keyList",
+            "description": "<p>要获取的 key 列表</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "callback",
+            "optional": false,
+            "field": "success",
+            "description": "<p>成功回调</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "callback",
+            "optional": false,
+            "field": "fail",
+            "description": "<p>失败回调</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "示例:",
+          "content": "sdk.getGroupCloudStorage({\n    shareTicket: \"xxx\",\n    keyList: [\"score\"],\n    success: function(res){\n        console.log(res)\n    },\n    fail: function(res){\n        console.log(res)\n    }\n})",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "sdk/assets/Sdk/sdk.js",
+    "groupTitle": "C"
+  },
+  {
+    "group": "C",
     "name": "getItem",
     "type": "数据存储",
     "url": "数据存储",
@@ -451,6 +550,52 @@
         {
           "title": "示例:",
           "content": "//.不存在返回null\nvar user = sdk.getUser();",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "sdk/assets/Sdk/sdk.js",
+    "groupTitle": "C"
+  },
+  {
+    "group": "C",
+    "name": "getUserCloudStorage",
+    "type": "获取托管数据",
+    "url": "获取当前用户托管数据当中对应key的数据。该接口只可在开放数据域下使用",
+    "title": "getUserCloudStorage",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "Array",
+            "optional": false,
+            "field": "keyList",
+            "description": "<p>要获取的 key 列表</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "callback",
+            "optional": false,
+            "field": "success",
+            "description": "<p>成功回调</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "callback",
+            "optional": false,
+            "field": "fail",
+            "description": "<p>失败回调</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "示例:",
+          "content": "sdk.getUserCloudStorage({\n    keyList: [\"score\"],\n    success: function(res){\n        console.log(res)\n    },\n    fail: function(res){\n        console.log(res)\n    }\n})",
           "type": "json"
         }
       ]
@@ -622,6 +767,52 @@
         {
           "title": "示例:",
           "content": "sdk.setItem(\"nick\",\"hello\")",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "sdk/assets/Sdk/sdk.js",
+    "groupTitle": "C"
+  },
+  {
+    "group": "C",
+    "name": "setUserCloudStorage",
+    "type": "主域上报数据",
+    "url": "主域上报数据",
+    "title": "setUserCloudStorage",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "Array",
+            "optional": false,
+            "field": "KVDataList",
+            "description": "<p>要修改的 KV 数据列表</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "callback",
+            "optional": false,
+            "field": "success",
+            "description": "<p>成功回调</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "callback",
+            "optional": false,
+            "field": "fail",
+            "description": "<p>失败回调</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "示例:",
+          "content": "var kvDataList = new Array();\nkvDataList.push({key:\"score\",value:\"520\"});\nsdk.setUserCloudStorage({\n    KVDataList:kvDataList,\n    success: function(res){\n        console.log(res)\n    },\n    fail: function(res){\n        console.log(res)\n    }\n})",
           "type": "json"
         }
       ]

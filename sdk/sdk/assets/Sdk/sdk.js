@@ -628,59 +628,137 @@ var sdk = {
             wx.postMessage({ message: msg });
         }
     },
+    /**
+     * @apiGroup C
+     * @apiName setUserCloudStorage
+     * @api {主域上报数据} 主域上报数据 setUserCloudStorage
+     * @apiParam {Array} KVDataList 要修改的 KV 数据列表
+     * @apiParam {callback} success 成功回调
+     * @apiParam {callback} fail 失败回调
+     * 
+     * @apiSuccessExample {json} 示例:
+     * var DataList = new Array();
+     * DataList.push({key:"score",value:"520"});
+     * sdk.setUserCloudStorage({
+     *     KVDataList: DataList,
+     *     success: function(res){
+     *         console.log(res)
+     *     },
+     *     fail: function(res){
+     *         console.log(res)
+     *     }
+     * })
+     */
     //.主域上报数据:    对用户托管数据进行写数据操作，允许同时写多组 KV 数据。
-    setUserCloudStorage(kvDataList, callback){
+    setUserCloudStorage(obj){
         if (cc.sys.platform === cc.sys.WECHAT_GAME) {
             wx.setUserCloudStorage({
-                KVDataList: kvDataList,
+                KVDataList: obj.KVDataList,
                 success(res){
-                    callback(res)
+                    obj.success(res)
                 },
                 fail(res){
-                    callback(res)
+                    obj.fail(res)
                 }
             })
         }
     },
-    //.获取当前用户托管数据当中对应 key 的数据。该接口只可在开放数据域下使用
-    getUserCloudStorage(keyList, callback){
+    /**
+     * @apiGroup C
+     * @apiName getUserCloudStorage
+     * @api {获取托管数据} 获取当前用户托管数据当中对应key的数据。该接口只可在开放数据域下使用 getUserCloudStorage
+     * @apiParam {Array} keyList 要获取的 key 列表
+     * @apiParam {callback} success 成功回调
+     * @apiParam {callback} fail 失败回调
+     * 
+     * @apiSuccessExample {json} 示例:
+     * sdk.getUserCloudStorage({
+     *     keyList: ["score"],
+     *     success: function(res){
+     *         console.log(res)
+     *     },
+     *     fail: function(res){
+     *         console.log(res)
+     *     }
+     * })
+     */
+    getUserCloudStorage(obj){
         if (cc.sys.platform === cc.sys.WECHAT_GAME) {
             wx.getUserCloudStorage({
-                keyList: keyList,
+                keyList: obj.keyList,
                 success(res){
-                    callback(res)
+                    obj.success(res)
                 },
                 fail(res){
-                    callback(res)
+                    obj.fail(res)
                 }
             })
         }
     },
+    /**
+     * @apiGroup C
+     * @apiName getGroupCloudStorage
+     * @api {获取群同玩成员的游戏数据} 获取群同玩成员的游戏数据 getGroupCloudStorage
+     * @apiParam {String} shareTicket 群分享对应的 shareTicket
+     * @apiParam {Array} keyList 要获取的 key 列表
+     * @apiParam {callback} success 成功回调
+     * @apiParam {callback} fail 失败回调
+     * 
+     * @apiSuccessExample {json} 示例:
+     * sdk.getGroupCloudStorage({
+     *     shareTicket: "xxx",
+     *     keyList: ["score"],
+     *     success: function(res){
+     *         console.log(res)
+     *     },
+     *     fail: function(res){
+     *         console.log(res)
+     *     }
+     * })
+     */
     //.在小游戏是通过群分享卡片打开的情况下，可以通过调用该接口获取群同玩成员的游戏数据。该接口只可在开放数据域下使用。
-    getGroupCloudStorage(shareTicket, keyList, callback){
+    getGroupCloudStorage(obj){
         if (cc.sys.platform === cc.sys.WECHAT_GAME) {
             wx.getGroupCloudStorage({
-                shareTicket: shareTicket,
-                keyList: keyList,
+                shareTicket: obj.shareTicket,
+                keyList: obj.keyList,
                 success(res){
-                    callback(res)
+                    obj.success(res)
                 },
                 fail(res){
-                    callback(res)
+                    obj.fail(res)
                 }
             })
         }
     },
-    //.拉取当前用户所有同玩好友的托管数据。该接口只可在开放数据域下使用
-    getFriendCloudStorage(keyList, callback){
+    /**
+     * @apiGroup C
+     * @apiName getFriendCloudStorage
+     * @api {同玩好友的托管数据} 拉取当前用户所有同玩好友的托管数据。该接口只可在开放数据域下使用 getFriendCloudStorage
+     * @apiParam {Array} keyList 要获取的 key 列表
+     * @apiParam {callback} success 成功回调
+     * @apiParam {callback} fail 失败回调
+     * 
+     * @apiSuccessExample {json} 示例:
+     * sdk.getFriendCloudStorage({
+     *     keyList: ["score"],
+     *     success: function(res){
+     *         console.log(res)
+     *     },
+     *     fail: function(res){
+     *         console.log(res)
+     *     }
+     * })
+     */
+    getFriendCloudStorage(obj){
         if (cc.sys.platform === cc.sys.WECHAT_GAME) {
             wx.getFriendCloudStorage({
-                keyList: keyList,
+                keyList: obj.keyList,
                 success(res){
-                    callback(res)
+                    obj.success(res)
                 },
                 fail(res){
-                    callback(res)
+                    obj.fail(res)
                 }
             })
         }
@@ -984,7 +1062,7 @@ var sdk = {
     /**
      * @apiGroup C
      * @apiName createRewardedVideoAd
-     * @api {微信登录} 创建banner广告组件 createRewardedVideoAd（广告）
+     * @api {微信登录} 创建banner广告组件 createRewardedVideoAd
      * @apiParam {String} adUnitId 广告单元id	
      * 
      * @apiSuccessExample {json} 示例:
