@@ -20,7 +20,7 @@
 - 预制体文件
 
 
-**3.使用示例：asset目录结构**
+**3.使用示例：asset目录结构（唯一标识：abc）**
 
 ![](https://laixiao.github.io/gamebox/doc/gamebox.png)
 
