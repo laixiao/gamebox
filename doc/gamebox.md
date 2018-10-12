@@ -1,14 +1,14 @@
 # 前言
 
-> 为了避免数据冲突 和 整合游戏盒子，请遵守以下规范
+> 为了避免数据冲突以及更好地整合游戏盒子，请遵守以下规范
 
 # 规范内容
 
-### 一、命名规范：
+### 一、文件命名规范：
 
 **1.使用方法:** 
 
-> 项目唯一标识 + xxx
+> 唯一标识 + xxx
 
 **2.使用范围:**
 - 场景文件（强制）
@@ -24,19 +24,20 @@
 
 ![](https://laixiao.github.io/gamebox/doc/gamebox.png)
 
-### 二、接口规范（强制）:
+### 二、接口命名规范（强制）:
 
-- 使用方法：下载SDK文件夹，拖到项目中。
+- **使用方法：** 下载SDK文件夹，拖到项目中。
 
-- 使用范围：开放数据、开放数据域、数据存储
+- **使用范围：** 开放数据、开放数据域、数据存储
     
-- 使用示例：
+- **使用示例：**
     ```javascript
-    开放数据：
-        var kvDataList = new Array();
-        kvDataList.push({key:"score",value:"520"});
+    微信开放数据：
+        //存
+        var DataList = new Array();
+        DataList.push({key:"score",value:"520"});
         sdk.setUserCloudStorage({
-            kvDataList:kvDataList,
+            kvDataList: DataList,
             success: function(res){
                 console.log(res)
             },
@@ -44,7 +45,17 @@
                 console.log(res)
             }
         })
-    开放数据域：
+        //取
+        sdk.getUserCloudStorage({
+            keyList: ["score"],
+            success: function(res){
+                console.log(res)
+            },
+            fail: function(res){
+                console.log(res)
+            }
+        }
+    微信开放数据域：
         //发送
         sdk.postMessage("hello")
         //监听
@@ -66,9 +77,11 @@
 
 - cocos creator引擎版本要求：2.0.2及其以上。
 
+- 为保证盒子性能，盒子内的所有子游戏**不能设置常驻节点**。
+
 # 集成流程
 
-1.联系甲方获取：项目唯一标识；
+1.联系甲方获取：唯一标识；
 
 2.按照规范修改相关的 **文件夹** 和 **文件名**；
 

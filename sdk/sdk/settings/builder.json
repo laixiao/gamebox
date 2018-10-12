@@ -30,12 +30,11 @@
   "webOrientation": "auto",
   "wechatgame": {
     "REMOTE_SERVER_ROOT": "",
-    "appid": "wx80050e48268dd2a9",
+    "appid": "",
     "isSubdomain": false,
     "orientation": "portrait",
     "subContext": ""
   },
   "xxteaKey": "6333ff63-e93b-42",
-  "zipCompressJs": true,
-  "renderMode": "0"
+  "zipCompressJs": true
 }
