@@ -1,6 +1,7 @@
 var loadingBg = "https://laixiao.github.io/gamebox/doc/bg.png";
 
 var scene = new cc.Scene();
+scene.name = "loading-scene"
 //1.新增Canvas组件
 var root = new cc.Node();
 var canvas = root.addComponent(cc.Canvas);
@@ -12,10 +13,12 @@ var createImage = function(sprite, url) {
     if (cc.sys.platform === cc.sys.WECHAT_GAME) {
         let image = wx.createImage();
         image.onload = function () {
-            let texture = new cc.Texture2D();
-            texture.initWithElement(image);
-            texture.handleLoadedTexture();
-            sprite.spriteFrame = new cc.SpriteFrame(texture);
+            if(cc.director.getScene().name == "loading-scene"){
+                let texture = new cc.Texture2D();
+                texture.initWithElement(image);
+                texture.handleLoadedTexture();
+                sprite.spriteFrame = new cc.SpriteFrame(texture);
+            }
         };
         image.src = url;
     }
