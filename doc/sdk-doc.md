@@ -1,5 +1,5 @@
 
-#sdk接入流程
+# sdk接入流程
 
 
 ## 盒子方
@@ -14,13 +14,13 @@
                 
 + **一、下载并集成sdk**
 
-    **sdk下载地址：**
-    https://laixiao.github.io/gamebox/sdk/Sdk.zip
+    **sdk下载地址：**[https://laixiao.github.io/gamebox/sdk/Sdk.zip](https://laixiao.github.io/gamebox/sdk/Sdk.zip "sdk下载地址")
 
-    （下载完成，解压后复制整个文件夹到项目中即可。）
+    （下载完成解压后，复制整个文件夹到项目中即可。）
 
     **sdk在线文档：**
-    https://laixiao.github.io/gamebox/sdk/sdkdoc/index.html
+    [https://laixiao.github.io/gamebox/sdk/sdkdoc/index.html](https://laixiao.github.io/gamebox/sdk/sdkdoc/index.html "sdk在线文档")
+    
 
 + **二、配置sdk并初始化**
 
