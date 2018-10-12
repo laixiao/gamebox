@@ -5,4 +5,6 @@ wechat对战游戏盒子
 
 https://laixiao.github.io/gamebox/doc/gamebox
 
+https://laixiao.github.io/gamebox/doc/gamebox.png
+
 https://laixiao.github.io/gamebox/sdk/sdkdoc/index.html
