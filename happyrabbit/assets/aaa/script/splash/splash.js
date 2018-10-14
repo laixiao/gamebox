@@ -2,9 +2,13 @@ cc.Class({
     extends: cc.Component,
 
     properties: {
-        label: {
+        loginNode: {
             default: null,
-            type: cc.Label
+            type: cc.Node
+        },
+        loadingNode: {
+            default: null,
+            type: cc.Node
         },
         // defaults, set visually when attaching this script to the Canvas
         progressBar: {
@@ -25,7 +29,13 @@ cc.Class({
             this.currentProgress = parseFloat((completedCount/totalCount)).toFixed(2);
             console.log(this.currentProgress);
         }, (error)=>{
-            // cc.director.loadScene("home");
+            //.判断是否登录
+            if(false){
+                cc.director.loadScene("home");
+            }else{
+                this.loadingNode.destroy();
+                this.loginNode.active = true;
+            }
         })
 
     },
@@ -37,4 +47,9 @@ cc.Class({
         }
 
     },
+
+    home(){
+        cc.director.loadScene("home");
+    }
+
 });
