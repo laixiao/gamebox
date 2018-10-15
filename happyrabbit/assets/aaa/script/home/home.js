@@ -27,12 +27,16 @@ cc.Class({
         //         this._bar = value;
         //     }
         // },
+        messageBt: cc.Node,
+        Message: cc.Node,
+
+
     },
 
     // LIFE-CYCLE CALLBACKS:
 
     onLoad () {
-
+        cc.debug.setDisplayStats(false)
 
         
 
@@ -40,7 +44,24 @@ cc.Class({
 
     start () {
 
+        this.messageBt.on(cc.Node.EventType.TOUCH_START, ()=>{
+            this.showMessage();
+        },this);
+
     },
 
     // update (dt) {},
+
+    showMessage(){
+        this.Message.active = true;
+        this.Message.runAction(cc.moveTo(0.3, new cc.Vec2(0, 0)).easing(cc.easeOut(2.0)));
+    },
+    hideMessage(){
+        var seq =  cc.sequence(cc.moveTo(0.3, new cc.Vec2(0, -cc.winSize.height)).easing(cc.easeOut(2.0)), cc.callFunc(()=>{
+            this.Message.active = false;
+        }))
+        this.Message.runAction(seq);
+    },
+    
+
 });

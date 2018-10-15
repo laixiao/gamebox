@@ -21,6 +21,7 @@ cc.Class({
 
     // use this for initialization
     onLoad: function () {
+        cc.debug.setDisplayStats(false)
         
         //.预加载下一个场景：进度
         this.currentProgress = 0;
