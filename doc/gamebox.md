@@ -10,8 +10,8 @@
 
 ## 接入方
 
-1.按照[《盒子技术规范》](https://laixiao.github.io/gamebox/doc/gamebox-doc "《技术规范》")修改相关的 **文件夹** 和 **文件名**；
+ - 1.按照[《盒子技术规范》](https://laixiao.github.io/gamebox/doc/gamebox-doc "《技术规范》")修改相关的 **文件夹** 和 **文件名**；
 
-2.按照[《盒子sdk集成文档》](https://laixiao.github.io/gamebox/doc/sdk-doc "《技术规范》")修改相应的代码；
+ - 2.按照[《盒子sdk集成文档》](https://laixiao.github.io/gamebox/doc/sdk-doc "《技术规范》")修改相应的代码；
 
-3.把源码打包压缩发过来。
+ - 3.把源码打包压缩发过来。
