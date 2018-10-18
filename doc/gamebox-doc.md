@@ -26,7 +26,7 @@
 
 - **使用说明：** sdk已经自动为游戏添加了唯一标识，开发者只需集成并使用；开发者需要改动的地方就是把wx.xxx()方法改成sdk.xxx()
 
-- **使用方法：** [sdk接入流程](https://laixiao.github.io/gamebox/doc/sdk-doc "sdk接入流程")
+- **使用方法：** [盒子sdk集成文档](https://laixiao.github.io/gamebox/doc/sdk-doc "盒子sdk集成文档")
 
 - **使用范围：** 开放数据、开放数据域、数据存储
 

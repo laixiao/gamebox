@@ -1,7 +1,7 @@
 # 盒子sdk集成文档
 ---------------
                 
-### **一、解压并集成sdk**
+### **一、下载并集成sdk**
 
 **sdk下载地址：**
 
@@ -9,7 +9,6 @@
 | ------------ | ------------ |------------ |
 |  主盒子 |  aa |   https://laixiao.github.io/gamebox/sdk/aa_sdk.zip |
 |  飞刀   |  ab |  https://laixiao.github.io/gamebox/sdk/ab_sdk.zip   |
-
 
 
 （下载完成解压后，复制整个文件夹到项目中即可。）
