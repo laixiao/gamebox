@@ -12,9 +12,16 @@
 
 ## 接入方
                 
-### **一、下载并集成sdk**
+### **一、解压并集成sdk**
 
-**sdk下载地址：**[https://laixiao.github.io/gamebox/sdk/Sdk.zip](https://laixiao.github.io/gamebox/sdk/Sdk.zip "sdk下载地址")
+**sdk下载地址：**
+
+| 游戏名  |  唯一标识 |  下载地址  |
+| ------------ | ------------ |------------ |
+|  主盒子 |  aa |   https://laixiao.github.io/gamebox/sdk/aa_sdk.zip |
+|  飞刀   |  ab |  https://laixiao.github.io/gamebox/sdk/ab_sdk.zip   |
+
+
 
 （下载完成解压后，复制整个文件夹到项目中即可。）
 
