@@ -29,46 +29,6 @@
 - **使用方法：** [sdk接入流程](https://laixiao.github.io/gamebox/doc/sdk-doc "sdk接入流程")
 
 - **使用范围：** 开放数据、开放数据域、数据存储
-    
-- **使用示例：**
-    ```javascript
-    微信开放数据：
-        //存
-        var DataList = new Array();
-        DataList.push({key:"score",value:"520"});
-        sdk.setUserCloudStorage({
-            kvDataList: DataList,
-            success: function(res){
-                console.log(res)
-            },
-            fail: function(res){
-                console.log(res)
-            }
-        })
-        //取
-        sdk.getUserCloudStorage({
-            keyList: ["score"],
-            success: function(res){
-                console.log(res)
-            },
-            fail: function(res){
-                console.log(res)
-            }
-        }
-    微信开放数据域：
-        //发送
-        sdk.postMessage("hello")
-        //监听
-        sdk.onMessage((d)=>{
-            console.log(d)
-        })
-    数据存储：
-        //存
-        sdk.setItem("nick","hello")
-        //取
-        var nick = sdk.getItem("nick")
-    ```
-  
 
 
 ### 三、其它规范（强制）：
