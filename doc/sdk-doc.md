@@ -32,7 +32,7 @@
 （下载完成解压后，复制整个文件夹到项目中即可。）
 
 **sdk在线文档：**
-[https://laixiao.github.io/gamebox/sdk/sdkdoc/index.html](https://laixiao.github.io/gamebox/sdk/sdkdoc/index.html "sdk在线文档")
+[https://laixiao.github.io/gamebox/api/index.html](https://laixiao.github.io/gamebox/api/index.html "sdk在线文档")
     
 
 ### **二、配置sdk并初始化**
@@ -49,7 +49,7 @@
 在游戏启动页初始化sdk：
 ```javascript
     //.初始化游戏
-    sdk.init({ debug: true }).then((res)=>{
+    xx_sdk.init({ debug: true }).then((res)=>{
         console.log('sdk初始化结果：', res)
     })
 ```
@@ -58,7 +58,7 @@
 
 例子：
 ```javascript
-var d1 = sdk.getConfig1();
+var d1 = xx_sdk.getConfig1();
 if(d1.hz){
     //.显示分享按钮
 }else{
@@ -101,7 +101,7 @@ if(d1.hz){
     //存
     var DataList = new Array();
     DataList.push({key:"score",value:"520"});
-    sdk.setUserCloudStorage({
+    xx_sdk.setUserCloudStorage({
         kvDataList: DataList,
         success: function(res){
             console.log(res)
@@ -111,7 +111,7 @@ if(d1.hz){
         }
     })
     //取
-    sdk.getUserCloudStorage({
+    xx_sdk.getUserCloudStorage({
         keyList: ["score"],
         success: function(res){
             console.log(res)
@@ -122,16 +122,16 @@ if(d1.hz){
     }
 微信开放数据域：
     //发送
-    sdk.postMessage("hello")
+    xx_sdk.postMessage("hello")
     //监听
-    sdk.onMessage((d)=>{
+    xx_sdk.onMessage((d)=>{
         console.log(d)
     })
 数据存储：
     //存
-    sdk.setItem("nick","hello")
+    xx_sdk.setItem("nick","hello")
     //取
-    var nick = sdk.getItem("nick")
+    var nick = xx_sdk.getItem("nick")
 ```
     
 -----
@@ -142,18 +142,18 @@ if(d1.hz){
     
 sdk初始化成功后，监听右上角分享按钮：
 ```javascript
-sdk.onShareAppMessage({type: 0, query: "xxx=xxx" });
+xx_sdk.onShareAppMessage({type: 0, query: "xxx=xxx" });
 ```
 主动拉起分享：
 ```javascript
-sdk.shareAppMessage({type: 1, query: "xxx=xxx" });
+xx_sdk.shareAppMessage({type: 1, query: "xxx=xxx" });
 ```
 	
 **二、对接广告接口**
 
 * Banner广告
 ```javascript
-    //var bannerAd = sdk.createBannerAd({
+    //var bannerAd = xx_sdk.createBannerAd({
     //    style:{
     //        left: 0,
     //        top: 0,
@@ -163,14 +163,14 @@ sdk.shareAppMessage({type: 1, query: "xxx=xxx" });
     //});
     
     //.极简版（默认底部Banner）
-    var bannerAd = sdk.createBannerAd({});
+    var bannerAd = xx_sdk.createBannerAd({});
     bannerAd.show()
 ```
 
 * Video广告
 ```javascript
     //.创建广告
-    var videoAd = sdk.createRewardedVideoAd();
+    var videoAd = xx_sdk.createRewardedVideoAd();
     //.显示广告
     videoAd.load().then(() => videoAd.show());
 ```
