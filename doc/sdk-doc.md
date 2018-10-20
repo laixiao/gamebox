@@ -31,7 +31,7 @@
 在游戏启动页初始化sdk：
 ```javascript
     //.初始化游戏
-    xx_sdk.init({ debug: true }).then((res)=>{
+    xx_sdk.init({ debug: true }, function(res){
         console.log('sdk初始化结果：', res)
     })
 ```
