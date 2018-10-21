@@ -156,3 +156,73 @@ xx_sdk.shareAppMessage({type: 1, query: "xxx=xxx" });
     //.显示广告
     videoAd.load().then(() => videoAd.show());
 ```
+
+--------
+
+# 对战接口
+
+- 1.开始游戏：盒子匹配对手玩家成功，携带房间数据进入子游戏。
+```javascript
+    //盒子匹配成功的房间数据，请使用该数据进行对战（数据存储key名：xx_room）
+    var room = cc.sys.localStorage.getItem("ab_room");
+
+    //room的数据格式如下（可以使用下面的数据进行开发测试）：
+    /* 
+    var room = {
+        room_id: null,          //房间id
+        create_time: null,      //创建时间
+        room_owner: null,       //房主uid
+        game_id: "ab",          //游戏唯一标识
+        player_count: 2,        //房间人数上限
+        user : {                //当前用户信息
+            "avatarUrl": "https://wx.qlogo.cn/mmopen/vi_32/E31dTdkFnKSFOmmy98kLqJlmDQFjLoRt52KTxohsKFtib2otLWZFOCzyuPXia8A7YR32th1FibqncWra94aAJQicYw/132",
+            "uid": "wx_oFOQ65H3BiZHc3_PpUZN52lhFcHA",
+            "city": "广州",
+            "country": "中国",
+            "province": "广东",
+            "gender": 1,
+            "language": "zh_CN",
+            "nickName": "千寻િ😨雨天"
+        },    
+        all_player_data: [      //对战数据
+            {
+                player_data:{
+                    avatarUrl:"https://wx.qlogo.cn/mmopen/vi_32/E31dTdkFnKSFOmmy98kLqJlmDQFjLoRt52KTxohsKFtib2otLWZFOCzyuPXia8A7YR32th1FibqncWra94aAJQicYw/132",
+                    city:"广州",
+                    country:"中国",
+                    gender:1,
+                    language:"zh_CN",
+                    nickName:"千寻િ😨雨天",
+                    province:"广东"
+                },
+                position:2,     //玩家所在房间的位置
+                state:0,        //玩家状态  0：未准备   1：已准备
+                uid:"wx_oFOQ65H3BiZHc3_PpUZN52lhFcHA"
+            },
+            {
+                player_data:{
+                    avatarUrl: "https://wx.qlogo.cn/mmopen/vi_32/oNyD409Hg3gHqJtqtKFhhYDiad6pRFiaprwjEheyLra4CEicGPdnn7uBCJL0oxZjqAibW4wrTsbtfnHoY6NolPpz9A/132",
+                    city: "河池",
+                    country: "中国",
+                    gender: 2,
+                    language: "zh_CN",
+                    nickName: "象牙塔จุ๊บ",
+                    province: "广东"
+                },
+                position:2,     //玩家所在房间的位置
+                state:0,        //玩家状态  0：未准备   1：已准备
+                uid: "wx_oFOQ65PBvyfjW-tbPQLM_Z0Qg2kI"
+            },
+        ]
+    }
+     */
+```
+
+- 2.游戏结束：上报对战结果，返回主场景（aa_home）。
+```javascript
+    //.上报对战结果
+    
+
+    //.返回盒子主场景页面
+    cc.director.loadScene("aa_home")
+```
