@@ -9,7 +9,7 @@
 | ------------ | ------------ |------------ |
 |  主盒子 |  aa |   https://laixiao.github.io/gamebox/sdk/aa_sdk.zip |
 |  飞刀   |  ab |  https://laixiao.github.io/gamebox/sdk/ab_sdk.zip   |
-
+|  合并战斗   |  ac |  https://laixiao.github.io/gamebox/sdk/ac_sdk.zip   |
 
 （下载完成解压后，复制整个文件夹到项目中即可。）
 
@@ -38,21 +38,21 @@
 
 ### **三、使用sdk：**
 
-例子：
+
 ```javascript
+对接游戏配置：
+
 var d1 = xx_sdk.getConfig1();
-if(d1.hz){
+if(d1.showshare){
     //.显示分享按钮
 }else{
     //.隐藏分享按钮
 }
-```
-参数说明：
-```javascript
-{
-    "hz": 0,//分享加10步
-    "hz2": 0,//跳游戏
-    "hz3": 0,//跳盒子
+
+//游戏配置参数说明：
+var d1 = {
+    "online": 0,//是否上线
+    "showshare": 0,//是否显示分享按钮
     "bannerAd": 0,//banner广告
     "videoAd": 0,//视频广告开关
     "fs": 0,//看广告加10步
@@ -76,9 +76,16 @@ if(d1.hz){
 }
 ```
 
+
 ---------
 
 ```javascript
+数据存储：
+    //存
+    xx_sdk.setItem("nick","hello")
+    //取
+    var nick = xx_sdk.getItem("nick")
+
 微信开放数据：
     //存
     var DataList = new Array();
@@ -102,6 +109,7 @@ if(d1.hz){
             console.log(res)
         }
     }
+
 微信开放数据域：
     //发送
     xx_sdk.postMessage("hello")
@@ -109,11 +117,6 @@ if(d1.hz){
     xx_sdk.onMessage((d)=>{
         console.log(d)
     })
-数据存储：
-    //存
-    xx_sdk.setItem("nick","hello")
-    //取
-    var nick = xx_sdk.getItem("nick")
 ```
     
 -----
@@ -124,7 +127,7 @@ if(d1.hz){
     
 sdk初始化成功后，监听右上角分享按钮：
 ```javascript
-xx_sdk.onShareAppMessage({type: 0, query: "xxx=xxx" });
+xx_sdk.onShareAppMessage({type: 0, query: "" });
 ```
 主动拉起分享：
 ```javascript
@@ -159,11 +162,11 @@ xx_sdk.shareAppMessage({type: 1, query: "xxx=xxx" });
 
 --------
 
-# 对战接口
+# ==对战接口==
 
-- 1.开始游戏：盒子匹配对手玩家成功，携带房间数据进入子游戏。
+- 1.开始游戏：盒子匹配对手玩家成功，携带对战数据进入子游戏。
 ```javascript
-    //盒子匹配成功的房间数据，请使用该数据进行对战（数据存储key名：xx_room）
+    //.子游戏获取数据
     var room = cc.sys.localStorage.getItem("ab_room");
 
     //room的数据格式如下（可以使用下面的数据进行开发测试）：
@@ -218,11 +221,18 @@ xx_sdk.shareAppMessage({type: 1, query: "xxx=xxx" });
      */
 ```
 
-- 2.游戏结束：上报对战结果，返回主场景（aa_home）。
+- 3.游戏结束：上报对战结果、送花、返回游戏大厅。
 ```javascript
-    //.上报对战结果
-    
+    //.上报战果
+    sdk.uploadResult({ result: 2, opponent_uid: "xxx" }, function(d){
+        console.log(d)
+    });
 
-    //.返回盒子主场景页面
-    cc.director.loadScene("aa_home")
+    //.点赞、送花
+    sdk.favour({ tar_uid: 2 }, function(d){
+        console.log(d)
+    });
+
+    //.子游戏：返回游戏大厅
+    sdk.backHome();
 ```

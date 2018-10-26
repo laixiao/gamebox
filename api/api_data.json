@@ -23,13 +23,13 @@
       "examples": [
         {
           "title": "示例:",
-          "content": "//.初始化游戏\n sdk.init({ debug: true }).then((res)=>{\n     console.log('sdk初始化结果：', res)\n })",
+          "content": "//.初始化游戏\naa_sdk.init({ debug: true }, (res)=>{\n    console.log('sdk初始化结果：', res)\n});",
           "type": "json"
         }
       ]
     },
     "version": "0.0.0",
-    "filename": "../happyrabbit/assets/aa/script/sdk/aa_sdk.js",
+    "filename": "../games/happyrabbit/v1.0.0/happyrabbit/assets/aa/script/sdk/aa_sdk.js",
     "groupTitle": "A"
   },
   {
@@ -68,7 +68,7 @@
       ]
     },
     "version": "0.0.0",
-    "filename": "../happyrabbit/assets/aa/script/sdk/aa_sdk.js",
+    "filename": "../games/happyrabbit/v1.0.0/happyrabbit/assets/aa/script/sdk/aa_sdk.js",
     "groupTitle": "B"
   },
   {
@@ -100,7 +100,7 @@
       ]
     },
     "version": "0.0.0",
-    "filename": "../happyrabbit/assets/aa/script/sdk/aa_sdk.js",
+    "filename": "../games/happyrabbit/v1.0.0/happyrabbit/assets/aa/script/sdk/aa_sdk.js",
     "groupTitle": "B"
   },
   {
@@ -146,7 +146,7 @@
       ]
     },
     "version": "0.0.0",
-    "filename": "../happyrabbit/assets/aa/script/sdk/aa_sdk.js",
+    "filename": "../games/happyrabbit/v1.0.0/happyrabbit/assets/aa/script/sdk/aa_sdk.js",
     "groupTitle": "B"
   },
   {
@@ -199,7 +199,7 @@
       ]
     },
     "version": "0.0.0",
-    "filename": "../happyrabbit/assets/aa/script/sdk/aa_sdk.js",
+    "filename": "../games/happyrabbit/v1.0.0/happyrabbit/assets/aa/script/sdk/aa_sdk.js",
     "groupTitle": "B"
   },
   {
@@ -245,7 +245,7 @@
       ]
     },
     "version": "0.0.0",
-    "filename": "../happyrabbit/assets/aa/script/sdk/aa_sdk.js",
+    "filename": "../games/happyrabbit/v1.0.0/happyrabbit/assets/aa/script/sdk/aa_sdk.js",
     "groupTitle": "B"
   },
   {
@@ -277,7 +277,7 @@
       ]
     },
     "version": "0.0.0",
-    "filename": "../happyrabbit/assets/aa/script/sdk/aa_sdk.js",
+    "filename": "../games/happyrabbit/v1.0.0/happyrabbit/assets/aa/script/sdk/aa_sdk.js",
     "groupTitle": "B"
   },
   {
@@ -345,7 +345,7 @@
       ]
     },
     "version": "0.0.0",
-    "filename": "../happyrabbit/assets/aa/script/sdk/aa_sdk.js",
+    "filename": "../games/happyrabbit/v1.0.0/happyrabbit/assets/aa/script/sdk/aa_sdk.js",
     "groupTitle": "B"
   },
   {
@@ -377,7 +377,7 @@
       ]
     },
     "version": "0.0.0",
-    "filename": "../happyrabbit/assets/aa/script/sdk/aa_sdk.js",
+    "filename": "../games/happyrabbit/v1.0.0/happyrabbit/assets/aa/script/sdk/aa_sdk.js",
     "groupTitle": "B"
   },
   {
@@ -423,7 +423,7 @@
       ]
     },
     "version": "0.0.0",
-    "filename": "../happyrabbit/assets/aa/script/sdk/aa_sdk.js",
+    "filename": "../games/happyrabbit/v1.0.0/happyrabbit/assets/aa/script/sdk/aa_sdk.js",
     "groupTitle": "B"
   },
   {
@@ -491,7 +491,7 @@
       ]
     },
     "version": "0.0.0",
-    "filename": "../happyrabbit/assets/aa/script/sdk/aa_sdk.js",
+    "filename": "../games/happyrabbit/v1.0.0/happyrabbit/assets/aa/script/sdk/aa_sdk.js",
     "groupTitle": "B"
   },
   {
@@ -537,7 +537,7 @@
       ]
     },
     "version": "0.0.0",
-    "filename": "../happyrabbit/assets/aa/script/sdk/aa_sdk.js",
+    "filename": "../games/happyrabbit/v1.0.0/happyrabbit/assets/aa/script/sdk/aa_sdk.js",
     "groupTitle": "B"
   },
   {
@@ -556,7 +556,7 @@
       ]
     },
     "version": "0.0.0",
-    "filename": "../happyrabbit/assets/aa/script/sdk/aa_sdk.js",
+    "filename": "../games/happyrabbit/v1.0.0/happyrabbit/assets/aa/script/sdk/aa_sdk.js",
     "groupTitle": "B"
   },
   {
@@ -602,7 +602,7 @@
       ]
     },
     "version": "0.0.0",
-    "filename": "../happyrabbit/assets/aa/script/sdk/aa_sdk.js",
+    "filename": "../games/happyrabbit/v1.0.0/happyrabbit/assets/aa/script/sdk/aa_sdk.js",
     "groupTitle": "C"
   },
   {
@@ -642,13 +642,13 @@
       "examples": [
         {
           "title": "示例:",
-          "content": "sdk.Post(sdk.ip + sdk.common, { user_id: user_id }, function (d) {\n    console.log(d)\n});",
+          "content": "sdk.Post(\"https://xxx\", { user_id: user_id }, function (d) {\n    console.log(d)\n});",
           "type": "json"
         }
       ]
     },
     "version": "0.0.0",
-    "filename": "../happyrabbit/assets/aa/script/sdk/aa_sdk.js",
+    "filename": "../games/happyrabbit/v1.0.0/happyrabbit/assets/aa/script/sdk/aa_sdk.js",
     "groupTitle": "C"
   },
   {
@@ -687,7 +687,85 @@
       ]
     },
     "version": "0.0.0",
-    "filename": "../happyrabbit/assets/aa/script/sdk/aa_sdk.js",
+    "filename": "../games/happyrabbit/v1.0.0/happyrabbit/assets/aa/script/sdk/aa_sdk.js",
+    "groupTitle": "C"
+  },
+  {
+    "group": "C",
+    "name": "favourRecord",
+    "type": "点赞、送花记录查询",
+    "url": "点赞、送花记录查询",
+    "title": "favourRecord（送花记录",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "Int",
+            "optional": false,
+            "field": "page",
+            "description": "<p>第几页</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "Int",
+            "optional": false,
+            "field": "count",
+            "description": "<p>每页几条</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "示例:",
+          "content": "//.点赞、送花\nsdk.favourRecord({ page: 1, count: 10 }, function(d){\n    console.log(d)\n});",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "../games/happyrabbit/v1.0.0/happyrabbit/assets/aa/script/sdk/aa_sdk.js",
+    "groupTitle": "C"
+  },
+  {
+    "group": "C",
+    "name": "gameRecord",
+    "type": "对战记录查询",
+    "url": "对战记录查询",
+    "title": "gameRecord（对战记录）",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "Int",
+            "optional": false,
+            "field": "page",
+            "description": "<p>第几页</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "Int",
+            "optional": false,
+            "field": "count",
+            "description": "<p>每页几条</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "示例:",
+          "content": "//.对战记录查询\nsdk.gameRecord({ page: 1, count: 10 }, function(d){\n    console.log(d)\n});",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "../games/happyrabbit/v1.0.0/happyrabbit/assets/aa/script/sdk/aa_sdk.js",
     "groupTitle": "C"
   },
   {
@@ -719,7 +797,7 @@
       ]
     },
     "version": "0.0.0",
-    "filename": "../happyrabbit/assets/aa/script/sdk/aa_sdk.js",
+    "filename": "../games/happyrabbit/v1.0.0/happyrabbit/assets/aa/script/sdk/aa_sdk.js",
     "groupTitle": "C"
   },
   {
@@ -751,7 +829,7 @@
       ]
     },
     "version": "0.0.0",
-    "filename": "../happyrabbit/assets/aa/script/sdk/aa_sdk.js",
+    "filename": "../games/happyrabbit/v1.0.0/happyrabbit/assets/aa/script/sdk/aa_sdk.js",
     "groupTitle": "C"
   },
   {
@@ -790,7 +868,7 @@
       ]
     },
     "version": "0.0.0",
-    "filename": "../happyrabbit/assets/aa/script/sdk/aa_sdk.js",
+    "filename": "../games/happyrabbit/v1.0.0/happyrabbit/assets/aa/script/sdk/aa_sdk.js",
     "groupTitle": "C"
   },
   {
@@ -809,7 +887,7 @@
       ]
     },
     "version": "0.0.0",
-    "filename": "../happyrabbit/assets/aa/script/sdk/aa_sdk.js",
+    "filename": "../games/happyrabbit/v1.0.0/happyrabbit/assets/aa/script/sdk/aa_sdk.js",
     "groupTitle": "C"
   },
   {
@@ -828,7 +906,7 @@
       ]
     },
     "version": "0.0.0",
-    "filename": "../happyrabbit/assets/aa/script/sdk/aa_sdk.js",
+    "filename": "../games/happyrabbit/v1.0.0/happyrabbit/assets/aa/script/sdk/aa_sdk.js",
     "groupTitle": "C"
   },
   {
@@ -867,7 +945,116 @@
       ]
     },
     "version": "0.0.0",
-    "filename": "../happyrabbit/assets/aa/script/sdk/aa_sdk.js",
+    "filename": "../games/happyrabbit/v1.0.0/happyrabbit/assets/aa/script/sdk/aa_sdk.js",
     "groupTitle": "C"
+  },
+  {
+    "group": "D",
+    "name": "backHome",
+    "type": "子游戏：返回游戏大厅",
+    "url": "子游戏：返回游戏大厅",
+    "title": "backHome（返回大厅）",
+    "success": {
+      "examples": [
+        {
+          "title": "示例:",
+          "content": "//.子游戏：返回游戏大厅\nsdk.backHome();",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "../games/happyrabbit/v1.0.0/happyrabbit/assets/aa/script/sdk/aa_sdk.js",
+    "groupTitle": "D"
+  },
+  {
+    "group": "D",
+    "name": "favour",
+    "type": "点赞、送花",
+    "url": "点赞、送花",
+    "title": "favour（点赞、送花）",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "tar_uid",
+            "description": "<p>对方的uid</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "示例:",
+          "content": "//.点赞、送花\nsdk.favour({ tar_uid: 2 }, function(d){\n    console.log(d)\n});",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "../games/happyrabbit/v1.0.0/happyrabbit/assets/aa/script/sdk/aa_sdk.js",
+    "groupTitle": "D"
+  },
+  {
+    "group": "D",
+    "name": "getGameData",
+    "type": "子游戏：获取对战数据",
+    "url": "子游戏：获取对战数据",
+    "title": "getGameData-对战数据",
+    "success": {
+      "examples": [
+        {
+          "title": "示例:",
+          "content": "//.开始游戏：从主盒子获取对战需要的数据，数据格式如下（可以使用以下数据进行测试）：\nvar gameData = sdk.getGameData();\n\n// var gameData = {\n//     user : {                //当前用户信息\n//         \"avatarUrl\": \"https://wx.qlogo.cn/mmopen/vi_32/E31dTdkFnKSFOmmy98kLqJlmDQFjLoRt52KTxohsKFtib2otLWZFOCzyuPXia8A7YR32th1FibqncWra94aAJQicYw/132\",\n//         \"uid\": \"wx_oFOQ65H3BiZHc3_PpUZN52lhFcHA\",\n//         \"city\": \"广州\",\n//         \"country\": \"中国\",\n//         \"province\": \"广东\",\n//         \"gender\": 1,\n//         \"language\": \"zh_CN\",\n//         \"nickName\": \"千寻િ😨雨天\"\n//     }, \n//     room_id: null,          //房间id\n//     create_time: null,      //创建时间\n//     room_owner: null,       //房主uid\n//     game_id: \"ab\",          //游戏唯一标识\n//     player_count: 2,        //房间人数上限\n//     all_player_data: [      //对战数据\n//         {\n//             player_data:{\n//                 avatarUrl:\"https://wx.qlogo.cn/mmopen/vi_32/E31dTdkFnKSFOmmy98kLqJlmDQFjLoRt52KTxohsKFtib2otLWZFOCzyuPXia8A7YR32th1FibqncWra94aAJQicYw/132\",\n//                 city:\"广州\",\n//                 country:\"中国\",\n//                 gender:1,\n//                 language:\"zh_CN\",\n//                 nickName:\"千寻િ😨雨天\",\n//                 province:\"广东\"\n//             },\n//             position:2,     //玩家所在房间的位置\n//             state:0,        //玩家状态  0：未准备   1：已准备\n//             uid:\"wx_oFOQ65H3BiZHc3_PpUZN52lhFcHA\"\n//         },\n//         {\n//             player_data:{\n//                 avatarUrl: \"https://wx.qlogo.cn/mmopen/vi_32/oNyD409Hg3gHqJtqtKFhhYDiad6pRFiaprwjEheyLra4CEicGPdnn7uBCJL0oxZjqAibW4wrTsbtfnHoY6NolPpz9A/132\",\n//                 city: \"河池\",\n//                 country: \"中国\",\n//                 gender: 2,\n//                 language: \"zh_CN\",\n//                 nickName: \"象牙塔จุ๊บ\",\n//                 province: \"广东\"\n//             },\n//             position:2,     //玩家所在房间的位置\n//             state:0,        //玩家状态  0：未准备   1：已准备\n//             uid: \"wx_oFOQ65PBvyfjW-tbPQLM_Z0Qg2kI\"\n//         },\n//     ]\n// }",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "../games/happyrabbit/v1.0.0/happyrabbit/assets/aa/script/sdk/aa_sdk.js",
+    "groupTitle": "D"
+  },
+  {
+    "group": "D",
+    "name": "uploadResult",
+    "type": "子游戏：上报战果",
+    "url": "子游戏：上报战果",
+    "title": "uploadResult-上报战果",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "int",
+            "optional": false,
+            "field": "result",
+            "description": "<p>战果: 0负 1平 2胜</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "opponent_uid",
+            "description": "<p>对手uid</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "示例:",
+          "content": "//.上报战果\nsdk.uploadResult({ result: 2, opponent_uid: \"xxx\" }, function(d){\n    console.log(d)\n});",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "../games/happyrabbit/v1.0.0/happyrabbit/assets/aa/script/sdk/aa_sdk.js",
+    "groupTitle": "D"
   }
 ]
