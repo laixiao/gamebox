@@ -178,15 +178,16 @@ xx_sdk.shareAppMessage({type: 1, query: "xxx=xxx" });
         room_owner: null,       //房主uid
         game_id: "ab",          //游戏唯一标识
         player_count: 2,        //房间人数上限
-        user : {                //当前用户信息
-            "avatarUrl": "https://wx.qlogo.cn/mmopen/vi_32/E31dTdkFnKSFOmmy98kLqJlmDQFjLoRt52KTxohsKFtib2otLWZFOCzyuPXia8A7YR32th1FibqncWra94aAJQicYw/132",
-            "uid": "wx_oFOQ65H3BiZHc3_PpUZN52lhFcHA",
-            "city": "广州",
-            "country": "中国",
-            "province": "广东",
-            "gender": 1,
-            "language": "zh_CN",
-            "nickName": "千寻િ😨雨天"
+        user: {                //当前用户信息
+            uid: "wx_robot2_",
+            
+            avatarUrl: "https://wx.qlogo.cn/mmopen/vi_32/oNyD409Hg3gHqJtqtKFhhYDiad6pRFiaprwjEheyLra4CEicGPdnn7uBCJL0oxZjqAibW4wrTsbtfnHoY6NolPpz9A/132",
+            city: "河池",
+            country: "中国",
+            gender: 2,
+            language: "zh_CN",
+            nickName: "象牙塔จุ๊บ",
+            province: "广东"
         },    
         all_player_data: [      //对战数据
             {
@@ -201,7 +202,7 @@ xx_sdk.shareAppMessage({type: 1, query: "xxx=xxx" });
                 },
                 position:2,     //玩家所在房间的位置
                 state:0,        //玩家状态  0：未准备   1：已准备
-                uid:"wx_oFOQ65H3BiZHc3_PpUZN52lhFcHA"
+                uid:"wx_robot_2"
             },
             {
                 player_data:{
@@ -215,7 +216,7 @@ xx_sdk.shareAppMessage({type: 1, query: "xxx=xxx" });
                 },
                 position:2,     //玩家所在房间的位置
                 state:0,        //玩家状态  0：未准备   1：已准备
-                uid: "wx_oFOQ65PBvyfjW-tbPQLM_Z0Qg2kI"
+                uid: "wx_robot2_"
             },
         ]
     }
