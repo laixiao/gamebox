@@ -172,6 +172,7 @@ xx_sdk.shareAppMessage({type: 1, query: "xxx=xxx" });
     //room的数据格式如下（可以使用下面的数据进行开发测试）：
     /* 
     var room = {
+        ai: false,              //是否ai机器人？
         room_id: null,          //房间id
         create_time: null,      //创建时间
         room_owner: null,       //房主uid
