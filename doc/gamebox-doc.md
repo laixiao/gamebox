@@ -35,7 +35,7 @@
 
 - 子域和主域都必须遵守本规范
 
-- 使用wx其它api时，请判断一下运行环境： 
+- 使用wx相关api时，请判断一下运行环境： 
 ```javascript
 if (cc.sys.platform === cc.sys.WECHAT_GAME) {}
 ```
