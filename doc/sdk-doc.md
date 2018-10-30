@@ -5,7 +5,7 @@
 
 - **使用方法：** [https://laixiao.github.io/gamebox/api/index.html](https://laixiao.github.io/gamebox/api/index.html "sdk在线文档")
 
-- **强制使用范围：** 开放数据、开放数据域、数据存储
+- **使用范围（强制）：** 开放数据、开放数据域、数据存储
 
 -----
                 
@@ -49,7 +49,7 @@ if(!window.xx_sdk){
 }
 
 //1.初始化sdk成功后才能使用sdk
-xx_sdk.init({ debug: true }, function(res){
+xx_sdk.init(function(res){
     if(res){
         console.log('sdk初始化成功')
 
@@ -167,6 +167,8 @@ var d1 = {
     }
 }
 ```
+
+------
 
 > 广告接口（没有需求则无需对接）
 

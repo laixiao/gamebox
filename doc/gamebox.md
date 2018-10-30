@@ -15,3 +15,11 @@
  - 2.按照[《盒子sdk集成文档》](https://laixiao.github.io/gamebox/doc/sdk-doc "《技术规范》")修改相应的代码；
 
  - 3.把源码打包压缩发过来。
+
+-------
+
+## 盒子运行效果图
+
+![](https://laixiao.github.io/gamebox/doc/screen/s1.png)
+![](https://laixiao.github.io/gamebox/doc/screen/s2.png)
+![](https://laixiao.github.io/gamebox/doc/screen/s3.png)
