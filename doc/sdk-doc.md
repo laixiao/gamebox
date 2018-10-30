@@ -11,19 +11,19 @@
                 
 ### **一、下载并集成sdk**
 
-**sdk下载地址：**
+**sdk下载地址：** https://github.com/laixiao/gamebox/tree/master/sdk
 
-| 游戏名    |  唯一标识 | 测试用户1 | 测试用户2 | 下载地址  |
-| ----------| --------- |--------- |----------- |----------- |
-|  主盒子    |  aa |  xxx         | xxx         |  https://laixiao.github.io/gamebox/sdk/aa_sdk.zip |
-|  飞刀      |  ab |  wx_robot_2  | wx_robot2_  | https://laixiao.github.io/gamebox/sdk/ab_sdk.zip   |
-|  测试      |  ac |  xxx            | xxx       | https://laixiao.github.io/gamebox/sdk/ac_sdk.zip   |
-|  合成游戏   |  ad | wx_robot_0  | wx_robot0_  | https://laixiao.github.io/gamebox/sdk/ad_sdk.zip   |
-|  羊羊对碰   |  ae | wx_robot1_  | wx_robot_1  | https://laixiao.github.io/gamebox/sdk/ae_sdk.zip   |
-|  教师大战   |  af | wx_robot3_    | wx_robot_3  | https://laixiao.github.io/gamebox/sdk/af_sdk.zip   |
-|  斗兽棋     |  ag | wx_robot_4_  | wx_robot4_  | https://laixiao.github.io/gamebox/sdk/ag_sdk.zip   |
+| 游戏名    |  唯一标识 | 测试用户1 | 测试用户2 | 
+| ----------| --------- |--------- |----------- |
+|  主盒子    |  aa |  xxx         | xxx         |
+|  飞刀      |  ab |  wx_robot_2  | wx_robot2_  |
+|  测试      |  ac |  xxx            | xxx       | 
+|  合成游戏   |  ad | wx_robot_0  | wx_robot0_  | 
+|  羊羊对碰   |  ae | wx_robot1_  | wx_robot_1  |
+|  教师大战   |  af | wx_robot3_    | wx_robot_3  | 
+|  斗兽棋     |  ag | wx_robot_4_  | wx_robot4_  |
 
-（下载完成解压后，复制整个文件夹到项目中即可。）
+（下载sdk文件夹，复制到项目中即可。）
 
 ### **二、配置sdk并初始化：**
 
@@ -38,10 +38,33 @@ var sdk_conf = {
 };
 ```
 
-2.获取用户信息
+
+2.初始化sdk（游戏启动时）：
+```javascript
+
+if(!window.xx_sdk){
+    window.xx_sdk = new sdk({ sdk_conf: require("xx_sdk_conf"), debug: false });
+}
+
+//1.初始化sdk成功后才能使用sdk
+xx_sdk.init({ debug: true }, function(res){
+    if(res){
+        console.log('sdk初始化成功')
+
+        //=====对接分享接口======
+        //2.监听右上角分享按钮
+        xx_sdk.onShareAppMessage({type: 0, query: "" });
+        //3.主动拉起分享
+        //xx_sdk.shareAppMessage({type: 1, query: "xxx=xxx" });
+        
+    }
+})
+```
+
+3.获取用户信息
 ```javascript
 //盒子内的子游戏无需登录，可直接获取用户数据
-var user = sdk.getUser();
+var user = xx_sdk.getUser();
 
 /*
 {                
@@ -56,23 +79,6 @@ var user = sdk.getUser();
     nickName: "千寻િ😨雨天"
 }
 */
-```
-
-3.初始化sdk（游戏启动页时）：
-```javascript
-//1.初始化sdk成功后才能使用sdk
-xx_sdk.init({ debug: true }, function(res){
-    if(res){
-        console.log('sdk初始化成功')
-
-        //=====对接分享接口======
-        //2.监听右上角分享按钮
-        xx_sdk.onShareAppMessage({type: 0, query: "" });
-        //3.主动拉起分享
-        //xx_sdk.shareAppMessage({type: 1, query: "xxx=xxx" });
-        
-    }
-})
 ```
 
 ### **三、使用sdk：**
