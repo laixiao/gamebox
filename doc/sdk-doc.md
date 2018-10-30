@@ -21,7 +21,7 @@
 
 （下载完成解压后，复制整个文件夹到项目中即可。）
 
-### **二、配置sdk并初始化**
+### **二、配置sdk并初始化：**
 
 1.配置sdk_conf.js文件：
 ```javascript
@@ -36,7 +36,7 @@ var sdk_conf = {
 
 2.获取用户信息
 ```javascript
-//子游戏无需登录，可直接获取用户数据
+//盒子内的子游戏无需登录，可直接获取用户数据
 var user = sdk.getUser();
 
 /*
@@ -54,7 +54,7 @@ var user = sdk.getUser();
 */
 ```
 
-3.初始化sdk（游戏启动页中）：
+3.初始化sdk（游戏启动页时）：
 ```javascript
 //1.初始化sdk成功后才能使用sdk
 xx_sdk.init({ debug: true }, function(res){
