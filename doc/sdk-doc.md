@@ -187,6 +187,7 @@ videoAd.load().then(() => videoAd.show());
 ### **四、对战接口：**
 
 - 1.开始游戏：游戏大厅匹配对手玩家成功，携带对战数据进入子游戏。
+
 ```javascript
 //.子游戏获取该数据
 var gameData = sdk.getGameData();
@@ -249,24 +250,24 @@ var gameData = {
 
 - 2.游戏进行中：
 ```javascript
-    //.获取表情包
+//.获取表情包
 
-    //.上传语音文件
+//.上传语音文件
     
 ```
 
 - 3.游戏结束：上报对战结果、送花、返回游戏大厅。
 ```javascript
-    //.上报战果
-    sdk.uploadResult({ result: 2, opponent_uid: "xxx" }, function(d){
-        console.log(d)
-    });
+//.上报战果
+sdk.uploadResult({ result: 2, opponent_uid: "xxx" }, function(d){
+    console.log(d)
+});
 
-    //.点赞、送花
-    sdk.favour({ tar_uid: 2 }, function(d){
-        console.log(d)
-    });
+//.点赞、送花
+sdk.favour({ tar_uid: 2 }, function(d){
+    console.log(d)
+});
 
-    //.子游戏：返回游戏大厅
-    sdk.backHome();
+//.子游戏：返回游戏大厅
+sdk.backHome();
 ```
