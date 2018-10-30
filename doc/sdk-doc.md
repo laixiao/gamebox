@@ -13,6 +13,8 @@
 
 **sdk下载地址：** https://github.com/laixiao/gamebox/tree/master/sdk
 
+（下载sdk文件夹，复制到项目中即可）
+
 | 游戏名    |  唯一标识 | 测试用户1 | 测试用户2 | 
 | ----------| --------- |--------- |----------- |
 |  主盒子    |  aa |  xxx         | xxx         |
@@ -23,7 +25,7 @@
 |  教师大战   |  af | wx_robot3_    | wx_robot_3  | 
 |  斗兽棋     |  ag | wx_robot_4_  | wx_robot4_  |
 
-（下载sdk文件夹，复制到项目中即可。）
+
 
 ### **二、配置sdk并初始化：**
 
