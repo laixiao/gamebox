@@ -13,11 +13,15 @@
 
 **sdk下载地址：**
 
-| 游戏名  |  唯一标识 |  下载地址  |
-| ------------ | ------------ |------------ |
-|  主盒子 |  aa |   https://laixiao.github.io/gamebox/sdk/aa_sdk.zip |
-|  飞刀   |  ab |  https://laixiao.github.io/gamebox/sdk/ab_sdk.zip   |
-|  合并战斗   |  ac |  https://laixiao.github.io/gamebox/sdk/ac_sdk.zip   |
+| 游戏名    |  唯一标识 | 测试用户1 | 测试用户2 | 下载地址  |
+| ----------| --------- |--------- |----------- |----------- |
+|  主盒子    |  aa |  xxx         | xxx         |  https://laixiao.github.io/gamebox/sdk/aa_sdk.zip |
+|  飞刀      |  ab |  wx_robot_2  | wx_robot2_  | https://laixiao.github.io/gamebox/sdk/ab_sdk.zip   |
+|  测试      |  ac |  xxx            | xxx       | https://laixiao.github.io/gamebox/sdk/ac_sdk.zip   |
+|  合成游戏   |  ad | wx_robot_0  | wx_robot0_  | https://laixiao.github.io/gamebox/sdk/ad_sdk.zip   |
+|  羊羊对碰   |  ae | wx_robot1_  | wx_robot_1  | https://laixiao.github.io/gamebox/sdk/ae_sdk.zip   |
+|  教师大战   |  af | wx_robot3_    | wx_robot_3  | https://laixiao.github.io/gamebox/sdk/af_sdk.zip   |
+|  斗兽棋     |  ag | wx_robot_4_  | wx_robot4_  | https://laixiao.github.io/gamebox/sdk/ag_sdk.zip   |
 
 （下载完成解压后，复制整个文件夹到项目中即可。）
 
