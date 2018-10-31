@@ -206,7 +206,7 @@ videoAd.load().then(() => videoAd.show());
 //.子游戏获取该数据
 var gameData = sdk.getGameData();
 
-//room的数据格式如下（可以使用下面的数据进行开发测试）：
+//gameData的数据格式如下（可以使用下面的数据进行开发测试）：
 /* 
 var gameData = {
     user : {                //当前用户信息
