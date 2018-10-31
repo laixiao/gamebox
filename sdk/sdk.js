@@ -1361,8 +1361,12 @@
             room.user = this.getUser();
             return room;
         }else{
-            console.log("==getGameData=数据不存在")
-            return null;
+            if(sdk_conf.debugData){
+                return sdk_conf.debugData;
+            }else{
+                console.log("==getGameData=数据不存在")
+                return null;
+            }
         }
     }
 

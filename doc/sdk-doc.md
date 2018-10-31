@@ -11,7 +11,7 @@
                 
 ### **一、下载并集成sdk**
 
-**sdk下载地址：** https://github.com/laixiao/gamebox/tree/master/sdk
+**sdk下载地址：** [https://github.com/laixiao/gamebox/tree/master/sdk](https://github.com/laixiao/gamebox/tree/master/sdk "sdk下载地址")
 
 （下载sdk文件夹，复制到项目中即可）
 
@@ -71,8 +71,8 @@ var user = xx_sdk.getUser();
 /*
 {                
     avatarUrl: "https://wx.qlogo.cn/mmopen/vi_32/E31dTdkFnKSFOmmy98kLqJlmDQFjLoRt52KTxohsKFtib2otLWZFOCzyuPXia8A7YR32th1FibqncWra94aAJQicYw/132",
-    uid: "wx_oFOQ65H3BiZHc3_PpUZN52lhFcHA",
-    openid: "wx_oFOQ65H3BiZHc3_PpUZN52lhFcHA",
+    uid: "测试用户uid",
+    openid: "测试用户openid",
     city: "广州",
     country: "中国",
     province: "广东",
@@ -211,8 +211,8 @@ var gameData = sdk.getGameData();
 var gameData = {
     user : {                //当前用户信息
         avatarUrl: "https://wx.qlogo.cn/mmopen/vi_32/E31dTdkFnKSFOmmy98kLqJlmDQFjLoRt52KTxohsKFtib2otLWZFOCzyuPXia8A7YR32th1FibqncWra94aAJQicYw/132",
-        uid: "wx_oFOQ65H3BiZHc3_PpUZN52lhFcHA",
-        openid: "wx_oFOQ65H3BiZHc3_PpUZN52lhFcHA",
+        uid: "测试用户1",
+        openid: "测试用户1",
         city: "广州",
         country: "中国",
         province: "广东",
@@ -220,16 +220,16 @@ var gameData = {
         language: "zh_CN",
         nickName: "千寻િ😨雨天"
     },  
-    ai: false,              //是否ai机器人 
-    room_id: null,          //房间id
-    create_time: null,      //创建时间
-    room_owner: null,       //房主uid
-    game_id: "ab",          //游戏唯一标识
+    ai: false,              //是否ai机器人
+    room_id: "room_001",          //房间id
+    create_time: new Date().getTime()/1000,      //创建时间
+    room_owner: "测试用户2",       //房主uid
+    game_id: "ae",          //游戏唯一标识
     player_count: 2,        //房间人数上限
     all_player_data: [      //对战数据
         {
             player_data:{
-                openid: "wx_oFOQ65H3BiZHc3_PpUZN52lhFcHA",
+                openid: "测试用户1",
                 avatarUrl:"https://wx.qlogo.cn/mmopen/vi_32/E31dTdkFnKSFOmmy98kLqJlmDQFjLoRt52KTxohsKFtib2otLWZFOCzyuPXia8A7YR32th1FibqncWra94aAJQicYw/132",
                 city:"广州",
                 country:"中国",
@@ -240,11 +240,11 @@ var gameData = {
             },
             position:2,     //玩家所在房间的位置
             state:0,        //玩家状态  0：未准备   1：已准备
-            uid:"wx_oFOQ65H3BiZHc3_PpUZN52lhFcHA"
+            uid:"测试用户1"
         },
         {
             player_data:{
-                openid: "wx_oFOQ65PBvyfjW-tbPQLM_Z0Qg2kI",
+                openid: "测试用户2",
                 avatarUrl: "https://wx.qlogo.cn/mmopen/vi_32/oNyD409Hg3gHqJtqtKFhhYDiad6pRFiaprwjEheyLra4CEicGPdnn7uBCJL0oxZjqAibW4wrTsbtfnHoY6NolPpz9A/132",
                 city: "河池",
                 country: "中国",
@@ -255,7 +255,7 @@ var gameData = {
             },
             position:2,     //玩家所在房间的位置
             state:0,        //玩家状态  0：未准备   1：已准备
-            uid: "wx_oFOQ65PBvyfjW-tbPQLM_Z0Qg2kI"
+            uid: "测试用户2"
         },
     ]
 }

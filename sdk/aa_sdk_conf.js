@@ -7,7 +7,7 @@ var sdk_conf = {
     bannerAdUnitId: 'adunit-d6b9bab967f2f8b7',  //.banner广告单元id
     videoAdUnitId: 'adunit-3fa34dc8aada52e3',      //.video广告单元id   
 
-    //.测试用户1、测试用户2 的ID数据可查阅： https://laixiao.github.io/gamebox/doc/sdk-doc
+    //.测试用户的ID数据可查阅： https://laixiao.github.io/gamebox/doc/sdk-doc
     debugData: {                //.非盒子环境下的调试数据
         user : {                //当前用户信息
             avatarUrl: "https://wx.qlogo.cn/mmopen/vi_32/E31dTdkFnKSFOmmy98kLqJlmDQFjLoRt52KTxohsKFtib2otLWZFOCzyuPXia8A7YR32th1FibqncWra94aAJQicYw/132",
@@ -21,9 +21,9 @@ var sdk_conf = {
             nickName: "千寻િ😨雨天"
         },  
         ai: false,              //是否ai机器人 
-        room_id: null,          //房间id
-        create_time: null,      //创建时间
-        room_owner: null,       //房主uid
+        room_id: "room_001",          //房间id
+        create_time: new Date().getTime()/1000,      //创建时间
+        room_owner: "测试用户1", //房主uid
         game_id: "ab",          //游戏唯一标识
         player_count: 2,        //房间人数上限
         all_player_data: [      //对战数据
