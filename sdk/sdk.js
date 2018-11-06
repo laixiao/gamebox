@@ -12,21 +12,24 @@
         // this.container = document.getElementById(container);
         var args = args || {};
         sdk_conf = args.sdk_conf;
+
+        this.sdk_conf = args.sdk_conf || {};
         this.md5 = md5;
-        
-        this.debug = args.debug || sdk_conf.debug;
-        this.iphttps = args.iphttps || "https://www.90wqiji.com";
-        this.ipwss = args.ipwss || "wss://www.90wqiji.com";
         this.loginBg = args.loginBg || "https://www.90wqiji.com/box/image/singlecolor.png";
         this.loginBt = args.loginBt || "https://www.90wqiji.com/box/image/happyrabbitlogin.png";
+        this.debug = args.debug || sdk_conf.debug;
 
-        this.login = args.login || "/Login";
-        this.Config = args.Config || "/Config/GameConfig";
-        this.Share = args.Share || "/Config/ShareConfig";
-        this.GameReport = args.GameReport || "/Game/GameReport";
-        this.Like = args.Like || "/Game/Like";
-        this.GetLikeInfo = args.GetLikeInfo || "/Game/GetLikeInfo";
-        this.GetGameReport = args.GetGameReport || "/Game/GetGameReport";
+
+        this.iphttps = args.iphttps || "https://testadmin.90wqiji.com";
+        this.ipwss = args.ipwss || "wss://www.90wqiji.com";
+
+        this.login = args.login || "/api/LogHandle/Login";
+        this.Config = args.Config || "/api/Config/GameConfig";
+        this.Share = args.Share || "/api/Config/ShareConfig";
+        this.GameReport = args.GameReport || "/api/Game/GameReport";
+        this.Like = args.Like || "/api/Game/Like";
+        this.GetLikeInfo = args.GetLikeInfo || "/api/Game/GetLikeInfo";
+        this.GetGameReport = args.GetGameReport || "/api/Game/GetGameReport";
         
         this.ConfigData = args.ConfigData || { 
             "config1": {},
@@ -112,7 +115,7 @@
     sdk.prototype.Get = function(url, reqData, callback) {
         var self = this;
 
-        reqData.game = sdk_conf.game;
+        reqData.game_id = sdk_conf.game;
         reqData.version = sdk_conf.version;
         var ts = new Date().getTime();
         reqData.ts = ts;
@@ -164,7 +167,7 @@
     sdk.prototype.Post = function(url, reqData, callback) {
         var self = this;
         
-        reqData.game = sdk_conf.game;
+        reqData.game_id = sdk_conf.game;
         reqData.version = sdk_conf.version;
         var ts = new Date().getTime();
         reqData.ts = ts;
@@ -201,7 +204,7 @@
         };
         xhr.open("POST", url, true);
         xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-        xhr.send(JSON.stringify(reqData));//reqData为json字符串形式
+        xhr.send(reqData);//reqData为json字符串形式
     }
 
     
@@ -1254,7 +1257,6 @@
      */
     sdk.prototype.uploadResult = function(obj, callback) {
         var reqData = {
-            game_id: sdk_conf.game,
             uid: this.getUser().uid,
             result: obj.result,  //.0负 1平 2胜
             opponent_uid: obj.opponent_uid //.对手uid
@@ -1275,7 +1277,6 @@
      */
     sdk.prototype.favour = function(obj, callback) {
         var reqData = {
-            game_id: sdk_conf.game,
             src_uid: this.getUser().uid,
             tar_uid: obj.tar_uid,
         }
@@ -1372,9 +1373,7 @@
                 return null;
             }
         }
-    }
-
-
+    },
 
 
     window.sdk = sdk;
