@@ -35,6 +35,8 @@
 
 - 子域和主域都必须遵守本规范
 
+- 禁止使用代码分包加载
+
 - 使用wx相关api时，请判断一下运行环境： 
 ```javascript
 if (cc.sys.platform === cc.sys.WECHAT_GAME) {}
