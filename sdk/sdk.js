@@ -1295,7 +1295,7 @@
         var d = {
             "id": "c2s_leave_room",
         };
-        this.ws.send(JSON.stringify(d)); 
+        aa_sdk.ws.send(JSON.stringify(d)); 
         cc.director.loadScene("aa_home")
     }
     /**
