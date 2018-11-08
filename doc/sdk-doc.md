@@ -125,6 +125,15 @@ var user = xx_sdk.getUser();
     xx_sdk.onMessage((d)=>{
         console.log(d)
     })
+
+cc.game 事件：
+    //注册监听
+    sdk.on("xxx", (e)=>{
+        console.log("xxx")
+    }, this);
+    //关闭监听
+    sdk.off("xxx");
+
 ```
     
 -----
@@ -286,6 +295,9 @@ sdk.favour({ tar_uid: 2 }, function(d){
     console.log(d)
 });
 
-//.子游戏：返回游戏大厅
+//.子游戏：返回游戏大厅。
 sdk.backHome();
+//（子游戏需释放资源并关闭socket）
+
+
 ```
