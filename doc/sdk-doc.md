@@ -5,7 +5,7 @@
 
 - **使用方法：** [https://laixiao.github.io/gamebox/api/index.html](https://laixiao.github.io/gamebox/api/index.html "sdk在线文档")
 
-- **使用范围（强制）：** 开放数据、开放数据域、数据存储
+- **使用范围（强制）：** 开放数据、开放数据域、数据存储、cc.game事件
 
 -----
                 
@@ -276,13 +276,40 @@ var gameData = {
 **2.游戏进行中：**
 
 ```javascript
-//.获取表情包
+//1.表情互动：获取游戏表情包，自行根据产品需求展示和广播表情
+sdk.getEmoji((d)=>{
+    console.log(d)
+    // [
+    //     {
+    //         "id":1,
+    //         "type":1,       //表情类型
+    //         "url":"https://qxgame-1257972171.cos.ap-guangzhou.myqcloud.com/gameadmin/emoji/1.png",
+    //         "weight":10,    //表情权重
+    //         "txt ":"太菜了" //表情中文描述
+    //     },
+    // ]
+});
 
-//.上传语音文件
+//2.语音互动
+    //2.1语音自定义版：上传语音文件后自行广播语音
+    // sdk.uploadSound({
+    //     tempFilePath: res.tempFilePath,
+    //     success: function(url){
+    //        console.log("语音文件播放地址：", url)
+    //     },
+    //     fail: function(res){
+    //        console.log(res)
+    //     }
+    // });
+
+    //2.2语音极简版：为按钮注册录音事件。
+    //（sdk会自动为按钮注册按下，松开，取消事件，然后自动上传该语音并在房间内广播）
+    sdk.onRecorder(this.soundButton);
+
     
 ```
 
-**3.游戏结束：上报对战结果、送花、返回游戏大厅。**
+**3.游戏结束：上报对战结果、送花、返回游戏大厅、释放资源。**
 
 ```javascript
 //.上报战果
@@ -297,7 +324,7 @@ sdk.favour({ tar_uid: 2 }, function(d){
 
 //.子游戏：返回游戏大厅。
 sdk.backHome();
-//（子游戏需释放资源并关闭socket）
+//（子游戏需主动释放资源并关闭socket）
 
 
 ```
