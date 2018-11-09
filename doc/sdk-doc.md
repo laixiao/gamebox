@@ -3,7 +3,7 @@
 
 - **使用说明：** 为了防止数据冲突以及更好地集成游戏，开发者必须集成并使用盒子SDK。
 
-- **使用方法：** [https://laixiao.github.io/gamebox/api/index.html](https://laixiao.github.io/gamebox/api/index.html "sdk在线文档")
+- **api文档：** [https://laixiao.github.io/gamebox/api/index.html](https://laixiao.github.io/gamebox/api/index.html "sdk在线文档")
 
 - **使用范围（强制）：** 开放数据、开放数据域、数据存储、cc.game事件
 
@@ -11,7 +11,7 @@
                 
 ### **一、下载并集成sdk**
 
-**sdk下载地址：** [https://github.com/laixiao/gamebox/tree/master/sdk](https://github.com/laixiao/gamebox/tree/master/sdk "sdk下载地址")
+**SDK下载：** [https://github.com/laixiao/gamebox/tree/master/sdk](https://github.com/laixiao/gamebox/tree/master/sdk "sdk下载地址")
 
 （下载sdk文件夹，复制到项目中即可）
 
