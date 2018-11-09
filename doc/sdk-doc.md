@@ -306,6 +306,13 @@ sdk.getEmoji((d)=>{
     //（sdk会自动为按钮注册按下，松开，取消事件，然后自动上传该语音并在房间内广播）
     sdk.onRecorder(this.soundButton);
 
+    //2.3语音开关设置
+    //屏蔽语音: 如果不想听其它人说话，可以屏蔽语音
+    sdk.setSoundStatus(0);
+    //开启语音
+    sdk.setSoundStatus(1);
+    //获取语音开关状态：0 或 1
+    var status = sdk.getSoundStatus();
     
 ```
 

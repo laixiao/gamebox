@@ -10,11 +10,10 @@
         "Parameter": [
           {
             "group": "Parameter",
-            "type": "Boolean",
-            "optional": true,
-            "field": "debug",
-            "defaultValue": "false",
-            "description": "<p>是否开启调试</p>"
+            "type": "callback",
+            "optional": false,
+            "field": "callback",
+            "description": "<p>结果回调</p>"
           }
         ]
       }
@@ -834,38 +833,6 @@
   },
   {
     "group": "C",
-    "name": "getEmoji",
-    "type": "获取表情包",
-    "url": "获取表情包",
-    "title": "getEmoji（获取表情包）",
-    "parameter": {
-      "fields": {
-        "Parameter": [
-          {
-            "group": "Parameter",
-            "type": "Object",
-            "optional": false,
-            "field": "callback",
-            "description": "<p>不存在返回null</p>"
-          }
-        ]
-      }
-    },
-    "success": {
-      "examples": [
-        {
-          "title": "示例:",
-          "content": "//获取表情包\nsdk.getEmoji((d)=>{\n    console.log(d)\n    // [\n    //     {\n    //         \"id\":1,\n    //         \"type\":1,       //表情类型\n    //         \"url\":\"https://qxgame-1257972171.cos.ap-guangzhou.myqcloud.com/gameadmin/emoji/1.png\",\n    //         \"weight\":10,    //表情权重\n    //         \"txt \":\"太菜了\" //表情中文描述\n    //     },\n    // ]\n});",
-          "type": "json"
-        }
-      ]
-    },
-    "version": "0.0.0",
-    "filename": "../games/happyrabbit/v1.0.0/happyrabbit/assets/aa/script/sdk/sdk.js",
-    "groupTitle": "C"
-  },
-  {
-    "group": "C",
     "name": "getItem",
     "type": "数据存储",
     "url": "数据存储",
@@ -962,38 +929,6 @@
   },
   {
     "group": "C",
-    "name": "onRecorder",
-    "type": "注册录音事件",
-    "url": "注册录音事件",
-    "title": "onRecorder-注册录音事件",
-    "parameter": {
-      "fields": {
-        "Parameter": [
-          {
-            "group": "Parameter",
-            "type": "cc.Node",
-            "optional": false,
-            "field": "node",
-            "description": "<p>录音按钮</p>"
-          }
-        ]
-      }
-    },
-    "success": {
-      "examples": [
-        {
-          "title": "示例:",
-          "content": "//注册录音事件\nsdk.onRecorder(this.soundButton);",
-          "type": "json"
-        }
-      ]
-    },
-    "version": "0.0.0",
-    "filename": "../games/happyrabbit/v1.0.0/happyrabbit/assets/aa/script/sdk/sdk.js",
-    "groupTitle": "C"
-  },
-  {
-    "group": "C",
     "name": "screenshot",
     "type": "微信小游戏截图保存",
     "url": "微信小游戏截图保存",
@@ -1042,38 +977,6 @@
         {
           "title": "示例:",
           "content": "sdk.setItem(\"nick\",\"hello\")",
-          "type": "json"
-        }
-      ]
-    },
-    "version": "0.0.0",
-    "filename": "../games/happyrabbit/v1.0.0/happyrabbit/assets/aa/script/sdk/sdk.js",
-    "groupTitle": "C"
-  },
-  {
-    "group": "C",
-    "name": "uploadSound",
-    "type": "上传语音",
-    "url": "上传语音",
-    "title": "uploadSound-上传语音",
-    "parameter": {
-      "fields": {
-        "Parameter": [
-          {
-            "group": "Parameter",
-            "type": "String",
-            "optional": false,
-            "field": "tempFilePath",
-            "description": "<p>语音文件临时路径（wx.getRecorderManager()获取的）</p>"
-          }
-        ]
-      }
-    },
-    "success": {
-      "examples": [
-        {
-          "title": "示例:",
-          "content": "//上传语音文件\nsdk.uploadSound({\n    tempFilePath: res.tempFilePath,\n    success: function(url){\n       console.log(\"语音文件播放地址：\", url)\n    },\n    fail: function(res){\n       console.log(res)\n    }\n});",
           "type": "json"
         }
       ]
@@ -1135,6 +1038,38 @@
   },
   {
     "group": "D",
+    "name": "getEmoji",
+    "type": "获取表情包",
+    "url": "获取表情包",
+    "title": "getEmoji（获取表情包）",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "Object",
+            "optional": false,
+            "field": "callback",
+            "description": "<p>不存在返回null</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "示例:",
+          "content": "//获取表情包\nsdk.getEmoji((d)=>{\n    console.log(d)\n    // [\n    //     {\n    //         \"id\":1,\n    //         \"type\":1,       //表情类型\n    //         \"url\":\"https://qxgame-1257972171.cos.ap-guangzhou.myqcloud.com/gameadmin/emoji/1.png\",\n    //         \"weight\":10,    //表情权重\n    //         \"txt \":\"太菜了\" //表情中文描述\n    //     },\n    // ]\n});",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "../games/happyrabbit/v1.0.0/happyrabbit/assets/aa/script/sdk/sdk.js",
+    "groupTitle": "D"
+  },
+  {
+    "group": "D",
     "name": "getGameData",
     "type": "子游戏：获取对战数据",
     "url": "子游戏：获取对战数据",
@@ -1144,6 +1079,103 @@
         {
           "title": "示例:",
           "content": " //.开始游戏：从主盒子获取对战需要的数据，数据格式如下（可以使用以下数据进行测试）：\n var gameData = sdk.getGameData();\n\n// var gameData = {                //.非盒子环境下的调试数据\n //     user : {                //当前用户信息\n //         avatarUrl: \"https://wx.qlogo.cn/mmopen/vi_32/E31dTdkFnKSFOmmy98kLqJlmDQFjLoRt52KTxohsKFtib2otLWZFOCzyuPXia8A7YR32th1FibqncWra94aAJQicYw/132\",\n //         uid: \"测试用户1\",\n //         openid: \"测试用户1\",\n //         city: \"广州\",\n //         country: \"中国\",\n //         province: \"广东\",\n //         gender: 1,\n //         language: \"zh_CN\",\n //         nickName: \"千寻િ😨雨天\"\n //     },  \n //     ai: false,              //是否ai机器人 \n //     room_id: \"room_001\",          //房间id\n //     create_time: new Date().getTime()/1000,      //创建时间\n //     room_owner: \"测试用户1\", //房主uid\n //     game_id: \"ab\",          //游戏唯一标识\n //     player_count: 2,        //房间人数上限\n //     all_player_data: [      //对战数据\n //         {\n //             player_data:{\n //                 openid: \"测试用户1\",\n //                 avatarUrl:\"https://wx.qlogo.cn/mmopen/vi_32/E31dTdkFnKSFOmmy98kLqJlmDQFjLoRt52KTxohsKFtib2otLWZFOCzyuPXia8A7YR32th1FibqncWra94aAJQicYw/132\",\n //                 city:\"广州\",\n //                 country:\"中国\",\n //                 gender:1,\n //                 language:\"zh_CN\",\n //                 nickName:\"千寻િ😨雨天\",\n //                 province:\"广东\"\n //             },\n //             position:2,     //玩家所在房间的位置\n //             state:0,        //玩家状态  0：未准备   1：已准备\n //             uid:\"测试用户1\"\n //         },\n //         {\n //             player_data:{\n //                 openid: \"测试用户2\",\n //                 avatarUrl: \"https://wx.qlogo.cn/mmopen/vi_32/oNyD409Hg3gHqJtqtKFhhYDiad6pRFiaprwjEheyLra4CEicGPdnn7uBCJL0oxZjqAibW4wrTsbtfnHoY6NolPpz9A/132\",\n //                 city: \"河池\",\n //                 country: \"中国\",\n //                 gender: 2,\n //                 language: \"zh_CN\",\n //                 nickName: \"象牙塔จุ๊บ\",\n //                 province: \"广东\"\n //             },\n //             position:2,     //玩家所在房间的位置\n //             state:0,        //玩家状态  0：未准备   1：已准备\n //             uid: \"测试用户2\"\n //         },\n //     ]\n // }",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "../games/happyrabbit/v1.0.0/happyrabbit/assets/aa/script/sdk/sdk.js",
+    "groupTitle": "D"
+  },
+  {
+    "group": "D",
+    "name": "getSoundStatus",
+    "type": "获取语音开关状态",
+    "url": "当前语音的开关状态",
+    "title": "getSoundStatus-语音开关",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "int",
+            "optional": false,
+            "field": "return",
+            "description": "<p>1：已开启语音 0：已屏蔽语音</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "示例:",
+          "content": "//获取语音开关状态：0 或 1\nvar status = sdk.getSoundStatus();",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "../games/happyrabbit/v1.0.0/happyrabbit/assets/aa/script/sdk/sdk.js",
+    "groupTitle": "D"
+  },
+  {
+    "group": "D",
+    "name": "onRecorder",
+    "type": "注册录音事件",
+    "url": "注册录音事件",
+    "title": "onRecorder-注册录音事件",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "cc.Node",
+            "optional": false,
+            "field": "node",
+            "description": "<p>录音按钮</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "示例:",
+          "content": "//注册录音事件\nsdk.onRecorder(this.soundButton);",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "../games/happyrabbit/v1.0.0/happyrabbit/assets/aa/script/sdk/sdk.js",
+    "groupTitle": "D"
+  },
+  {
+    "group": "D",
+    "name": "setSoundStatus",
+    "type": "设置语音开关",
+    "url": "如果不想听其它人说话，可以屏蔽语音",
+    "title": "setSoundStatus-语音开关",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "status",
+            "optional": false,
+            "field": "status",
+            "defaultValue": "1",
+            "description": "<p>1：开启语音 0：屏蔽语音</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "示例:",
+          "content": "//屏蔽语音\nsdk.setSoundStatus(0);\n//开启语音\nsdk.setSoundStatus(1);",
           "type": "json"
         }
       ]
@@ -1183,6 +1215,38 @@
         {
           "title": "示例:",
           "content": "//.上报战果\nsdk.uploadResult({ result: 2, opponent_uid: \"xxx\" }, function(d){\n    console.log(d)\n});",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "../games/happyrabbit/v1.0.0/happyrabbit/assets/aa/script/sdk/sdk.js",
+    "groupTitle": "D"
+  },
+  {
+    "group": "D",
+    "name": "uploadSound",
+    "type": "上传语音",
+    "url": "上传语音",
+    "title": "uploadSound-上传语音",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "tempFilePath",
+            "description": "<p>语音文件临时路径（wx.getRecorderManager()获取的）</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "示例:",
+          "content": "//上传语音文件\nsdk.uploadSound({\n    tempFilePath: res.tempFilePath,\n    success: function(url){\n       console.log(\"语音文件播放地址：\", url)\n    },\n    fail: function(res){\n       console.log(res)\n    }\n});",
           "type": "json"
         }
       ]
