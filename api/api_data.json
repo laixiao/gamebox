@@ -32,6 +32,25 @@
     "groupTitle": "A"
   },
   {
+    "group": "A",
+    "name": "wechatLogin",
+    "type": "微信登录",
+    "url": "盒子外的独立游戏需要调用本接口进行登录",
+    "title": "wechatLogin（微信登录）",
+    "success": {
+      "examples": [
+        {
+          "title": "示例:",
+          "content": "// 1.判断是否登录（登录页）\n  var user = sdk.getUser();\n  if(user){\n      //2.已经登录\n      console.log(\"本地用户信息：\", user)\n  }else{\n      //2.未登录：调用sdk登录\n      sdk.wechatLogin((d)=>{\n          console.log(\"用户信息：\", d)\n          // 登录成功：\n              //    {\n              //         \"uid\":\"xxx\"//登录玩家uid\n              //         \"openid\":\"x\",\n              //         \"nickName\":\"x\",\n              //         \"avatarUrl\":\"x\",\n              //         \"gender\":\"x\",\n              //         \"country\":\"x\",\n              //         \"city\":\"x\",\n              //         \"province\":\"x\"\n              //     }\n          // 登录失败：返回false\n      });\n  }",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "../games/happyrabbit/v1.0.0/happyrabbit/assets/aa/script/sdk/sdk.js",
+    "groupTitle": "A"
+  },
+  {
     "group": "B",
     "name": "createBannerAd",
     "type": "创建banner广告组件",
@@ -540,25 +559,6 @@
     "groupTitle": "B"
   },
   {
-    "group": "B",
-    "name": "weChatLogin",
-    "type": "微信登录",
-    "url": "微信登录",
-    "title": "weChatLogin（登录）",
-    "success": {
-      "examples": [
-        {
-          "title": "示例:",
-          "content": "// 1.判断是否登录（登录页）\n  var user = sdk.getUser();\n  if(user){\n      //2.已经登录\n      console.log(\"本地用户信息：\", user)\n  }else{\n      //2.未登录：调用sdk登录\n      sdk.weChatLogin((d)=>{\n          console.log(\"用户信息：\", d)\n          // 登录成功：\n              //    {\n              //         \"uid\":\"xxx\"//登录玩家uid\n              //         \"openid\":\"x\",\n              //         \"nickName\":\"x\",\n              //         \"avatarUrl\":\"x\",\n              //         \"gender\":\"x\",\n              //         \"country\":\"x\",\n              //         \"city\":\"x\",\n              //         \"province\":\"x\"\n              //     }\n          // 登录失败：返回false\n      });\n  }",
-          "type": "json"
-        }
-      ]
-    },
-    "version": "0.0.0",
-    "filename": "../games/happyrabbit/v1.0.0/happyrabbit/assets/aa/script/sdk/sdk.js",
-    "groupTitle": "B"
-  },
-  {
     "group": "C",
     "name": "Get",
     "type": "Get",
@@ -680,7 +680,7 @@
       "examples": [
         {
           "title": "示例:",
-          "content": "var data = sdk.createImage(sprite, url);",
+          "content": "sdk.createImage(sprite, url);",
           "type": "json"
         }
       ]
