@@ -133,7 +133,9 @@ cc.game 事件：
     }, this);
     //关闭监听
     sdk.off("xxx");
-
+    //发射事件
+    sdk.emit("xxx");
+    sdk.emit("xxx", {nick:"xxx"});
 ```
     
 -----

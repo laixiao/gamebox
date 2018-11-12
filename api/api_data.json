@@ -892,14 +892,33 @@
   {
     "group": "C",
     "name": "off",
-    "type": "注册game的特定事件类型回调",
-    "url": "注册game的特定事件类型回调",
+    "type": "删除game监听器",
+    "url": "删除game监听器",
     "title": "off（删除game监听器）",
     "success": {
       "examples": [
         {
           "title": "示例:",
           "content": "//删除监听器\nsdk.off(\"xxx\");",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "../games/happyrabbit/v1.0.0/happyrabbit/assets/aa/script/sdk/sdk.js",
+    "groupTitle": "C"
+  },
+  {
+    "group": "C",
+    "name": "off",
+    "type": "cc.game发射事件",
+    "url": "cc.game发射事件",
+    "title": "emit（cc.game发射事件）",
+    "success": {
+      "examples": [
+        {
+          "title": "示例:",
+          "content": "//cc.game发射事件\n//sdk.emit(\"xxx\");\n//sdk.emit(\"xxx\", {nick:\"xxx\"});",
           "type": "json"
         }
       ]
@@ -937,7 +956,7 @@
       "examples": [
         {
           "title": "示例:",
-          "content": "//.摄像机组件、回调\nsdk.screenshot((d)=>{\n    if(d){\n        console.log(\"图片保存成功：\", d)\n    }else{\n        console.log(\"图片保存失败：\", d)\n    }\n})",
+          "content": "//.微信小游戏：截图保存\nsdk.screenshot((d)=>{\n    if(d){\n        console.log(\"图片保存成功：\", d)\n    }else{\n        console.log(\"图片保存失败：\", d)\n    }\n})",
           "type": "json"
         }
       ]
