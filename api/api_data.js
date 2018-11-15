@@ -892,14 +892,14 @@ define({ "api": [
   {
     "group": "C",
     "name": "off",
-    "type": "删除game监听器",
-    "url": "删除game监听器",
-    "title": "off（删除game监听器）",
+    "type": "cc.game发射事件",
+    "url": "cc.game发射事件",
+    "title": "emit（cc.game发射事件）",
     "success": {
       "examples": [
         {
           "title": "示例:",
-          "content": "//删除监听器\nsdk.off(\"xxx\");",
+          "content": "//cc.game发射事件\n//sdk.emit(\"xxx\");\n//sdk.emit(\"xxx\", {nick:\"xxx\"});",
           "type": "json"
         }
       ]
@@ -911,14 +911,14 @@ define({ "api": [
   {
     "group": "C",
     "name": "off",
-    "type": "cc.game发射事件",
-    "url": "cc.game发射事件",
-    "title": "emit（cc.game发射事件）",
+    "type": "删除game监听器",
+    "url": "删除game监听器",
+    "title": "off（删除game监听器）",
     "success": {
       "examples": [
         {
           "title": "示例:",
-          "content": "//cc.game发射事件\n//sdk.emit(\"xxx\");\n//sdk.emit(\"xxx\", {nick:\"xxx\"});",
+          "content": "//删除监听器\nsdk.off(\"xxx\");",
           "type": "json"
         }
       ]
@@ -1058,9 +1058,9 @@ define({ "api": [
   {
     "group": "D",
     "name": "getEmoji",
-    "type": "获取表情包",
-    "url": "获取表情包",
-    "title": "getEmoji（获取表情包）",
+    "type": "表情包列表",
+    "url": "表情包列表",
+    "title": "getEmoji（表情包列表）",
     "parameter": {
       "fields": {
         "Parameter": [
@@ -1078,7 +1078,7 @@ define({ "api": [
       "examples": [
         {
           "title": "示例:",
-          "content": "//获取表情包\nsdk.getEmoji((d)=>{\n    console.log(d)\n    // [\n    //     {\n    //         \"id\":1,\n    //         \"type\":1,       //表情类型\n    //         \"url\":\"https://qxgame-1257972171.cos.ap-guangzhou.myqcloud.com/gameadmin/emoji/1.png\",\n    //         \"weight\":10,    //表情权重\n    //         \"txt \":\"太菜了\" //表情中文描述\n    //     },\n    // ]\n});",
+          "content": "//获取表情包列表\nsdk.getEmoji((d)=>{\n    console.log(d)\n    // [\n    //     {\n    //         \"id\":1,\n    //         \"type\":1,       //表情类型\n    //         \"url\":\"https://qxgame-1257972171.cos.ap-guangzhou.myqcloud.com/gameadmin/emoji/1.png\",\n    //         \"weight\":10,    //表情权重\n    //         \"txt \":\"太菜了\" //表情中文描述\n    //     },\n    // ]\n});",
           "type": "json"
         }
       ]
@@ -1140,6 +1140,38 @@ define({ "api": [
   },
   {
     "group": "D",
+    "name": "onEmoji",
+    "type": "表情包监听",
+    "url": "监听收到表情包事件",
+    "title": "onEmoji（表情包监听）",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "Object",
+            "optional": false,
+            "field": "callback",
+            "description": "<p>不存在返回null</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "示例:",
+          "content": "//监听收到表情包事件\nsdk.onEmoji((emoji)=>{\n    console.log(\"=收到一个表情=\", emoji)\n})",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "../games/happyrabbit/v1.0.0/happyrabbit/assets/aa/script/sdk/sdk.js",
+    "groupTitle": "D"
+  },
+  {
+    "group": "D",
     "name": "onRecorder",
     "type": "注册录音事件",
     "url": "注册录音事件",
@@ -1162,6 +1194,38 @@ define({ "api": [
         {
           "title": "示例:",
           "content": "//注册录音事件\nsdk.onRecorder(this.soundButton);",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "../games/happyrabbit/v1.0.0/happyrabbit/assets/aa/script/sdk/sdk.js",
+    "groupTitle": "D"
+  },
+  {
+    "group": "D",
+    "name": "sendEmoji",
+    "type": "表情包发送",
+    "url": "房间内广播表情",
+    "title": "sendEmoji（表情包发送）",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "Object",
+            "optional": false,
+            "field": "callback",
+            "description": "<p>不存在返回null</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "示例:",
+          "content": "//房间内广播表情",
           "type": "json"
         }
       ]
@@ -1246,7 +1310,7 @@ define({ "api": [
     "group": "D",
     "name": "uploadSound",
     "type": "上传语音",
-    "url": "上传语音",
+    "url": "语音自定义版：上传语音文件后自行广播语音",
     "title": "uploadSound-上传语音",
     "parameter": {
       "fields": {

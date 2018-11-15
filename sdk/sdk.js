@@ -7,7 +7,6 @@
     let sdk_conf = null;
 
     // window.aa_sdk = new sdk({ sdk_conf: require("aa_sdk_conf") });
-    // window.aa_sdk = new sdk({ sdk_conf: require("aa_sdk_conf"), debug: true });
     function sdk(args) {
         // this.container = document.getElementById(container);
         var args = args || {};
@@ -17,7 +16,7 @@
         this.md5 = md5;
         this.loginBg = args.loginBg || "https://www.90wqiji.com/box/image/singlecolor.png";
         this.loginBt = args.loginBt || "https://www.90wqiji.com/box/image/happyrabbitlogin.png";
-        this.debug = args.debug || sdk_conf.debug;
+        this.debug = sdk_conf.debug;
         this.iphttps = args.iphttps || "https://testadmin.90wqiji.com";
         this.ipwss = args.ipwss || "wss://www.90wqiji.com";
 
@@ -1456,7 +1455,7 @@
     /**
      * @apiGroup D
      * @apiName uploadSound
-     * @api {上传语音} 上传语音 uploadSound-上传语音
+     * @api {上传语音} 语音自定义版：上传语音文件后自行广播语音 uploadSound-上传语音
      * @apiParam {String} tempFilePath 语音文件临时路径（wx.getRecorderManager()获取的）
      * 
      * @apiSuccessExample {json} 示例:
@@ -1624,15 +1623,14 @@
             return 1;
         }
     }
-
     /**
      * @apiGroup D
      * @apiName getEmoji
-     * @api {获取表情包} 获取表情包 getEmoji（获取表情包）
+     * @api {表情包列表} 表情包列表 getEmoji（表情包列表）
      * @apiParam {Object} callback 不存在返回null
      * 
      * @apiSuccessExample {json} 示例:
-     *   //获取表情包
+     *   //获取表情包列表
      *   sdk.getEmoji((d)=>{
      *       console.log(d)
      *       // [
@@ -1664,8 +1662,54 @@
             })
         }
     }
-    
+    /**
+     * @apiGroup D
+     * @apiName sendEmoji
+     * @api {表情包发送} 房间内广播表情 sendEmoji（表情包发送）
+     * @apiParam {Object} callback 不存在返回null
+     * 
+     * @apiSuccessExample {json} 示例:
+     *   //房间内广播表情
+     */
+    sdk.prototype.sendEmoji = function(emoji) {
+        var self = this;
+        var d = {
+            id: "c2s_room_broadcast",
+            type: "broadcastEmoji", 
+            game_id: sdk_conf.game,       
+            emoji: emoji
+        };
+        if(this.debug){
+            console.log("sdk广播一个表情", d)
+        }
+        aa_sdk.wsSend(d);
+    }
+    /**
+     * @apiGroup D
+     * @apiName onEmoji
+     * @api {表情包监听} 监听收到表情包事件 onEmoji（表情包监听）
+     * @apiParam {Object} callback 不存在返回null
+     * 
+     * @apiSuccessExample {json} 示例:
+     *   //监听收到表情包事件
+     *   sdk.onEmoji((emoji)=>{
+     *       console.log("=收到一个表情=", emoji)
+     *   })
+     */
+    sdk.prototype.onEmoji = function(callback) {
+        var self = this;
+       
+        aa_sdk.off("broadcastEmoji")
+        aa_sdk.on("broadcastEmoji", (e)=>{
+            if(self.debug){
+                console.log("sdk收到一个表情", e)
+            }
+            callback(e)
+        }, this);
+    }
 
+
+    
 
     window.sdk = sdk;
 })(window, require("md5"));

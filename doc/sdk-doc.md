@@ -278,19 +278,28 @@ var gameData = {
 **2.游戏进行中：**
 
 ```javascript
-//1.表情互动：获取游戏表情包列表，自行根据产品需求展示和广播表情
-sdk.getEmoji((d)=>{
-    console.log(d)
-    // [
-    //     {
-    //         "id":1,
-    //         "type":1,       //表情类型
-    //         "url":"https://qxgame-1257972171.cos.ap-guangzhou.myqcloud.com/gameadmin/emoji/1.png",
-    //         "weight":10,    //表情权重
-    //         "txt ":"太菜了" //表情中文描述
-    //     },
-    // ]
-});
+//1.表情互动
+    //1.1监听收到表情包事件
+    sdk.onEmoji((emoji)=>{
+        console.log("=收到一个表情=", emoji)
+    })
+    //1.2获取表情包列表（自行根据产品需求展示）
+    aa_sdk.getEmoji((d)=>{
+        console.log("表情包列表", d)
+        // [
+        //     {
+        //         "id":1,
+        //         "type":1,       //表情类型
+        //         "url":"https://qxgame-1257972171.cos.ap-guangzhou.myqcloud.com/gameadmin/emoji/1.png",
+        //         "weight":10,    //表情权重
+        //         "txt ":"太菜了" //表情中文描述
+        //     },
+        // ]
+        
+        //1.3发送表情包
+        aa_sdk.sendEmoji(d[0])
+    }); 
+
 
 //2.语音互动
     //2.1语音自定义版：上传语音文件后自行广播语音
