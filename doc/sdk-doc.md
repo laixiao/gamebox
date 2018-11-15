@@ -45,7 +45,7 @@ var sdk_conf = {
 ```javascript
 
 if(!window.xx_sdk){
-    window.xx_sdk = new sdk({ sdk_conf: require("xx_sdk_conf"), debug: false });
+    window.xx_sdk = new sdk({ sdk_conf: require("xx_sdk_conf") });
 }
 
 //1.初始化sdk成功后才能使用sdk
