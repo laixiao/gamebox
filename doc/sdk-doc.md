@@ -284,7 +284,7 @@ var gameData = {
         console.log("=收到一个表情=", emoji)
     })
     //1.2获取表情包列表（自行根据产品需求展示，大小根据UI风格自由调整，规格为正方形）
-    aa_sdk.getEmoji((d)=>{
+    sdk.getEmoji((d)=>{
         console.log("表情包列表", d)
         // [
         //     {
@@ -297,7 +297,7 @@ var gameData = {
         // ]
         
         //1.3发送表情包
-        aa_sdk.sendEmoji(d[0])
+        sdk.sendEmoji(d[0])
     }); 
 
 
