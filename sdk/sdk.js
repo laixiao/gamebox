@@ -1627,7 +1627,7 @@
      * @apiGroup D
      * @apiName getEmoji
      * @api {表情包列表} 表情包列表 getEmoji（表情包列表）
-     * @apiParam {Object} callback 不存在返回null
+     * @apiParam {function} callback 不存在返回null
      * 
      * @apiSuccessExample {json} 示例:
      *   //获取表情包列表
@@ -1665,11 +1665,12 @@
     /**
      * @apiGroup D
      * @apiName sendEmoji
-     * @api {表情包发送} 房间内广播表情 sendEmoji（表情包发送）
-     * @apiParam {Object} callback 不存在返回null
+     * @api {表情包发送} 房间内广播一个表情 sendEmoji（表情包发送）
+     * @apiParam {Object} emoji 表情对象
      * 
      * @apiSuccessExample {json} 示例:
-     *   //房间内广播表情
+     *   //房间内广播一个表情
+     *   aa_sdk.sendEmoji(emoji)
      */
     sdk.prototype.sendEmoji = function(emoji) {
         var self = this;
@@ -1688,7 +1689,7 @@
      * @apiGroup D
      * @apiName onEmoji
      * @api {表情包监听} 监听收到表情包事件 onEmoji（表情包监听）
-     * @apiParam {Object} callback 不存在返回null
+     * @apiParam {function} callback 返回一个表情对象
      * 
      * @apiSuccessExample {json} 示例:
      *   //监听收到表情包事件
