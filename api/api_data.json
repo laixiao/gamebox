@@ -1066,7 +1066,7 @@
         "Parameter": [
           {
             "group": "Parameter",
-            "type": "Object",
+            "type": "function",
             "optional": false,
             "field": "callback",
             "description": "<p>不存在返回null</p>"
@@ -1149,10 +1149,10 @@
         "Parameter": [
           {
             "group": "Parameter",
-            "type": "Object",
+            "type": "function",
             "optional": false,
             "field": "callback",
-            "description": "<p>不存在返回null</p>"
+            "description": "<p>返回一个表情对象</p>"
           }
         ]
       }
@@ -1206,7 +1206,7 @@
     "group": "D",
     "name": "sendEmoji",
     "type": "表情包发送",
-    "url": "房间内广播表情",
+    "url": "房间内广播一个表情",
     "title": "sendEmoji（表情包发送）",
     "parameter": {
       "fields": {
@@ -1215,8 +1215,8 @@
             "group": "Parameter",
             "type": "Object",
             "optional": false,
-            "field": "callback",
-            "description": "<p>不存在返回null</p>"
+            "field": "emoji",
+            "description": "<p>表情对象</p>"
           }
         ]
       }
@@ -1225,7 +1225,7 @@
       "examples": [
         {
           "title": "示例:",
-          "content": "//房间内广播表情",
+          "content": "//房间内广播一个表情\naa_sdk.sendEmoji(emoji)",
           "type": "json"
         }
       ]
