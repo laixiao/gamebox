@@ -1373,7 +1373,11 @@
         var d = {
             "id": "c2s_leave_room",
         };
-        aa_sdk.wsSend(d); 
+        if(window.aa_sdk){
+            aa_sdk.wsSend(d);
+        }else{
+            console.log("该接口只在盒子内生效")
+        }
         cc.director.loadScene("aa_home")
     }
     /**
@@ -1556,7 +1560,11 @@
                                     game_id: sdk_conf.game,       
                                     url: url
                                 };
-                                aa_sdk.wsSend(d); 
+                                if(window.aa_sdk){
+                                    aa_sdk.wsSend(d);
+                                }else{
+                                    console.log("该接口只在盒子内生效")
+                                }
                             },
                             fail: function(err){
                                 console.log("发送语音文件失败：", err)
@@ -1586,6 +1594,72 @@
             node.on(cc.Node.EventType.TOUCH_CANCEL, function(){
                 console.log("结束录音，不使用")
                 this.isUse = false;
+                this.recorderManager.stop()
+            }, this);
+
+        }
+    },
+    //录音=》上传=》返回url
+    sdk.prototype.onRecorder2 = function(node, callback) {
+        var self = this;
+
+        if (cc.sys.platform === cc.sys.WECHAT_GAME) {
+            //是否使用该录音
+            let isUse = true;
+            //录音时长
+            let time = 0, startTime=0;
+            //1.微信录音管理器
+            if(!this.recorderManager){
+                this.recorderManager = wx.getRecorderManager()
+                this.recorderManager.onStart(()=>{
+                    console.log('recorder 开始')
+                })
+                this.recorderManager.onPause(()=>{
+                    console.log('recorder 暂停')
+                })
+                this.recorderManager.onStop((res)=>{
+                    console.log('recorder 停止', res)
+                    if(isUse){
+                        //3.发送语音文件并在房间内广播
+                        self.uploadSound({
+                            tempFilePath: res.tempFilePath,
+                            success: function(url){
+                                console.log("语音文件播放地址：", url)
+                                callback(url, time) 
+                            },
+                            fail: function(err){
+                                console.log("发送语音文件失败：", err)
+                                callback(false) 
+                            }
+                        });
+                    }else{
+                        callback(false) 
+                    }
+                })
+            }
+
+            //2.Cocos录音控制
+            node.on(cc.Node.EventType.TOUCH_START, function(){
+                console.log("开始录音")
+                isUse = true;
+                startTime = new Date().getTime();
+                this.recorderManager.start({
+                    duration: 10000,
+                    sampleRate: 44100,
+                    numberOfChannels: 1,
+                    encodeBitRate: 192000,
+                    format: 'mp3',//aac、mp3
+                    frameSize: 50
+                })
+            }, this);
+            node.on(cc.Node.EventType.TOUCH_END, function(){
+                console.log("结束录音")
+                time = new Date().getTime() - startTime;
+                this.recorderManager.stop()
+            }, this);
+            node.on(cc.Node.EventType.TOUCH_CANCEL, function(){
+                console.log("结束录音，不使用")
+                isUse = false;
                 this.recorderManager.stop()
             }, this);
 
@@ -1683,7 +1757,11 @@
         if(this.debug){
             console.log("sdk广播一个表情", d)
         }
-        aa_sdk.wsSend(d);
+        if(window.aa_sdk){
+            aa_sdk.wsSend(d);
+        }else{
+            console.log("该接口只在盒子内生效")
+        }
     }
     /**
      * @apiGroup D
@@ -1700,17 +1778,21 @@
     sdk.prototype.onEmoji = function(callback) {
         var self = this;
        
-        aa_sdk.off("broadcastEmoji")
-        aa_sdk.on("broadcastEmoji", (e)=>{
-            if(self.debug){
-                console.log("sdk收到一个表情", e)
-            }
-            callback(e)
-        }, this);
+        if(window.aa_sdk){
+            aa_sdk.off("broadcastEmoji")
+            aa_sdk.on("broadcastEmoji", (e)=>{
+                if(self.debug){
+                    console.log("sdk收到一个表情", e)
+                }
+                callback(e)
+            }, this); 
+        }else{
+            console.log("该接口只在盒子内生效")
+        }
     }
 
 
-    
+
 
     window.sdk = sdk;
 })(window, require("md5"));
