@@ -128,14 +128,14 @@ var user = xx_sdk.getUser();
 
 cc.game 事件：
     //注册监听
-    sdk.on("xxx", (e)=>{
+    xx_sdk.on("xxx", (e)=>{
         console.log("xxx")
     }, this);
     //关闭监听
-    sdk.off("xxx");
+    xx_sdk.off("xxx");
     //发射事件
-    sdk.emit("xxx");
-    sdk.emit("xxx", {nick:"xxx"});
+    xx_sdk.emit("xxx");
+    xx_sdk.emit("xxx", {nick:"xxx"});
 ```
     
 -----
@@ -215,7 +215,7 @@ videoAd.load().then(() => videoAd.show());
 
 ```javascript
 //.子游戏获取该数据
-var gameData = sdk.getGameData();
+var gameData = xx_sdk.getGameData();
 
 //gameData的数据格式如下（可以使用下面的数据进行开发测试）：
 /* 
@@ -280,11 +280,11 @@ var gameData = {
 ```javascript
 //1.表情互动
     //1.1监听收到表情包事件
-    sdk.onEmoji((emoji)=>{
+    xx_sdk.onEmoji((emoji)=>{
         console.log("=收到一个表情=", emoji)
     })
     //1.2获取表情包列表（自行根据产品需求展示，大小根据UI风格自由调整，规格为正方形）
-    sdk.getEmoji((d)=>{
+    xx_sdk.getEmoji((d)=>{
         console.log("表情包列表", d)
         // [
         //     {
@@ -297,13 +297,13 @@ var gameData = {
         // ]
         
         //1.3发送表情包
-        sdk.sendEmoji(d[0])
+        xx_sdk.sendEmoji(d[0])
     }); 
 
 
 //2.语音互动
     //2.1语音自定义版：上传语音文件后自行广播语音
-    // sdk.uploadSound({
+    // xx_sdk.uploadSound({
     //     tempFilePath: res.tempFilePath,
     //     success: function(url){
     //        console.log("语音文件播放地址：", url)
@@ -315,15 +315,15 @@ var gameData = {
 
     //2.2语音极简版：为按钮注册录音事件。
     //（sdk会自动为按钮注册按下，松开，取消事件，然后自动上传该语音并在房间内广播）
-    sdk.onRecorder(this.soundButton);
+    xx_sdk.onRecorder(this.soundButton);
 
     //2.3语音开关设置
     //屏蔽语音: 如果不想听其它人说话，可以屏蔽语音
-    sdk.setSoundStatus(0);
+    xx_sdk.setSoundStatus(0);
     //开启语音
-    sdk.setSoundStatus(1);
+    xx_sdk.setSoundStatus(1);
     //获取语音开关状态：0 或 1
-    var status = sdk.getSoundStatus();
+    var status = xx_sdk.getSoundStatus();
     
 ```
 
@@ -331,17 +331,17 @@ var gameData = {
 
 ```javascript
 //.上报战果
-sdk.uploadResult({ result: 2, opponent_uid: "xxx" }, function(d){
+xx_sdk.uploadResult({ result: 2, opponent_uid: "xxx" }, function(d){
     console.log(d)
 });
 
 //.点赞、送花
-sdk.favour({ tar_uid: 2 }, function(d){
+xx_sdk.favour({ tar_uid: 2 }, function(d){
     console.log(d)
 });
 
 //.子游戏：返回游戏大厅。
-sdk.backHome();
+xx_sdk.backHome();
 //（子游戏需主动释放资源并关闭socket）
 
 
