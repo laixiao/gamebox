@@ -18,10 +18,9 @@
         this.loginBg = args.loginBg || "https://www.90wqiji.com/box/image/singlecolor.png";
         this.loginBt = args.loginBt || "https://www.90wqiji.com/box/image/happyrabbitlogin.png";
         this.debug = args.debug || sdk_conf.debug;
-
-
         this.iphttps = args.iphttps || "https://testadmin.90wqiji.com";
         this.ipwss = args.ipwss || "wss://www.90wqiji.com";
+
 
         this.login = args.login || "/api/LogHandle/Login";
         this.Config = args.Config || "/api/Config/GameConfig";
@@ -30,14 +29,18 @@
         this.Like = args.Like || "/api/Game/Like";
         this.GetLikeInfo = args.GetLikeInfo || "/api/Game/GetLikeInfo";
         this.GetGameReport = args.GetGameReport || "/api/Game/GetGameReport";
+        this.GetEmojiImg = args.GetEmojiImg || "/api/Game/GetEmojiImg";
         
-        this.ConfigData = args.ConfigData || { 
-            "config1": {},
-            "config2": {},
+
+        this.BannerAd = args.BannerAd || null;//banner广告
+        this.VideoAd = args.VideoAd || null;//video广告
+        this.ConfigData = args.ConfigData || { //游戏配置数据
+            "config1": {},//运营配置数据
+            "config2": {},//程序自定义配置数据
         };
-        this.ShareList = args.ShareList || [];
-        this.BannerAd = args.BannerAd || null;
-        this.VideoAd = args.VideoAd || null;
+        this.ShareList = args.ShareList || [];//分享卡片信息列表
+
+        
         
     }
 
@@ -45,8 +48,7 @@
      * @apiGroup A
      * @apiName init
      * @api {初始化sdk} 使用sdk前，必须在启动页初始化一次才能使用 init（初始化sdk）
-     *
-     * @apiParam {Boolean} [debug=false] 是否开启调试
+     * @apiParam {callback} callback 结果回调
      * 
      * @apiSuccessExample {json} 示例:
      *  if(!window.xx_sdk){
@@ -69,7 +71,7 @@
     sdk.prototype.init = function(callback) {
         var self = this;
 
-        this.checkUpdate();
+        // this.checkUpdate();
 
         //1.初始化后台配置信息
         this.Get(this.iphttps + this.Config, {}, function (d) {
@@ -88,6 +90,7 @@
                         self.init(callback);
                     }
                 });
+
             }else{
                 if(self.debug){
                     console.log("2.初始化后台配置信息失败，再次初始化：",d)
@@ -95,7 +98,6 @@
                 self.init(callback);
             }
         });
-
         
 
     }
@@ -107,6 +109,7 @@
      * @apiParam {String} url 请求地址
      * @apiParam {Object} reqData 请求参数
      * @apiParam {Object} callback 不存在返回null
+     * 
      * @apiSuccessExample {json} 示例:
      * sdk.Get("https://xxx.xxx", { user_id: user_id }, function (d) {
      *     console.log(d)
@@ -179,7 +182,26 @@
         //     param += item + "=" + reqData[item] + "&";
         // }
         //2.发起请求
-        var xhr = new XMLHttpRequest();
+        var getXmlHttp = function() {
+            var xmlhttp = null;
+            if (window.XMLHttpRequest) {
+                xmlhttp = new XMLHttpRequest();
+            } else {
+                try {
+                    xmlhttp = new ActiveXObject("Msxml2.XMLHTTP");
+                } catch (e) {
+                    try {
+                        xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+                    } catch (e) {
+                        return null;
+                    }
+                }
+            }
+            return xmlhttp;
+        }
+        var xhr = getXmlHttp();
+
+        // var xhr = new XMLHttpRequest();
         xhr.onreadystatechange = function () {
             if (xhr.readyState == 4) {
                 if (xhr.status >= 200 && xhr.status < 400) {
@@ -203,8 +225,11 @@
             }
         };
         xhr.open("POST", url, true);
+        // xhr.setRequestHeader("Access-Control-Allow-Origin", "*");
         xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-        xhr.send(reqData);//reqData为json字符串形式
+        xhr.setRequestHeader("Content-Type", "application/json");
+
+        xhr.send(JSON.stringify(reqData));//reqData为json字符串形式
     }
 
     
@@ -427,7 +452,7 @@
      * @apiParam {String} url 需要加载的图片地址
      * 
      * @apiSuccessExample {json} 示例:
-     * var data = sdk.createImage(sprite, url);
+     * sdk.createImage(sprite, url);
      */
     sdk.prototype.createImage = function(sprite, url) {
         // if (cc.sys.platform === cc.sys.WECHAT_GAME) {
@@ -459,14 +484,19 @@
      * var user = sdk.getUser();
      */
     sdk.prototype.getUser = function() {
-        var userinfo = cc.sys.localStorage.getItem("userinfo");
-        if(userinfo){
-            return JSON.parse(userinfo);
+        if(this.userinfo){
+            return this.userinfo;
         }else{
-            if(sdk_conf.debugData){
-                return sdk_conf.debugData.user;
+            let userinfo = cc.sys.localStorage.getItem("userinfo");
+            if(userinfo){
+                this.userinfo = JSON.parse(userinfo);
+                return this.userinfo;
             }else{
-                return null;
+                if(sdk_conf.debugData){
+                    return sdk_conf.debugData.user;
+                }else{
+                    return null;
+                }
             }
         }
     }
@@ -836,9 +866,9 @@
         return dataList;
     }
     /**
-     * @apiGroup B
-     * @apiName weChatLogin
-     * @api {微信登录} 微信登录 weChatLogin（登录）
+     * @apiGroup A
+     * @apiName wechatLogin
+     * @api {微信登录} 盒子外的独立游戏需要调用本接口进行登录 wechatLogin（微信登录）
      * 
      * @apiSuccessExample {json} 示例:
      * // 1.判断是否登录（登录页）
@@ -848,7 +878,7 @@
      *       console.log("本地用户信息：", user)
      *   }else{
      *       //2.未登录：调用sdk登录
-     *       sdk.weChatLogin((d)=>{
+     *       sdk.wechatLogin((d)=>{
      *           console.log("用户信息：", d)
      *           // 登录成功：
      *               //    {
@@ -866,7 +896,7 @@
      *   }
      * 
      */
-    sdk.prototype.weChatLogin = function(callback) {
+    sdk.prototype.wechatLogin = function(callback) {
         var self = this;
         if (cc.sys.platform === cc.sys.WECHAT_GAME) {
             var options = wx.getLaunchOptionsSync();
@@ -902,7 +932,7 @@
                                 style: {  width: width, height: height, left: res.screenWidth/2-width/2, top: res.screenHeight/2-height/2 },
                                 lang: 'zh_CN'
                             })
-                            self.button.onTap((res1) => {
+                            self.button.onTap((res1)=>{
                                 // 处理用户拒绝授权的情况
                                 // if (res1.errMsg.indexOf('auth deny') > -1 || res1.errMsg.indexOf('auth denied') > -1 ) {
                                 //     wx.showToast();
@@ -1024,7 +1054,7 @@
      * @apiSuccessExample {json} 示例:
      * //.参考文档：https://developers.weixin.qq.com/minigame/dev/document/ad/wx.createRewardedVideoAd.html
      *  var videoAd = sdk.createRewardedVideoAd();
-     *  videoAd.load().then(() => videoAd.show());
+     *  videoAd.load().then(()=>videoAd.show());
      * 
      */
     sdk.prototype.createRewardedVideoAd = function() {
@@ -1049,7 +1079,7 @@
      * @api {微信小游戏截图保存} 微信小游戏截图保存 screenshot（游戏截图）
      * 
      * @apiSuccessExample {json} 示例:
-     *   //.摄像机组件、回调
+     *   //.微信小游戏：截图保存
      *   sdk.screenshot((d)=>{
      *       if(d){
      *           console.log("图片保存成功：", d)
@@ -1194,10 +1224,58 @@
             })
         }
     }
-
-
-
-
+    /**
+     * @apiGroup C
+     * @apiName on
+     * @api {注册game的特定事件类型回调} 注册game的特定事件类型回调 on（注册game监听器）
+     * 
+     * @apiSuccessExample {json} 示例:
+     *   //注册 game 的特定事件类型回调
+     *   sdk.on("xxx", (e)=>{
+     *      console.log("xxx")
+     *   }, this);
+     * 
+     */
+    sdk.prototype.on = function(type, callback, target) {
+        if (!callback || !target) {
+            console.log("事件注册失败，缺少参数callback, target")
+            return;
+        }
+        cc.game.on(type, callback, target)
+    },
+    /**
+     * @apiGroup C
+     * @apiName off
+     * @api {删除game监听器} 删除game监听器 off（删除game监听器）
+     * 
+     * @apiSuccessExample {json} 示例:
+     *   //删除监听器
+     *   sdk.off("xxx");
+     */
+    sdk.prototype.off = function(type, callback, target) {
+        if (!callback || !target) {
+            cc.game.off(type);
+        }else{
+            cc.game.off(type, callback, target);
+        }
+    },
+    /**
+     * @apiGroup C
+     * @apiName off
+     * @api {cc.game发射事件} cc.game发射事件 emit（cc.game发射事件）
+     * 
+     * @apiSuccessExample {json} 示例:
+     *   //cc.game发射事件
+     *   //sdk.emit("xxx");
+     *   //sdk.emit("xxx", {nick:"xxx"});
+     */
+    sdk.prototype.emit = function(type, message) {
+        if (!message) {
+            cc.game.emit(type);
+        }else{
+            cc.game.emit(type, message);
+        }
+    },
 
 
     /**
@@ -1261,6 +1339,7 @@
             result: obj.result,  //.0负 1平 2胜
             opponent_uid: obj.opponent_uid //.对手uid
         }
+        console.log("==SDK上传战报==", reqData)
         this.Post(this.iphttps + this.GameReport, reqData, callback)
     }
     /**
@@ -1295,7 +1374,7 @@
         var d = {
             "id": "c2s_leave_room",
         };
-        aa_sdk.ws.send(JSON.stringify(d)); 
+        aa_sdk.wsSend(d); 
         cc.director.loadScene("aa_home")
     }
     /**
@@ -1374,6 +1453,218 @@
             }
         }
     },
+    /**
+     * @apiGroup D
+     * @apiName uploadSound
+     * @api {上传语音} 上传语音 uploadSound-上传语音
+     * @apiParam {String} tempFilePath 语音文件临时路径（wx.getRecorderManager()获取的）
+     * 
+     * @apiSuccessExample {json} 示例:
+     *   //上传语音文件
+     *   sdk.uploadSound({
+     *       tempFilePath: res.tempFilePath,
+     *       success: function(url){
+     *          console.log("语音文件播放地址：", url)
+     *       },
+     *       fail: function(res){
+     *          console.log(res)
+     *       }
+     *   });
+     */
+    sdk.prototype.uploadSound = function(obj) {
+        var self = this;
+
+        if (cc.sys.platform === cc.sys.WECHAT_GAME) {
+            if(!this.FileSystemManager){
+                this.FileSystemManager = wx.getFileSystemManager();
+            }
+            this.FileSystemManager.saveFile({
+                tempFilePath: obj.tempFilePath,
+                success(res) {
+                    console.log("存储后录音的路径", res)
+                    //语音上传
+                    var reqData = {};
+                    var ts = new Date().getTime();
+                    reqData.game_id = sdk_conf.game;
+                    reqData.version = sdk_conf.version;
+                    reqData.ts = ts;
+                    reqData.sign = md5(ts.toString().substr(9,4)+sdk_conf.game.substr(0,2)+sdk_conf.version.substr(0,1)+ '$5dfjr$%dsadsfdsii');
+                    
+                    reqData.scence = 1;
+                    reqData.uid = self.getUser().uid;
+                    wx.uploadFile({
+                        url: 'https://testadmin.90wqiji.com/api/Game/UpFile', //仅为示例，非真实的接口地址
+                        filePath: res.savedFilePath,
+                        name: 'file',
+                        formData: reqData,
+                        success(res2) {
+                            let data = JSON.parse(res2.data);
+                            console.log(data)
+                            //上传成功
+                            if(data.code == 1){
+                                obj.success(data.d.url)
+                            }else{
+                                obj.fail(res2)
+                            }
+                        },
+                        fail(res2) {
+                            console.log("语音文件上传失败", res2)
+                            obj.fail(res2)
+                        }
+                    })
+                },
+            });
+        }
+    },
+    /**
+     * @apiGroup D
+     * @apiName onRecorder
+     * @api {注册录音事件} 注册录音事件 onRecorder-注册录音事件
+     * @apiParam {cc.Node} node 录音按钮
+     * 
+     * @apiSuccessExample {json} 示例:
+     *   //注册录音事件
+     *   sdk.onRecorder(this.soundButton);
+     */
+    sdk.prototype.onRecorder = function(node) {
+        var self = this;
+
+        if (cc.sys.platform === cc.sys.WECHAT_GAME) {
+            //是否使用该录音
+            this.isUse = true;
+            //1.微信录音管理器
+            if(!this.recorderManager){
+                this.recorderManager = wx.getRecorderManager()
+                this.recorderManager.onStart(()=>{
+                    console.log('recorder 开始')
+                })
+                this.recorderManager.onPause(()=>{
+                    console.log('recorder 暂停')
+                })
+                this.recorderManager.onStop((res)=>{
+                    console.log('recorder 停止', res)
+                    if(self.isUse){
+                        //3.发送语音文件并在房间内广播
+                        self.uploadSound({
+                            tempFilePath: res.tempFilePath,
+                            success: function(url){
+                                console.log("语音文件播放地址：", url)
+
+                                //4.房间内广播语音
+                                var d = {
+                                    id: "c2s_room_broadcast",
+                                    type: "broadcastSound", 
+                                    game_id: sdk_conf.game,       
+                                    url: url
+                                };
+                                aa_sdk.wsSend(d); 
+                            },
+                            fail: function(err){
+                                console.log("发送语音文件失败：", err)
+                            }
+                        });
+                    }
+                })
+            }
+
+            //2.Cocos录音控制
+            node.on(cc.Node.EventType.TOUCH_START, function(){
+                console.log("开始录音")
+                this.isUse = true;
+                this.recorderManager.start({
+                    duration: 10000,
+                    sampleRate: 44100,
+                    numberOfChannels: 1,
+                    encodeBitRate: 192000,
+                    format: 'mp3',//aac、mp3
+                    frameSize: 50
+                })
+            }, this);
+            node.on(cc.Node.EventType.TOUCH_END, function(){
+                console.log("结束录音")
+                this.recorderManager.stop()
+            }, this);
+            node.on(cc.Node.EventType.TOUCH_CANCEL, function(){
+                console.log("结束录音，不使用")
+                this.isUse = false;
+                this.recorderManager.stop()
+            }, this);
+
+        }
+    },
+    /**
+     * @apiGroup D
+     * @apiName setSoundStatus
+     * @api {设置语音开关} 如果不想听其它人说话，可以屏蔽语音 setSoundStatus-语音开关
+     * @apiParam {status} status=1 1：开启语音 0：屏蔽语音
+     * 
+     * @apiSuccessExample {json} 示例:
+     *   //屏蔽语音
+     *   sdk.setSoundStatus(0);
+     *   //开启语音
+     *   sdk.setSoundStatus(1);
+     */
+    sdk.prototype.setSoundStatus = function(status) {
+        this.setItem("SoundStatus", status)
+    }
+    /**
+     * @apiGroup D
+     * @apiName getSoundStatus
+     * @api {获取语音开关状态} 当前语音的开关状态 getSoundStatus-语音开关
+     * @apiParam {int} return 1：已开启语音 0：已屏蔽语音
+     * @apiSuccessExample {json} 示例:
+     *   //获取语音开关状态：0 或 1
+     *   var status = sdk.getSoundStatus();
+     */
+    sdk.prototype.getSoundStatus = function() {
+        var status = this.getItem("SoundStatus");
+        if(status){
+            return status;
+        }else{
+            return 1;
+        }
+    }
+
+    /**
+     * @apiGroup D
+     * @apiName getEmoji
+     * @api {获取表情包} 获取表情包 getEmoji（获取表情包）
+     * @apiParam {Object} callback 不存在返回null
+     * 
+     * @apiSuccessExample {json} 示例:
+     *   //获取表情包
+     *   sdk.getEmoji((d)=>{
+     *       console.log(d)
+     *       // [
+     *       //     {
+     *       //         "id":1,
+     *       //         "type":1,       //表情类型
+     *       //         "url":"https://qxgame-1257972171.cos.ap-guangzhou.myqcloud.com/gameadmin/emoji/1.png",
+     *       //         "weight":10,    //表情权重
+     *       //         "txt ":"太菜了" //表情中文描述
+     *       //     },
+     *       // ]
+     *   });
+     */
+    sdk.prototype.EmojiList = null;
+    sdk.prototype.getEmoji = function(callback) {
+        var self = this;
+        if(this.EmojiList){
+            callback(this.EmojiList)
+        }else{
+            this.Get(this.iphttps + this.GetEmojiImg, {}, (d)=>{
+                // console.log(d)
+                if(d.code == 1){
+                    self.EmojiList = d.d;
+                    callback(self.EmojiList);
+                }else{
+                    console.log("表情包获取失败", d)
+                    callback(null);
+                }
+            })
+        }
+    }
+    
 
 
     window.sdk = sdk;
