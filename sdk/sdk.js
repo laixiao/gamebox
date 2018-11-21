@@ -8,7 +8,6 @@
 
     // window.aa_sdk = new sdk({ sdk_conf: require("aa_sdk_conf") });
     function sdk(args) {
-        // this.container = document.getElementById(container);
         var args = args || {};
         sdk_conf = args.sdk_conf;
 
@@ -18,6 +17,7 @@
         this.loginBt = args.loginBt || "https://www.90wqiji.com/box/image/happyrabbitlogin.png";
         this.debug = sdk_conf.debug;
         this.iphttps = args.iphttps || "https://testadmin.90wqiji.com";
+        this.iphttps_2 = args.iphttps_2 || "https://www.90wqiji.com";
         this.ipwss = args.ipwss || "wss://www.90wqiji.com";
 
 
@@ -29,7 +29,8 @@
         this.GetLikeInfo = args.GetLikeInfo || "/api/Game/GetLikeInfo";
         this.GetGameReport = args.GetGameReport || "/api/Game/GetGameReport";
         this.GetEmojiImg = args.GetEmojiImg || "/api/Game/GetEmojiImg";
-        
+        this.playerdata = args.playerdata || "/game/playerdata";
+
 
         this.BannerAd = args.BannerAd || null;//banner广告
         this.VideoAd = args.VideoAd || null;//video广告
@@ -465,13 +466,18 @@
         //     image.src = url;
         // }
 
-        cc.loader.load({url: url, type: 'png'}, function (err, texture) {
-            if(err){
-                console.log(err)
-            }else{
-                sprite.spriteFrame = new cc.SpriteFrame(texture);
-            }
-        });
+        if(url){
+            cc.loader.load({url: url, type: 'png'}, function (err, texture) {
+                if(err){
+                    console.log(err)
+                }else{
+                    sprite.spriteFrame = new cc.SpriteFrame(texture);
+                }
+            });
+        }else{
+            console.log("图片地址不能为空")
+        }
+        
     }
     /**
      * @apiGroup C
@@ -491,6 +497,7 @@
                 this.userinfo = JSON.parse(userinfo);
                 return this.userinfo;
             }else{
+                console.log("===sdk_conf.debugData==", sdk_conf.debugData)
                 if(sdk_conf.debugData){
                     return sdk_conf.debugData.user;
                 }else{
@@ -984,6 +991,8 @@
                     })
                 }
             }
+        }else{
+            callback(false)
         }
     }
     /**
@@ -1378,6 +1387,8 @@
         }else{
             console.log("该接口只在盒子内生效")
         }
+
+        cc.audioEngine.stopAll();
         cc.director.loadScene("aa_home")
     }
     /**
@@ -1577,6 +1588,7 @@
             //2.Cocos录音控制
             node.on(cc.Node.EventType.TOUCH_START, function(){
                 console.log("开始录音")
+                cc.audioEngine.pauseAll();
                 this.isUse = true;
                 this.recorderManager.start({
                     duration: 10000,
@@ -1590,16 +1602,18 @@
             node.on(cc.Node.EventType.TOUCH_END, function(){
                 console.log("结束录音")
                 this.recorderManager.stop()
+                cc.audioEngine.resumeAll();
             }, this);
             node.on(cc.Node.EventType.TOUCH_CANCEL, function(){
                 console.log("结束录音，不使用")
                 this.isUse = false;
                 this.recorderManager.stop()
+                cc.audioEngine.resumeAll();
             }, this);
 
         }
     },
-    //录音=》上传=》返回url
+    //录音=》上传=》返回url、time
     sdk.prototype.onRecorder2 = function(node, callback) {
         var self = this;
 
@@ -1665,6 +1679,28 @@
 
         }
     },
+    //wx音频播放器：播放网络音频
+    sdk.prototype.playSound = function(url) {
+        if (cc.sys.platform === cc.sys.WECHAT_GAME) {
+            if(!this.innerAudioContext){
+                this.innerAudioContext = wx.createInnerAudioContext()
+                this.innerAudioContext.autoplay = false;
+                this.innerAudioContext.src = '';
+                // this.innerAudioContext.onPlay(()=>{
+                //     console.log('开始播放')
+                // })
+                // this.innerAudioContext.onError((res)=>{
+                //     console.log('播放错误', res)
+                // })
+            }
+            this.innerAudioContext.src = url;
+            this.innerAudioContext.play()
+
+            return this.innerAudioContext;
+        }else{
+            return null;
+        }
+    }
     /**
      * @apiGroup D
      * @apiName setSoundStatus
@@ -1678,7 +1714,8 @@
      *   sdk.setSoundStatus(1);
      */
     sdk.prototype.setSoundStatus = function(status) {
-        this.setItem("SoundStatus", status)
+        // this.setItem("soundStatus", status)
+        cc.sys.localStorage.setItem("soundStatus", status);
     }
     /**
      * @apiGroup D
@@ -1690,9 +1727,10 @@
      *   var status = sdk.getSoundStatus();
      */
     sdk.prototype.getSoundStatus = function() {
-        var status = this.getItem("SoundStatus");
-        if(status){
-            return status;
+        // var status = this.getItem("soundStatus");
+        var status = cc.sys.localStorage.getItem("soundStatus");
+        if(status == 0){
+            return parseInt(status);
         }else{
             return 1;
         }
@@ -1790,9 +1828,20 @@
             console.log("该接口只在盒子内生效")
         }
     }
+    sdk.prototype.getUserData = function(uid, callback) {
+        var self = this;
+       
+        this.Get(this.iphttps_2 + this.playerdata, { uid: uid }, function (d) {
+            if(d.code == 1){
+                callback(d.d)
+            }else{
+                callback(null)
+            }
+        });
+    }
 
-
-
+    
+    
 
     window.sdk = sdk;
 })(window, require("md5"));
