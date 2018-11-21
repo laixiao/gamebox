@@ -268,6 +268,80 @@
   },
   {
     "group": "B",
+    "name": "navigateToMiniProgram",
+    "type": "打开另一个小程序",
+    "url": "打开另一个小程序",
+    "title": "navigateToMiniProgram",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "appId",
+            "description": "<p>要打开的小程序appId</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": true,
+            "field": "path",
+            "description": "<p>打开的页面路径，如果为空则打开首页</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "object",
+            "optional": true,
+            "field": "extraData",
+            "description": "<p>需要传递给目标小程序的数据，目标小程序可在 App.onLaunch，App.onShow 中获取到这份数据。</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": true,
+            "field": "envVersion",
+            "description": "<p>要打开的小程序版本。仅在当前小程序为开发版或体验版时此参数有效。如果当前小程序是正式版，则打开的小程序必定是正式版。</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "function",
+            "optional": true,
+            "field": "success",
+            "description": "<p>接口调用成功的回调函数</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "function",
+            "optional": true,
+            "field": "fail",
+            "description": "<p>接口调用失败的回调函数</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "function",
+            "optional": true,
+            "field": "complete",
+            "description": "<p>接口调用结束的回调函数（调用成功、失败都会执行）</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "示例:",
+          "content": "//.参考文档：https://developers.weixin.qq.com/minigame/dev/api/open-api/miniprogram-navigate/wx.navigateToMiniProgram.html\nsdk.navigateToMiniProgram({\n     appId: '',\n     path: 'page/index/index?id=123',\n     extraData: {\n       foo: 'bar'\n     },\n     envVersion: 'develop',\n     success(res) {\n       // 打开成功\n     }\n })",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "../games/happyrabbit/v1.0.0/happyrabbit/assets/aa/script/sdk/sdk.js",
+    "groupTitle": "B"
+  },
+  {
+    "group": "B",
     "name": "onMessage",
     "type": "主域监听子域发送的消息",
     "url": "主域监听子域发送的消息",
@@ -892,14 +966,14 @@
   {
     "group": "C",
     "name": "off",
-    "type": "cc.game发射事件",
-    "url": "cc.game发射事件",
-    "title": "emit（cc.game发射事件）",
+    "type": "删除game监听器",
+    "url": "删除game监听器",
+    "title": "off（删除game监听器）",
     "success": {
       "examples": [
         {
           "title": "示例:",
-          "content": "//cc.game发射事件\n//sdk.emit(\"xxx\");\n//sdk.emit(\"xxx\", {nick:\"xxx\"});",
+          "content": "//删除监听器\nsdk.off(\"xxx\");",
           "type": "json"
         }
       ]
@@ -911,14 +985,14 @@
   {
     "group": "C",
     "name": "off",
-    "type": "删除game监听器",
-    "url": "删除game监听器",
-    "title": "off（删除game监听器）",
+    "type": "cc.game发射事件",
+    "url": "cc.game发射事件",
+    "title": "emit（cc.game发射事件）",
     "success": {
       "examples": [
         {
           "title": "示例:",
-          "content": "//删除监听器\nsdk.off(\"xxx\");",
+          "content": "//cc.game发射事件\n//sdk.emit(\"xxx\");\n//sdk.emit(\"xxx\", {nick:\"xxx\"});",
           "type": "json"
         }
       ]
