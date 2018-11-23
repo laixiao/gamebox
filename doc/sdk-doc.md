@@ -24,7 +24,7 @@
 |  羊羊对碰   |  ae | wx_robot1_  | wx_robot_1  |
 |  教师大战   |  af | wx_robot3_    | wx_robot_3  | 
 |  斗兽棋     |  ag | wx_robot_4_  | wx_robot4_  |
-
+|  动物与水果 |  ah |   |   |
 
 
 ### **二、配置sdk并初始化：**
