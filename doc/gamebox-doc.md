@@ -45,6 +45,7 @@ if (cc.sys.platform === cc.sys.WECHAT_GAME) {}
 ------
 
 ### 三、对照表：
+
 | 游戏名    |  唯一标识 | 
 | ----------| --------- |
 |  主盒子    |  aa | 
@@ -57,10 +58,10 @@ if (cc.sys.platform === cc.sys.WECHAT_GAME) {}
 |  动物与水果 |  ah |   
 |  酷跑 |  ai |   
 |  大话骰 |  aj |
-|   |  ak |
-|   |  al |
-|   |  am |
-|   |  an |
+|  xx |  ak |
+|  xx |  al |
+|  xx |  am |
+|  xx |  an |
 
 
 测试账号:
