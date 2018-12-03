@@ -18,7 +18,8 @@ var sdk_conf = {
             province: "广东",
             gender: 1,
             language: "zh_CN",
-            nickName: "千寻િ😨雨天"
+            nickName: "千寻િ😨雨天",
+            sig: ""
         },  
         ai: false,              //是否ai机器人 
         room_id: "room_001",          //房间id
@@ -36,7 +37,8 @@ var sdk_conf = {
                     gender:1,
                     language:"zh_CN",
                     nickName:"千寻િ😨雨天",
-                    province:"广东"
+                    province:"广东",
+                    sig: ""
                 },
                 position:2,     //玩家所在房间的位置
                 state:0,        //玩家状态  0：未准备   1：已准备
@@ -51,7 +53,8 @@ var sdk_conf = {
                     gender: 2,
                     language: "zh_CN",
                     nickName: "象牙塔จุ๊บ",
-                    province: "广东"
+                    province: "广东",
+                    sig: ""
                 },
                 position:2,     //玩家所在房间的位置
                 state:0,        //玩家状态  0：未准备   1：已准备

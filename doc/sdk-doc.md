@@ -15,16 +15,6 @@
 
 （下载sdk文件夹，复制到项目中即可）
 
-| 游戏名    |  唯一标识 | 测试用户1 | 测试用户2 | 
-| ----------| --------- |--------- |----------- |
-|  主盒子    |  aa |  xxx         | xxx         |
-|  飞刀      |  ab |  wx_robot_2  | wx_robot2_  |
-|  测试      |  ac |  xxx            | xxx       | 
-|  合成游戏   |  ad | wx_robot_0  | wx_robot0_  | 
-|  羊羊对碰   |  ae | wx_robot1_  | wx_robot_1  |
-|  教师大战   |  af | wx_robot3_    | wx_robot_3  | 
-|  斗兽棋     |  ag | wx_robot_4_  | wx_robot4_  |
-|  动物与水果 |  ah |   |   |
 
 
 ### **二、配置sdk并初始化：**
