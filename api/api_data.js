@@ -1080,47 +1080,15 @@ define({ "api": [
   },
   {
     "group": "D",
-    "name": "backHome",
-    "type": "子游戏：返回游戏大厅",
-    "url": "子游戏：返回游戏大厅",
-    "title": "backHome（返回大厅）",
+    "name": "getBbmSwitch",
+    "type": "背景音乐开关状态",
+    "url": "获取背景音乐开关状态",
+    "title": "getBbmSwitch-背景音乐",
     "success": {
       "examples": [
         {
           "title": "示例:",
-          "content": "//.子游戏：返回游戏大厅\nsdk.backHome();",
-          "type": "json"
-        }
-      ]
-    },
-    "version": "0.0.0",
-    "filename": "../games/happyrabbit/v1.0.0/happyrabbit/assets/aa/script/sdk/sdk.js",
-    "groupTitle": "D"
-  },
-  {
-    "group": "D",
-    "name": "favour",
-    "type": "点赞、送花",
-    "url": "点赞、送花",
-    "title": "favour（点赞、送花）",
-    "parameter": {
-      "fields": {
-        "Parameter": [
-          {
-            "group": "Parameter",
-            "type": "String",
-            "optional": false,
-            "field": "tar_uid",
-            "description": "<p>对方的uid</p>"
-          }
-        ]
-      }
-    },
-    "success": {
-      "examples": [
-        {
-          "title": "示例:",
-          "content": "//.点赞、送花\nsdk.favour({ tar_uid: 2 }, function(d){\n    console.log(d)\n});",
+          "content": "//.背景音乐开关\nxx_sdk.getBbmSwitch();//0：关 1：开",
           "type": "json"
         }
       ]
@@ -1214,6 +1182,25 @@ define({ "api": [
   },
   {
     "group": "D",
+    "name": "giveUp",
+    "type": "弹出认输返回界面",
+    "url": "子游戏：弹出认输返回界面",
+    "title": "giveUp（认输界面）",
+    "success": {
+      "examples": [
+        {
+          "title": "示例:",
+          "content": "//.子游戏：弹出认输返回界面\nxx_sdk.giveUp(function(res){\n    if(res == 1){\n        //确认\n    }else{\n        //取消\n    }\n})",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "../games/happyrabbit/v1.0.0/happyrabbit/assets/aa/script/sdk/sdk.js",
+    "groupTitle": "D"
+  },
+  {
+    "group": "D",
     "name": "onEmoji",
     "type": "表情包监听",
     "url": "监听收到表情包事件",
@@ -1235,7 +1222,7 @@ define({ "api": [
       "examples": [
         {
           "title": "示例:",
-          "content": "//监听收到表情包事件\nsdk.onEmoji((emoji)=>{\n    console.log(\"=收到一个表情=\", emoji)\n})",
+          "content": "//监听收到表情包事件\nsdk.onEmoji((emoji)=>{\n    console.log(\"=收到一个表情=\", emoji)\n    console.log(\"=该表情的发送者=\", emoji.sender)\n})",
           "type": "json"
         }
       ]
@@ -1343,67 +1330,15 @@ define({ "api": [
   },
   {
     "group": "D",
-    "name": "uploadResult",
-    "type": "子游戏：上报战果",
-    "url": "子游戏：上报战果",
-    "title": "uploadResult-上报战果",
-    "parameter": {
-      "fields": {
-        "Parameter": [
-          {
-            "group": "Parameter",
-            "type": "int",
-            "optional": false,
-            "field": "result",
-            "description": "<p>战果: 0负 1平 2胜</p>"
-          },
-          {
-            "group": "Parameter",
-            "type": "String",
-            "optional": false,
-            "field": "opponent_uid",
-            "description": "<p>对手uid</p>"
-          }
-        ]
-      }
-    },
+    "name": "showResult",
+    "type": "结果展示",
+    "url": "展示游戏结果页面",
+    "title": "showResult（结果展示）",
     "success": {
       "examples": [
         {
           "title": "示例:",
-          "content": "//.上报战果\nsdk.uploadResult({ result: 2, opponent_uid: \"xxx\" }, function(d){\n    console.log(d)\n});",
-          "type": "json"
-        }
-      ]
-    },
-    "version": "0.0.0",
-    "filename": "../games/happyrabbit/v1.0.0/happyrabbit/assets/aa/script/sdk/sdk.js",
-    "groupTitle": "D"
-  },
-  {
-    "group": "D",
-    "name": "uploadSound",
-    "type": "上传语音",
-    "url": "语音自定义版：上传语音文件后自行广播语音",
-    "title": "uploadSound-上传语音",
-    "parameter": {
-      "fields": {
-        "Parameter": [
-          {
-            "group": "Parameter",
-            "type": "String",
-            "optional": false,
-            "field": "tempFilePath",
-            "description": "<p>语音文件临时路径（wx.getRecorderManager()获取的）</p>"
-          }
-        ]
-      }
-    },
-    "success": {
-      "examples": [
-        {
-          "title": "示例:",
-          "content": "//上传语音文件\nsdk.uploadSound({\n    tempFilePath: res.tempFilePath,\n    success: function(url){\n       console.log(\"语音文件播放地址：\", url)\n    },\n    fail: function(res){\n       console.log(res)\n    }\n});",
+          "content": "//.子游戏：展示游戏结果页面\nvar obj = [\n    {\n        uid: \"wx_robot_2\",      //用户id\n        score: 2                //比分\n    },\n    {\n        uid: \"wx_robot2_\",      //用户id\n        score: 1                //比分\n    },\n]\nxx_sdk.showResult(obj);",
           "type": "json"
         }
       ]

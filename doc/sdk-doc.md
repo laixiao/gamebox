@@ -273,6 +273,20 @@ var gameData = {
     xx_sdk.onEmoji((emoji)=>{
         console.log("=收到一个表情=", emoji)
         console.log("=该表情的发送者=", emoji.sender)
+        /*
+        emoji.sender格式：
+        {
+            "uid": "wx_oGUmH5Ic0ls6xa52epYcL7n77U3U", 
+            "openid": "oGUmH5Ic0ls6xa52epYcL7n77U3U", 
+            "nickName": "千寻િ😨雨天", 
+            "avatarUrl": "https://wx.qlogo.cn/mmopen/vi_32/ib3FwHCA5Nc3N0MpRdb6D5aibGTchEiad27KgRal9BPibfNHo0NZmagJVziaGmn96icC8cqJIrUW3B1vHlG9icibbK5tgA/132", 
+            "gender": 1, 
+            "country": "中国", 
+            "city": "广州", 
+            "province": "广东", 
+            "sig": ""
+        }
+        */
     })
     //1.2获取表情包列表（自行根据产品需求展示，大小根据UI风格自由调整，规格为正方形）
     xx_sdk.getEmoji((d)=>{
@@ -293,22 +307,11 @@ var gameData = {
 
 
 //2.语音互动
-    //2.1语音自定义版：上传语音文件后自行广播语音
-    // xx_sdk.uploadSound({
-    //     tempFilePath: res.tempFilePath,
-    //     success: function(url){
-    //        console.log("语音文件播放地址：", url)
-    //     },
-    //     fail: function(res){
-    //        console.log(res)
-    //     }
-    // });
-
-    //2.2语音极简版：为按钮注册录音事件。
+    //2.1语音极简版：为按钮注册录音事件。
     //（sdk会自动为按钮注册按下，松开，取消事件，然后自动上传该语音并在房间内广播）
     xx_sdk.onRecorder(this.soundButton);
 
-    //2.3语音开关设置
+    //2.2语音开关设置
     //屏蔽语音: 如果不想听其它人说话，可以屏蔽语音
     xx_sdk.setSoundStatus(0);
     //开启语音
@@ -316,24 +319,37 @@ var gameData = {
     //获取语音开关状态：0 或 1
     var status = xx_sdk.getSoundStatus();
     
+//3.背景音乐
+    let switch = xx_sdk.getBbmSwitch();//0：关 1：开
+
+
 ```
 
-**3.游戏结束：上报对战结果、送花、返回游戏大厅、释放资源。**
+**3.游戏结束：认输页面、游戏结束页面**
 
 ```javascript
-//.上报战果
-xx_sdk.uploadResult({ result: 2, opponent_uid: "xxx" }, function(d){
-    console.log(d)
-});
+//1.弹出认输返回界面（返回按钮）：
+    xx_sdk.giveUp(function(res){
+        if(res == 1){
+            //确认
+        }else{
+            //取消
+        }
+    })
 
-//.点赞、送花
-xx_sdk.favour({ tar_uid: 2 }, function(d){
-    console.log(d)
-});
-
-//.子游戏：返回游戏大厅。
-xx_sdk.backHome();
-//（子游戏需主动释放资源并关闭socket）
+//2.弹出游戏结果页面（游戏结束）
+    var obj = [
+        {
+            uid: "wx_robot_2",      //用户id
+            score: 2                //比分
+        },
+        {
+            uid: "wx_robot2_",      //用户id
+            score: 1                //比分
+        },
+    ]
+    xx_sdk.showResult(obj);
+    
 
 
 ```
