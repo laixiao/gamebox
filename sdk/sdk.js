@@ -1972,7 +1972,7 @@
      * 
      * @apiSuccessExample {json} 示例:
      *   //.子游戏：展示游戏结果页面
-     *   var obj = [
+     *   var result = [
      *       {
      *           uid: "wx_robot_2",      //用户id
      *           score: 2                //比分
@@ -1982,13 +1982,13 @@
      *           score: 1                //比分
      *       },
      *   ]
-     *   xx_sdk.showResult(obj);
+     *   xx_sdk.showResult({result: result});
      */
-    sdk.prototype.showResult = function(result, game_id) {
+    sdk.prototype.showResult = function(obj) {
         if(window.aa_sdk){
-            cc.sdk.ResConf["GameOver"].data.result = result;
-            if(game_id){
-                cc.sdk.ResConf["GameOver"].data.game_id = game_id;
+            cc.sdk.ResConf["GameOver"].data.result = obj.result;
+            if(obj.game_id){
+                cc.sdk.ResConf["GameOver"].data.game_id = obj.game_id;
             }else{
                 cc.sdk.ResConf["GameOver"].data.game_id = this.sdk_conf.game;
             }
