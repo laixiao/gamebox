@@ -272,6 +272,7 @@ var gameData = {
     //1.1监听收到表情包事件
     xx_sdk.onEmoji((emoji)=>{
         console.log("=收到一个表情=", emoji)
+        console.log("=该表情的发送者=", emoji.sender)
     })
     //1.2获取表情包列表（自行根据产品需求展示，大小根据UI风格自由调整，规格为正方形）
     xx_sdk.getEmoji((d)=>{
