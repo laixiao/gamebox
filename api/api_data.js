@@ -1338,7 +1338,7 @@ define({ "api": [
       "examples": [
         {
           "title": "示例:",
-          "content": "//.子游戏：展示游戏结果页面\nvar obj = [\n    {\n        uid: \"wx_robot_2\",      //用户id\n        score: 2                //比分\n    },\n    {\n        uid: \"wx_robot2_\",      //用户id\n        score: 1                //比分\n    },\n]\nxx_sdk.showResult(obj);",
+          "content": "//.子游戏：展示游戏结果页面\nvar result = [\n    {\n        uid: \"wx_robot_2\",      //用户id\n        score: 2                //比分\n    },\n    {\n        uid: \"wx_robot2_\",      //用户id\n        score: 1                //比分\n    },\n]\nxx_sdk.showResult({result: result});",
           "type": "json"
         }
       ]

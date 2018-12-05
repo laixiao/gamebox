@@ -348,7 +348,7 @@ var gameData = {
             score: 1                //比分
         },
     ]
-    xx_sdk.showResult(obj);
+    ab_sdk.showResult({result: obj});
     
 
 
