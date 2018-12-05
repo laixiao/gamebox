@@ -319,7 +319,7 @@ var gameData = {
     //获取语音开关状态：0 或 1
     var status = xx_sdk.getSoundStatus();
     
-//3.背景音乐
+//3.背景音乐开关
     let switch = xx_sdk.getBbmSwitch();//0：关 1：开
 
 
