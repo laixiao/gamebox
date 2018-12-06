@@ -320,6 +320,7 @@ var gameData = {
     var status = xx_sdk.getSoundStatus();
     
 //3.背景音乐开关
+    // （盒子有统一的背景音乐设置开关，子游戏只需根据状态判断是否播放背景音乐即可）
     let switch = xx_sdk.getBbmSwitch();//0：关 1：开
 
 
