@@ -58,7 +58,7 @@ if (cc.sys.platform === cc.sys.WECHAT_GAME) {}
 |  动物与水果 |  ah |   
 |  酷跑 |  ai |   
 |  大话骰 |  aj |
-|  xx |  ak |
+|  口红机 |  ak |
 |  xx |  al |
 |  xx |  am |
 |  xx |  an |
