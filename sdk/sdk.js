@@ -12,6 +12,17 @@
         this.iphttps_2 = "https://www.90wqiji.com";
         this.ipwss = "wss://www.90wqiji.com";
 
+        // 内网测试
+        // this.iphttps = "http://192.168.1.173";
+        // this.iphttps_2 = "http://192.168.1.91:8001";
+        // this.ipwss = "ws://192.168.1.91:6336";
+        
+        // if(sdk_conf_test){
+        //     this.iphttps = sdk_conf_test.iphttps;
+        //     this.iphttps_2 = sdk_conf_test.iphttps_2;
+        //     this.ipwss = sdk_conf_test.ipwss;
+        // }
+
         var args = args || {};
         this.sdk_conf = args.sdk_conf || {};
         this.md5 = md5;
@@ -22,7 +33,9 @@
         //一般接口
         this.login = args.login || "/api/LogHandle/Login";
         this.Config = args.Config || "/api/Config/GameConfig";
+        this.HzConfig = args.HzConfig || "/api/Config/HzConfig";
         this.Share = args.Share || "/api/Config/ShareConfig";
+
         this.GameReport = args.GameReport || "/api/Game/GameReport";
         this.Like = args.Like || "/api/Game/Like";
         this.GetLikeInfo = args.GetLikeInfo || "/api/Game/GetLikeInfo";
@@ -41,7 +54,6 @@
         this.ConfigData = args.ConfigData || { //游戏配置数据
             config1: {},//运营配置数据
             config2: {},//程序自定义配置数据
-            index_conf: []//首页配置
         };
         this.ShareList = args.ShareList || [];//分享卡片信息列表
         
@@ -80,14 +92,6 @@
         this.Get(this.iphttps + this.Config, {}, function (d) {
             if (d && d.code == 1) {
                 self.ConfigData = d.d;
-
-                if(d.d.index_conf){
-                    let games = d.d.index_conf;
-                    games = games.sort((a, b)=>{
-                        return parseInt(a.rank) - parseInt(b.rank);
-                    })
-                    self.gamelist = games;
-                }
 
                 //2.初始化分享信息
                 self.Get(self.iphttps + self.Share, {}, function (d2) {
@@ -161,9 +165,9 @@
         }
         reqData.version = this.sdk_conf.version;
         var ts = new Date().getTime();
-        reqData.ts = ts;
+        reqData.timestamp = parseInt(ts/1000);
         //数据验证签名。规则为：MD5(ts.substr(9,4)+game.substr(0,2)+version.substr(0,1)+key),时间戳后4位、data前3位、key（服务端提供）然后进行MD5加密
-        reqData.sign = this.md5(ts.toString().substr(9,4)+this.sdk_conf.game.substr(0,2)+this.sdk_conf.version.substr(0,1)+ '$5dfjr$%dsadsfdsii');
+        reqData.sign = this.md5(ts + this.sdk_conf.secret);
         
         url += "?";
         for (var item in reqData) {
@@ -218,8 +222,8 @@
         }
         reqData.version = this.sdk_conf.version;
         var ts = new Date().getTime();
-        reqData.ts = ts;
-        reqData.sign = this.md5(ts.toString().substr(9,4)+this.sdk_conf.game.substr(0,2)+this.sdk_conf.version.substr(0,1)+ '$5dfjr$%dsadsfdsii');
+        reqData.timestamp = parseInt(ts/1000);
+        reqData.sign = this.md5(ts + this.sdk_conf.secret);
         
         //1.拼接请求参数
         // var param = "";
@@ -290,7 +294,7 @@
      * @apiParam {callback} [fail] 失败回调
      * 
      * @apiSuccessExample {json} 示例:
-     * sdk.onShareAppMessage({type: 0, query: "uid=520" });
+     * sdk.onShareAppMessage({type: 0, query: "xxx=xxx" });
      */
     sdk.prototype.onShareAppMessage = function(obj) {
         var self = this;
@@ -358,7 +362,7 @@
      * @apiParam {callback} [fail] 失败回调
      * 
      * @apiSuccessExample {json} 示例:
-     * sdk.shareAppMessage({type: 1, query: "uid=520" });
+     * sdk.shareAppMessage({type: 1, query: "xxx=xxx" });
      */
     sdk.prototype.shareAppMessage = function(obj) {
         var self = this;
@@ -530,6 +534,22 @@
             console.log("图片地址不能为空")
         }
         
+    }
+    sdk.prototype.wxCreateImage = function(sprite, url) {
+        if(url){
+            if (cc.sys.platform === cc.sys.WECHAT_GAME) {
+                var image = wx.createImage();
+                image.onload = function () {
+                    var texture = new cc.Texture2D();
+                    texture.initWithElement(image);
+                    texture.handleLoadedTexture();
+                    sprite.spriteFrame = new cc.SpriteFrame(texture);
+                };
+                image.src = url;
+            }
+        }else{
+            console.log("图片地址不能为空")
+        }
     }
     /**
      * @apiGroup C
@@ -1885,7 +1905,7 @@
         var self = this;
        
         this.Get(this.iphttps_2 + this.playerdata, { uid: uid }, function (d) {
-            if(d.code == 1){
+            if(d && d.code == 1){
                 callback(d.d)
             }else{
                 callback(null)
@@ -2007,32 +2027,140 @@
      *  xx_sdk.getBbmSwitch();//0：关 1：开
      */
     sdk.prototype.getBbmSwitch = function(data) {
-        return parseInt(Math.random()*2);
+        let key = 'AudioSwitch';
+        let bgswitch = aa_sdk.getItem(key);
+        return parseInt(bgswitch);
     }
     
     
     //============自研游戏：共享盒子scoket================
     /**
-     *  //使用盒子socket
-     *  this.ws = aa_sdk.ws;
+     *  非盒子环境下需要初始化：
+     *      xx_sdk.notBoxInit();
      * 
-     *  使用盒子socket发送消息
+     *  使用盒子socket发送消息：
      *      xx_sdk.wsSend(obj)
      * 
      *  使用盒子socket接收消息：
      *      xx_sdk.on("WebSocket", (e) => { });
      */
     sdk.prototype.wsSend = function(d) {
-        if(aa_sdk.ws && aa_sdk.ws.readyState == WebSocket.OPEN){
-            aa_sdk.ws.send(JSON.stringify(d));
+        var self = this;
+
+        if(window.aa_sdk){
+            if(aa_sdk.ws && aa_sdk.ws.readyState == WebSocket.OPEN){
+                aa_sdk.ws.send(JSON.stringify(d));
+            }else{
+                //是否正在重连
+                if(!aa_sdk.isConnect){
+                    aa_sdk.isConnect = true;
+                    aa_sdk.initPK(d);
+                }
+            }
         }else{
-            //是否正在重连
-            if(!aa_sdk.isConnect){
-                aa_sdk.isConnect = true;
-                aa_sdk.initPK(d);
+            if(this.ws && this.ws.readyState == WebSocket.OPEN){
+                this.ws.send(JSON.stringify(d));
+            }else{
+                this.notBoxInit();
             }
         }
     }
+
+    //非盒子环境下初始化（仅供调试）
+    sdk.prototype.notBoxInit = function() {
+        var self = this;
+
+        if(!window.aa_sdk){
+            var userAgent = navigator.userAgent; //取得浏览器的userAgent字符串
+            if (userAgent.indexOf("iPhone") > -1) {
+                console.log("==iPhone机==", this.sdk_conf.debugData)
+            }
+            if (userAgent.indexOf("Android") > -1) {
+                let user1 = this.sdk_conf.debugData.all_player_data[0];
+                let user2 = this.sdk_conf.debugData.all_player_data[1];
+                this.sdk_conf.debugData.user = user2.player_data;
+                this.sdk_conf.debugData.user.uid = user2.uid;
+                this.sdk_conf.debugData.all_player_data[0] = user2;
+                this.sdk_conf.debugData.all_player_data[1] = user1;
+                console.log("==Android机==", this.sdk_conf.debugData)
+            }
+
+            //.WebSocket.CONNECTING    WebSocket.OPEN  WebSocket.CLOSING   WebSocket.CLOSED
+            let toUid = self.getGameData().all_player_data[1].uid;
+            var user = this.getUser();
+            this.ws = null;
+            this.ws = new WebSocket(this.ipwss); 
+            this.ws.onopen = function (e) {  
+                //.登录socket
+                var timestamp = parseInt(new Date().getTime()/1000);
+                var d = {
+                    "id": "c2s_signin",
+                    "uid": user.uid,
+                    "timestamp": timestamp,
+                    "sign": self.md5(user.uid +timestamp +self.sdk_conf.secret)
+                };
+                // console.log( "登录参数：", d, user.uid +timestamp +self.sdk_conf.secret)
+                self.ws.send(JSON.stringify(d));
+            }  
+            this.ws.onmessage = function (e) { 
+                var data = JSON.parse(e.data);
+                //.广播给其它子游戏
+                self.emit("WebSocket", e);
+                //登录
+                if(data.id == "c2s_signin"){
+                    if(data.code == 1){
+                        if(self.getGameData().room_owner == user.uid){
+                            var d = {
+                                "id": "c2s_create_room",
+                                "game_id": "ab",
+                                "player_count": 2,
+                            };
+                            self.ws.send(JSON.stringify(d));
+                        }
+                    }
+                }
+                if(data.id == "c2s_create_room"){
+                    if(data.code == 1){
+                        //房主创建房间
+                        // console.log(user.uid, "房主：", self.getGameData().room_owner)
+                        if(self.getGameData().room_owner == user.uid){
+                            let d = {
+                                id: "c2s_send_msg_to_player",
+                                uid: toUid,
+                                type: "JoinRoom",
+                                room_id: data.room_id
+                            }
+                            setTimeout(() => {
+                                self.ws.send(JSON.stringify(d));
+                            }, 1000);
+                        }
+                    }
+                }
+                if(data.id == "c2s_send_msg_to_player" && data.type == "JoinRoom"){
+                    //非房主才需要加入房间
+                    if(self.getGameData().room_owner != user.uid){
+                        var d = {
+                            id: "c2s_enter_room",
+                            room_id: data.room_id,
+                        };
+                        self.ws.send(JSON.stringify(d));
+                    }
+                }
+                if(data.id == "c2s_enter_room"){
+                    if(data.all_player_data && data.all_player_data.length == data.player_count){
+                        if(self.getGameData().room_owner == user.uid){
+                            console.log("我是房主，进入房间成功")
+                        }else{
+                            console.log("我是房客，进入房间成功")
+                        }
+                    }
+                }
+
+            }
+        }
+    }
+
+
 
     window.sdk = sdk;
     module.exports = sdk;

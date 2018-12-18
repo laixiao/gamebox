@@ -59,10 +59,11 @@ if (cc.sys.platform === cc.sys.WECHAT_GAME) {}
 |  酷跑 |  ai |   
 |  大话骰 |  aj |
 |  口红机 |  ak |
-|  xx |  al |
+|  极品飞车 |  al |
 |  xx |  am |
 |  xx |  an |
 
+> 单机版（ 加_ ）：  如"飞刀"唯一标识为： ab_
 
 测试账号:
 
