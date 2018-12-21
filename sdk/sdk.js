@@ -35,6 +35,7 @@
         this.Config = args.Config || "/api/Config/GameConfig";
         this.HzConfig = args.HzConfig || "/api/Config/HzConfig";
         this.Share = args.Share || "/api/Config/ShareConfig";
+        this.propdata = args.propdata || "/game/propdata";
 
         this.GameReport = args.GameReport || "/api/Game/GameReport";
         this.Like = args.Like || "/api/Game/Like";
@@ -166,8 +167,7 @@
         reqData.version = this.sdk_conf.version;
         var ts = new Date().getTime();
         reqData.timestamp = parseInt(ts/1000);
-        //数据验证签名。规则为：MD5(ts.substr(9,4)+game.substr(0,2)+version.substr(0,1)+key),时间戳后4位、data前3位、key（服务端提供）然后进行MD5加密
-        reqData.sign = this.md5(ts + this.sdk_conf.secret);
+        reqData.sign = this.md5(reqData.timestamp + this.sdk_conf.secret);
         
         url += "?";
         for (var item in reqData) {
@@ -223,7 +223,7 @@
         reqData.version = this.sdk_conf.version;
         var ts = new Date().getTime();
         reqData.timestamp = parseInt(ts/1000);
-        reqData.sign = this.md5(ts + this.sdk_conf.secret);
+        reqData.sign = this.md5(reqData.timestamp + this.sdk_conf.secret);
         
         //1.拼接请求参数
         // var param = "";
@@ -1596,24 +1596,27 @@
         if (cc.sys.platform === cc.sys.WECHAT_GAME) {
             //是否使用该录音
             this.isUse = true;
+            //录音时长
+            let time = 0, startTime=0;
             //1.微信录音管理器
             if(!this.recorderManager){
                 this.recorderManager = wx.getRecorderManager()
                 this.recorderManager.onStart(()=>{
                     console.log('recorder 开始')
+                    startTime = new Date().getTime();
                 })
                 this.recorderManager.onPause(()=>{
                     console.log('recorder 暂停')
                 })
                 this.recorderManager.onStop((res)=>{
                     console.log('recorder 停止', res)
-                    if(self.isUse){
+                    time = new Date().getTime() - startTime;
+                    if(self.isUse && time > 1000){
                         //3.发送语音文件并在房间内广播
                         self.uploadSound({
                             tempFilePath: res.tempFilePath,
                             success: function(url){
                                 console.log("语音文件播放地址：", url)
-
                                 //4.房间内广播语音
                                 var d = {
                                     id: "c2s_room_broadcast",
@@ -1631,6 +1634,8 @@
                                 console.log("发送语音文件失败：", err)
                             }
                         });
+                    }else{
+                        console.log("录音时间过短")
                     }
                 })
             }
@@ -1683,13 +1688,15 @@
                 this.recorderManager = wx.getRecorderManager()
                 this.recorderManager.onStart(()=>{
                     console.log('recorder 开始')
+                    startTime = new Date().getTime();
                 })
                 this.recorderManager.onPause(()=>{
                     console.log('recorder 暂停')
                 })
                 this.recorderManager.onStop((res)=>{
                     console.log('recorder 停止', res)
-                    if(isUse){
+                    time = new Date().getTime() - startTime;
+                    if(isUse && time > 1000){
                         //3.发送语音文件并在房间内广播
                         self.uploadSound({
                             tempFilePath: res.tempFilePath,
@@ -1712,7 +1719,6 @@
             node.on(cc.Node.EventType.TOUCH_START, function(){
                 console.log("开始录音")
                 isUse = true;
-                startTime = new Date().getTime();
                 this.recorderManager.start({
                     duration: 10000,
                     sampleRate: 44100,
@@ -1724,7 +1730,6 @@
             }, this);
             node.on(cc.Node.EventType.TOUCH_END, function(){
                 console.log("结束录音")
-                time = new Date().getTime() - startTime;
                 this.recorderManager.stop()
             }, this);
             node.on(cc.Node.EventType.TOUCH_CANCEL, function(){
@@ -1900,6 +1905,71 @@
             console.log("onEmoji接口只在盒子内生效")
         }
     }
+
+
+    /**
+     * @apiGroup D
+     * @apiName onGameEvent
+     * @api {监听全局游戏事件} 监听全局游戏事件 onGameEvent（监听全局游戏事件）
+     * @apiParam {function} callback 返回一个表情对象
+     * 
+     * @apiSuccessExample {json} 示例:
+     *   // 监听全局游戏事件
+     *   aj_sdk.onGameEvent((e)=>{
+     *       if(e.type == "emoji"){
+     *           console.log("=收到一个表情=", e.emoji)
+     *           // 表情格式如下
+     *           // emoji = {
+     *           //     "id":1,
+     *           //     "type":1,       //表情类型
+     *           //     "url":"https://qxgame-1257972171.cos.ap-guangzhou.myqcloud.com/gameadmin/emoji/1.png",
+     *           //     "weight":10,    //表情权重
+     *           //     "txt ":"太菜了", //表情中文描述
+     *           //     "sender": {     //表情的发送者
+     *           //         "uid": "wx_oGUmH5Ic0ls6xa52epYcL7n77U3U", 
+     *           //         "openid": "oGUmH5Ic0ls6xa52epYcL7n77U3U", 
+     *           //         "nickName": "千寻િ😨雨天", 
+     *           //         "avatarUrl": "https://wx.qlogo.cn/mmopen/vi_32/ib3FwHCA5Nc3N0MpRdb6D5aibGTchEiad27KgRal9BPibfNHo0NZmagJVziaGmn96icC8cqJIrUW3B1vHlG9icibbK5tgA/132", 
+     *           //         "gender": 1, 
+     *           //         "country": "中国", 
+     *           //         "city": "广州", 
+     *           //         "province": "广东", 
+     *           //         "sig": ""
+     *           //     }
+     *           // }
+     *       }
+     *       if(e.type == "giveUp"){
+     *           console.log("=对方认输了=")
+     *           self.stop_game();
+     *       }
+     *   })
+     */
+    sdk.prototype.onGameEvent = function(callback) {
+        var self = this;
+       
+        if(window.aa_sdk){
+            aa_sdk.off("broadcastEmoji")
+            aa_sdk.on("broadcastEmoji", (e)=>{
+                let d = {
+                    type: "emoji",
+                    emoji: e
+                }
+                callback(d)
+            }, this); 
+
+            aa_sdk.off("aa_giveUp")
+            aa_sdk.on("aa_giveUp", ()=>{
+                let d = {
+                    type: "giveUp",
+                }
+                callback(d)
+            }, this); 
+            
+        }else{
+            console.log("onGameEvent 接口只在盒子内生效")
+        }
+    }
+    
     //根据uid查询用户信息
     sdk.prototype.getUserData = function(uid, callback) {
         var self = this;

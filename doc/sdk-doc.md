@@ -15,10 +15,6 @@
                 
 ### **一、配置并初始化sdk**
 
-
-
-
-
 1.配置xx_sdk_conf.js文件：
 ```javascript
 var sdk_conf = { 
@@ -96,37 +92,37 @@ var user = xx_sdk.getUser();
     xx_sdk.emit("xxx");
     xx_sdk.emit("xxx", {nick:"xxx"});
 
-3.微信开放数据：
-    //存
-    var DataList = new Array();
-    DataList.push({key:"score",value:"520"});
-    xx_sdk.setUserCloudStorage({
-        kvDataList: DataList,
-        success: function(res){
-            console.log(res)
-        },
-        fail: function(res){
-            console.log(res)
-        }
-    })
-    //取
-    xx_sdk.getUserCloudStorage({
-        keyList: ["score"],
-        success: function(res){
-            console.log(res)
-        },
-        fail: function(res){
-            console.log(res)
-        }
-    }
+// 3.微信开放数据：
+//     //存
+//     var DataList = new Array();
+//     DataList.push({key:"score",value:"520"});
+//     xx_sdk.setUserCloudStorage({
+//         kvDataList: DataList,
+//         success: function(res){
+//             console.log(res)
+//         },
+//         fail: function(res){
+//             console.log(res)
+//         }
+//     })
+//     //取
+//     xx_sdk.getUserCloudStorage({
+//         keyList: ["score"],
+//         success: function(res){
+//             console.log(res)
+//         },
+//         fail: function(res){
+//             console.log(res)
+//         }
+//     }
 
-4.微信开放数据域：
-    //发送
-    xx_sdk.postMessage("hello")
-    //监听
-    xx_sdk.onMessage((d)=>{
-        console.log(d)
-    })
+// 4.微信开放数据域：
+//     //发送
+//     xx_sdk.postMessage("hello")
+//     //监听
+//     xx_sdk.onMessage((d)=>{
+//         console.log(d)
+//     })
 
 
 ```
@@ -204,27 +200,39 @@ var gameData = {
 **2.游戏进行中：**
 
 ```javascript
-//==1.表情互动==
-    //1.1监听收到表情包事件
-    xx_sdk.onEmoji((emoji)=>{
-        console.log("=收到一个表情=", emoji)
-        console.log("=该表情的发送者=", emoji.sender)
-        /*
-        emoji.sender格式如下：
-        {
-            "uid": "wx_oGUmH5Ic0ls6xa52epYcL7n77U3U", 
-            "openid": "oGUmH5Ic0ls6xa52epYcL7n77U3U", 
-            "nickName": "千寻િ😨雨天", 
-            "avatarUrl": "https://wx.qlogo.cn/mmopen/vi_32/ib3FwHCA5Nc3N0MpRdb6D5aibGTchEiad27KgRal9BPibfNHo0NZmagJVziaGmn96icC8cqJIrUW3B1vHlG9icibbK5tgA/132", 
-            "gender": 1, 
-            "country": "中国", 
-            "city": "广州", 
-            "province": "广东", 
-            "sig": ""
-        }
-        */
-    })
-    //1.2获取表情包列表（自行根据产品需求展示，大小根据UI风格自由调整，规格为正方形）
+// ==1.监听游戏全局事件==
+aj_sdk.onGameEvent((e)=>{
+    if(e.type == "emoji"){
+        console.log("=收到一个表情=", e.emoji)
+        // 表情格式如下
+        // emoji = {
+        //     "id":1,
+        //     "type":1,       //表情类型
+        //     "url":"https://qxgame-1257972171.cos.ap-guangzhou.myqcloud.com/gameadmin/emoji/1.png",
+        //     "weight":10,    //表情权重
+        //     "txt ":"太菜了", //表情中文描述
+        //     "sender": {     //表情的发送者
+        //         "uid": "wx_oGUmH5Ic0ls6xa52epYcL7n77U3U", 
+        //         "openid": "oGUmH5Ic0ls6xa52epYcL7n77U3U", 
+        //         "nickName": "千寻િ😨雨天", 
+        //         "avatarUrl": "https://wx.qlogo.cn/mmopen/vi_32/ib3FwHCA5Nc3N0MpRdb6D5aibGTchEiad27KgRal9BPibfNHo0NZmagJVziaGmn96icC8cqJIrUW3B1vHlG9icibbK5tgA/132", 
+        //         "gender": 1, 
+        //         "country": "中国", 
+        //         "city": "广州", 
+        //         "province": "广东", 
+        //         "sig": ""
+        //     }
+        // }
+    }
+    if(e.type == "giveUp"){
+        console.log("=对方认输了=")
+        self.stop_game();
+    }
+})
+
+
+//==2.表情互动==
+    //获取表情包列表（自行根据产品需求展示，大小根据UI风格自由调整，规格为正方形）
     xx_sdk.getEmoji((d)=>{
         console.log("表情包列表", d)
         /*
@@ -240,12 +248,12 @@ var gameData = {
         ]
          */
 
-        //1.3发送表情包
+        //发送表情包
         xx_sdk.sendEmoji(d[0])
-    }); 
+    });
 
 
-//==2.语音互动==
+//==3.语音互动==
     //2.1语音极简版：为按钮注册录音事件。
     //（sdk会自动为按钮注册按下，松开，取消事件，然后自动上传该语音并在房间内广播）
     xx_sdk.onRecorder(this.soundButton);
@@ -258,7 +266,7 @@ var gameData = {
     //获取语音开关状态：0 或 1
     var status = xx_sdk.getSoundStatus();
     
-//3.背景音乐开关
+//==4.背景音乐开关==
     // （盒子有统一的背景音乐设置开关，子游戏只需根据状态判断是否播放背景音乐即可）
     let switch = xx_sdk.getBbmSwitch();//0：关 1：开
 
