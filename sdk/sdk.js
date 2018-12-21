@@ -8,6 +8,8 @@
  */
 (function(window, md5) {
     function sdk(args) {
+        var args = args || {};
+
         this.iphttps = "https://testadmin.90wqiji.com";
         this.iphttps_2 = "https://www.90wqiji.com";
         this.ipwss = "wss://www.90wqiji.com";
@@ -22,8 +24,7 @@
         //     this.iphttps_2 = sdk_conf_test.iphttps_2;
         //     this.ipwss = sdk_conf_test.ipwss;
         // }
-
-        var args = args || {};
+        
         this.sdk_conf = args.sdk_conf || {};
         this.md5 = md5;
         this.loginBg = args.loginBg || "https://www.90wqiji.com/box/image/singlecolor.png";
@@ -68,7 +69,7 @@
      * 
      * @apiSuccessExample {json} 示例:
      *  if(!window.xx_sdk){
-     *      window.xx_sdk = new sdk({ sdk_conf: require("xx_sdk_conf"), debug: true });
+     *      window.xx_sdk = new sdk({ sdk_conf: require("xx_sdk_conf") });
      *  }
      *  //.初始化游戏
      *  xx_sdk.init(function(res){
@@ -1910,7 +1911,7 @@
     /**
      * @apiGroup D
      * @apiName onGameEvent
-     * @api {监听全局游戏事件} 监听全局游戏事件 onGameEvent（监听全局游戏事件）
+     * @api {监听全局游戏事件} 监听全局游戏事件 onGameEvent - 游戏事件
      * @apiParam {function} callback 返回一个表情对象
      * 
      * @apiSuccessExample {json} 示例:

@@ -5,9 +5,9 @@
 
 - **使用范围（强制）：** 开放数据、开放数据域、数据存储、cc.game事件
 
-- **文档地址：** [https://laixiao.github.io/gamebox/api/index.html](https://laixiao.github.io/gamebox/api/index.html "sdk在线文档")
+- **sdk文档地址：** [https://laixiao.github.io/gamebox/api/index.html](https://laixiao.github.io/gamebox/api/index.html "sdk在线文档")
 
-- **下载地址：** [https://github.com/laixiao/gamebox/tree/master/sdk](https://github.com/laixiao/gamebox/tree/master/sdk "sdk下载地址") （下载sdk文件夹，复制到项目中即可）
+- **sdk下载地址：** [https://github.com/laixiao/gamebox/tree/master/sdk](https://github.com/laixiao/gamebox/tree/master/sdk "sdk下载地址") （下载sdk文件夹，复制到项目中即可）
 
   
 
@@ -53,7 +53,6 @@ xx_sdk.init(function(res){
 ```javascript
 //盒子内的子游戏无需登录，可直接获取用户数据
 var user = xx_sdk.getUser();
-
 /*
     用户数据格式如下：
     {                
@@ -131,16 +130,14 @@ var user = xx_sdk.getUser();
 
 ### **四、对战接口：**
 
-**1.开始游戏：游戏大厅匹配对手玩家成功，携带对战数据进入子游戏。**
+**1.开始游戏**
 
 ```javascript
-//.子游戏获取该数据
-var gameData = xx_sdk.getGameData();
 
-
+//==获取对战数据==
+var gameData = xx_sdk.getGameData();//游戏大厅匹配对手玩家成功，携带对战数据进入子游戏。
 /* 
 //gameData的数据格式如下：
-
 var gameData = {
     user : {                //当前用户信息
         avatarUrl: "https://wx.qlogo.cn/mmopen/vi_32/E31dTdkFnKSFOmmy98kLqJlmDQFjLoRt52KTxohsKFtib2otLWZFOCzyuPXia8A7YR32th1FibqncWra94aAJQicYw/132",
@@ -195,12 +192,9 @@ var gameData = {
     ]
 }
     */
-```
+    
 
-**2.游戏进行中：**
-
-```javascript
-// ==1.监听游戏全局事件==
+// ==监听游戏全局事件==
 aj_sdk.onGameEvent((e)=>{
     if(e.type == "emoji"){
         console.log("=收到一个表情=", e.emoji)
@@ -230,8 +224,13 @@ aj_sdk.onGameEvent((e)=>{
     }
 })
 
+```
 
-//==2.表情互动==
+**2.游戏进行中：**
+
+```javascript
+
+//==表情互动==
     //获取表情包列表（自行根据产品需求展示，大小根据UI风格自由调整，规格为正方形）
     xx_sdk.getEmoji((d)=>{
         console.log("表情包列表", d)
@@ -247,17 +246,15 @@ aj_sdk.onGameEvent((e)=>{
             },
         ]
          */
-
         //发送表情包
         xx_sdk.sendEmoji(d[0])
     });
 
 
-//==3.语音互动==
+//==语音互动==
     //2.1语音极简版：为按钮注册录音事件。
     //（sdk会自动为按钮注册按下，松开，取消事件，然后自动上传该语音并在房间内广播）
     xx_sdk.onRecorder(this.soundButton);
-
     //2.2语音开关设置
     //屏蔽语音: 如果不想听其它人说话，可以屏蔽语音
     xx_sdk.setSoundStatus(0);
@@ -266,17 +263,13 @@ aj_sdk.onGameEvent((e)=>{
     //获取语音开关状态：0 或 1
     var status = xx_sdk.getSoundStatus();
     
-//==4.背景音乐开关==
+
+//==背景音乐开关==
     // （盒子有统一的背景音乐设置开关，子游戏只需根据状态判断是否播放背景音乐即可）
     let switch = xx_sdk.getBbmSwitch();//0：关 1：开
 
 
-```
-
-**3.游戏结束：认输页面、游戏结束页面**
-
-```javascript
-//1.弹出认输返回界面（返回按钮）：
+// ==弹出认输页面==
     xx_sdk.giveUp(function(res){
         if(res == 1){
             //确认
@@ -285,7 +278,13 @@ aj_sdk.onGameEvent((e)=>{
         }
     })
 
-//2.弹出游戏结果页面（游戏结束）
+```
+
+**3.游戏结束：**
+
+```javascript
+    
+//==弹出结算页面==
     var obj = [
         {
             uid: "wx_robot_2",      //用户id

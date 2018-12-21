@@ -22,13 +22,13 @@ define({ "api": [
       "examples": [
         {
           "title": "示例:",
-          "content": "if(!window.xx_sdk){\n    window.xx_sdk = new sdk({ sdk_conf: require(\"xx_sdk_conf\"), debug: true });\n}\n//.初始化游戏\nxx_sdk.init(function(res){\n     if(res){\n         console.log('sdk初始化成功')\n\n         //=====对接分享接口======\n         //2.监听右上角分享按钮\n         xx_sdk.onShareAppMessage({type: 0, query: \"\" });\n         //3.主动拉起分享\n         //xx_sdk.shareAppMessage({type: 1, query: \"xxx=xxx\" });\n\n     }\n })",
+          "content": "if(!window.xx_sdk){\n    window.xx_sdk = new sdk({ sdk_conf: require(\"xx_sdk_conf\") });\n}\n//.初始化游戏\nxx_sdk.init(function(res){\n     if(res){\n         console.log('sdk初始化成功')\n\n         //=====对接分享接口======\n         //2.监听右上角分享按钮\n         xx_sdk.onShareAppMessage({type: 0, query: \"\" });\n         //3.主动拉起分享\n         //xx_sdk.shareAppMessage({type: 1, query: \"xxx=xxx\" });\n\n     }\n })",
           "type": "json"
         }
       ]
     },
     "version": "0.0.0",
-    "filename": "../games/happyrabbit/v1.0.0/happyrabbit/assets/aa/script/sdk/sdk.js",
+    "filename": "../games/happyrabbit/v3.0.0/happyrabbit/assets/aa/script/sdk/sdk.js",
     "groupTitle": "A"
   },
   {
@@ -47,7 +47,7 @@ define({ "api": [
       ]
     },
     "version": "0.0.0",
-    "filename": "../games/happyrabbit/v1.0.0/happyrabbit/assets/aa/script/sdk/sdk.js",
+    "filename": "../games/happyrabbit/v3.0.0/happyrabbit/assets/aa/script/sdk/sdk.js",
     "groupTitle": "A"
   },
   {
@@ -86,7 +86,7 @@ define({ "api": [
       ]
     },
     "version": "0.0.0",
-    "filename": "../games/happyrabbit/v1.0.0/happyrabbit/assets/aa/script/sdk/sdk.js",
+    "filename": "../games/happyrabbit/v3.0.0/happyrabbit/assets/aa/script/sdk/sdk.js",
     "groupTitle": "B"
   },
   {
@@ -118,7 +118,7 @@ define({ "api": [
       ]
     },
     "version": "0.0.0",
-    "filename": "../games/happyrabbit/v1.0.0/happyrabbit/assets/aa/script/sdk/sdk.js",
+    "filename": "../games/happyrabbit/v3.0.0/happyrabbit/assets/aa/script/sdk/sdk.js",
     "groupTitle": "B"
   },
   {
@@ -164,7 +164,7 @@ define({ "api": [
       ]
     },
     "version": "0.0.0",
-    "filename": "../games/happyrabbit/v1.0.0/happyrabbit/assets/aa/script/sdk/sdk.js",
+    "filename": "../games/happyrabbit/v3.0.0/happyrabbit/assets/aa/script/sdk/sdk.js",
     "groupTitle": "B"
   },
   {
@@ -217,7 +217,7 @@ define({ "api": [
       ]
     },
     "version": "0.0.0",
-    "filename": "../games/happyrabbit/v1.0.0/happyrabbit/assets/aa/script/sdk/sdk.js",
+    "filename": "../games/happyrabbit/v3.0.0/happyrabbit/assets/aa/script/sdk/sdk.js",
     "groupTitle": "B"
   },
   {
@@ -263,7 +263,7 @@ define({ "api": [
       ]
     },
     "version": "0.0.0",
-    "filename": "../games/happyrabbit/v1.0.0/happyrabbit/assets/aa/script/sdk/sdk.js",
+    "filename": "../games/happyrabbit/v3.0.0/happyrabbit/assets/aa/script/sdk/sdk.js",
     "groupTitle": "B"
   },
   {
@@ -337,7 +337,7 @@ define({ "api": [
       ]
     },
     "version": "0.0.0",
-    "filename": "../games/happyrabbit/v1.0.0/happyrabbit/assets/aa/script/sdk/sdk.js",
+    "filename": "../games/happyrabbit/v3.0.0/happyrabbit/assets/aa/script/sdk/sdk.js",
     "groupTitle": "B"
   },
   {
@@ -369,7 +369,7 @@ define({ "api": [
       ]
     },
     "version": "0.0.0",
-    "filename": "../games/happyrabbit/v1.0.0/happyrabbit/assets/aa/script/sdk/sdk.js",
+    "filename": "../games/happyrabbit/v3.0.0/happyrabbit/assets/aa/script/sdk/sdk.js",
     "groupTitle": "B"
   },
   {
@@ -431,13 +431,13 @@ define({ "api": [
       "examples": [
         {
           "title": "示例:",
-          "content": "sdk.onShareAppMessage({type: 0, query: \"uid=520\" });",
+          "content": "sdk.onShareAppMessage({type: 0, query: \"xxx=xxx\" });",
           "type": "json"
         }
       ]
     },
     "version": "0.0.0",
-    "filename": "../games/happyrabbit/v1.0.0/happyrabbit/assets/aa/script/sdk/sdk.js",
+    "filename": "../games/happyrabbit/v3.0.0/happyrabbit/assets/aa/script/sdk/sdk.js",
     "groupTitle": "B"
   },
   {
@@ -469,7 +469,7 @@ define({ "api": [
       ]
     },
     "version": "0.0.0",
-    "filename": "../games/happyrabbit/v1.0.0/happyrabbit/assets/aa/script/sdk/sdk.js",
+    "filename": "../games/happyrabbit/v3.0.0/happyrabbit/assets/aa/script/sdk/sdk.js",
     "groupTitle": "B"
   },
   {
@@ -515,7 +515,7 @@ define({ "api": [
       ]
     },
     "version": "0.0.0",
-    "filename": "../games/happyrabbit/v1.0.0/happyrabbit/assets/aa/script/sdk/sdk.js",
+    "filename": "../games/happyrabbit/v3.0.0/happyrabbit/assets/aa/script/sdk/sdk.js",
     "groupTitle": "B"
   },
   {
@@ -577,13 +577,13 @@ define({ "api": [
       "examples": [
         {
           "title": "示例:",
-          "content": "sdk.shareAppMessage({type: 1, query: \"uid=520\" });",
+          "content": "sdk.shareAppMessage({type: 1, query: \"xxx=xxx\" });",
           "type": "json"
         }
       ]
     },
     "version": "0.0.0",
-    "filename": "../games/happyrabbit/v1.0.0/happyrabbit/assets/aa/script/sdk/sdk.js",
+    "filename": "../games/happyrabbit/v3.0.0/happyrabbit/assets/aa/script/sdk/sdk.js",
     "groupTitle": "B"
   },
   {
@@ -629,7 +629,7 @@ define({ "api": [
       ]
     },
     "version": "0.0.0",
-    "filename": "../games/happyrabbit/v1.0.0/happyrabbit/assets/aa/script/sdk/sdk.js",
+    "filename": "../games/happyrabbit/v3.0.0/happyrabbit/assets/aa/script/sdk/sdk.js",
     "groupTitle": "B"
   },
   {
@@ -675,7 +675,7 @@ define({ "api": [
       ]
     },
     "version": "0.0.0",
-    "filename": "../games/happyrabbit/v1.0.0/happyrabbit/assets/aa/script/sdk/sdk.js",
+    "filename": "../games/happyrabbit/v3.0.0/happyrabbit/assets/aa/script/sdk/sdk.js",
     "groupTitle": "C"
   },
   {
@@ -721,7 +721,7 @@ define({ "api": [
       ]
     },
     "version": "0.0.0",
-    "filename": "../games/happyrabbit/v1.0.0/happyrabbit/assets/aa/script/sdk/sdk.js",
+    "filename": "../games/happyrabbit/v3.0.0/happyrabbit/assets/aa/script/sdk/sdk.js",
     "groupTitle": "C"
   },
   {
@@ -760,7 +760,7 @@ define({ "api": [
       ]
     },
     "version": "0.0.0",
-    "filename": "../games/happyrabbit/v1.0.0/happyrabbit/assets/aa/script/sdk/sdk.js",
+    "filename": "../games/happyrabbit/v3.0.0/happyrabbit/assets/aa/script/sdk/sdk.js",
     "groupTitle": "C"
   },
   {
@@ -799,7 +799,7 @@ define({ "api": [
       ]
     },
     "version": "0.0.0",
-    "filename": "../games/happyrabbit/v1.0.0/happyrabbit/assets/aa/script/sdk/sdk.js",
+    "filename": "../games/happyrabbit/v3.0.0/happyrabbit/assets/aa/script/sdk/sdk.js",
     "groupTitle": "C"
   },
   {
@@ -838,7 +838,7 @@ define({ "api": [
       ]
     },
     "version": "0.0.0",
-    "filename": "../games/happyrabbit/v1.0.0/happyrabbit/assets/aa/script/sdk/sdk.js",
+    "filename": "../games/happyrabbit/v3.0.0/happyrabbit/assets/aa/script/sdk/sdk.js",
     "groupTitle": "C"
   },
   {
@@ -870,7 +870,7 @@ define({ "api": [
       ]
     },
     "version": "0.0.0",
-    "filename": "../games/happyrabbit/v1.0.0/happyrabbit/assets/aa/script/sdk/sdk.js",
+    "filename": "../games/happyrabbit/v3.0.0/happyrabbit/assets/aa/script/sdk/sdk.js",
     "groupTitle": "C"
   },
   {
@@ -902,7 +902,7 @@ define({ "api": [
       ]
     },
     "version": "0.0.0",
-    "filename": "../games/happyrabbit/v1.0.0/happyrabbit/assets/aa/script/sdk/sdk.js",
+    "filename": "../games/happyrabbit/v3.0.0/happyrabbit/assets/aa/script/sdk/sdk.js",
     "groupTitle": "C"
   },
   {
@@ -941,7 +941,7 @@ define({ "api": [
       ]
     },
     "version": "0.0.0",
-    "filename": "../games/happyrabbit/v1.0.0/happyrabbit/assets/aa/script/sdk/sdk.js",
+    "filename": "../games/happyrabbit/v3.0.0/happyrabbit/assets/aa/script/sdk/sdk.js",
     "groupTitle": "C"
   },
   {
@@ -960,7 +960,7 @@ define({ "api": [
       ]
     },
     "version": "0.0.0",
-    "filename": "../games/happyrabbit/v1.0.0/happyrabbit/assets/aa/script/sdk/sdk.js",
+    "filename": "../games/happyrabbit/v3.0.0/happyrabbit/assets/aa/script/sdk/sdk.js",
     "groupTitle": "C"
   },
   {
@@ -979,7 +979,7 @@ define({ "api": [
       ]
     },
     "version": "0.0.0",
-    "filename": "../games/happyrabbit/v1.0.0/happyrabbit/assets/aa/script/sdk/sdk.js",
+    "filename": "../games/happyrabbit/v3.0.0/happyrabbit/assets/aa/script/sdk/sdk.js",
     "groupTitle": "C"
   },
   {
@@ -998,7 +998,7 @@ define({ "api": [
       ]
     },
     "version": "0.0.0",
-    "filename": "../games/happyrabbit/v1.0.0/happyrabbit/assets/aa/script/sdk/sdk.js",
+    "filename": "../games/happyrabbit/v3.0.0/happyrabbit/assets/aa/script/sdk/sdk.js",
     "groupTitle": "C"
   },
   {
@@ -1017,7 +1017,7 @@ define({ "api": [
       ]
     },
     "version": "0.0.0",
-    "filename": "../games/happyrabbit/v1.0.0/happyrabbit/assets/aa/script/sdk/sdk.js",
+    "filename": "../games/happyrabbit/v3.0.0/happyrabbit/assets/aa/script/sdk/sdk.js",
     "groupTitle": "C"
   },
   {
@@ -1036,7 +1036,7 @@ define({ "api": [
       ]
     },
     "version": "0.0.0",
-    "filename": "../games/happyrabbit/v1.0.0/happyrabbit/assets/aa/script/sdk/sdk.js",
+    "filename": "../games/happyrabbit/v3.0.0/happyrabbit/assets/aa/script/sdk/sdk.js",
     "groupTitle": "C"
   },
   {
@@ -1075,7 +1075,7 @@ define({ "api": [
       ]
     },
     "version": "0.0.0",
-    "filename": "../games/happyrabbit/v1.0.0/happyrabbit/assets/aa/script/sdk/sdk.js",
+    "filename": "../games/happyrabbit/v3.0.0/happyrabbit/assets/aa/script/sdk/sdk.js",
     "groupTitle": "C"
   },
   {
@@ -1094,7 +1094,7 @@ define({ "api": [
       ]
     },
     "version": "0.0.0",
-    "filename": "../games/happyrabbit/v1.0.0/happyrabbit/assets/aa/script/sdk/sdk.js",
+    "filename": "../games/happyrabbit/v3.0.0/happyrabbit/assets/aa/script/sdk/sdk.js",
     "groupTitle": "D"
   },
   {
@@ -1126,7 +1126,7 @@ define({ "api": [
       ]
     },
     "version": "0.0.0",
-    "filename": "../games/happyrabbit/v1.0.0/happyrabbit/assets/aa/script/sdk/sdk.js",
+    "filename": "../games/happyrabbit/v3.0.0/happyrabbit/assets/aa/script/sdk/sdk.js",
     "groupTitle": "D"
   },
   {
@@ -1145,7 +1145,7 @@ define({ "api": [
       ]
     },
     "version": "0.0.0",
-    "filename": "../games/happyrabbit/v1.0.0/happyrabbit/assets/aa/script/sdk/sdk.js",
+    "filename": "../games/happyrabbit/v3.0.0/happyrabbit/assets/aa/script/sdk/sdk.js",
     "groupTitle": "D"
   },
   {
@@ -1177,7 +1177,7 @@ define({ "api": [
       ]
     },
     "version": "0.0.0",
-    "filename": "../games/happyrabbit/v1.0.0/happyrabbit/assets/aa/script/sdk/sdk.js",
+    "filename": "../games/happyrabbit/v3.0.0/happyrabbit/assets/aa/script/sdk/sdk.js",
     "groupTitle": "D"
   },
   {
@@ -1196,7 +1196,7 @@ define({ "api": [
       ]
     },
     "version": "0.0.0",
-    "filename": "../games/happyrabbit/v1.0.0/happyrabbit/assets/aa/script/sdk/sdk.js",
+    "filename": "../games/happyrabbit/v3.0.0/happyrabbit/assets/aa/script/sdk/sdk.js",
     "groupTitle": "D"
   },
   {
@@ -1228,7 +1228,39 @@ define({ "api": [
       ]
     },
     "version": "0.0.0",
-    "filename": "../games/happyrabbit/v1.0.0/happyrabbit/assets/aa/script/sdk/sdk.js",
+    "filename": "../games/happyrabbit/v3.0.0/happyrabbit/assets/aa/script/sdk/sdk.js",
+    "groupTitle": "D"
+  },
+  {
+    "group": "D",
+    "name": "onGameEvent",
+    "type": "监听全局游戏事件",
+    "url": "监听全局游戏事件",
+    "title": "onGameEvent - 游戏事件",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "function",
+            "optional": false,
+            "field": "callback",
+            "description": "<p>返回一个表情对象</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "示例:",
+          "content": "// 监听全局游戏事件\naj_sdk.onGameEvent((e)=>{\n    if(e.type == \"emoji\"){\n        console.log(\"=收到一个表情=\", e.emoji)\n        // 表情格式如下\n        // emoji = {\n        //     \"id\":1,\n        //     \"type\":1,       //表情类型\n        //     \"url\":\"https://qxgame-1257972171.cos.ap-guangzhou.myqcloud.com/gameadmin/emoji/1.png\",\n        //     \"weight\":10,    //表情权重\n        //     \"txt \":\"太菜了\", //表情中文描述\n        //     \"sender\": {     //表情的发送者\n        //         \"uid\": \"wx_oGUmH5Ic0ls6xa52epYcL7n77U3U\", \n        //         \"openid\": \"oGUmH5Ic0ls6xa52epYcL7n77U3U\", \n        //         \"nickName\": \"千寻િ😨雨天\", \n        //         \"avatarUrl\": \"https://wx.qlogo.cn/mmopen/vi_32/ib3FwHCA5Nc3N0MpRdb6D5aibGTchEiad27KgRal9BPibfNHo0NZmagJVziaGmn96icC8cqJIrUW3B1vHlG9icibbK5tgA/132\", \n        //         \"gender\": 1, \n        //         \"country\": \"中国\", \n        //         \"city\": \"广州\", \n        //         \"province\": \"广东\", \n        //         \"sig\": \"\"\n        //     }\n        // }\n    }\n    if(e.type == \"giveUp\"){\n        console.log(\"=对方认输了=\")\n        self.stop_game();\n    }\n})",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "../games/happyrabbit/v3.0.0/happyrabbit/assets/aa/script/sdk/sdk.js",
     "groupTitle": "D"
   },
   {
@@ -1260,7 +1292,7 @@ define({ "api": [
       ]
     },
     "version": "0.0.0",
-    "filename": "../games/happyrabbit/v1.0.0/happyrabbit/assets/aa/script/sdk/sdk.js",
+    "filename": "../games/happyrabbit/v3.0.0/happyrabbit/assets/aa/script/sdk/sdk.js",
     "groupTitle": "D"
   },
   {
@@ -1292,7 +1324,7 @@ define({ "api": [
       ]
     },
     "version": "0.0.0",
-    "filename": "../games/happyrabbit/v1.0.0/happyrabbit/assets/aa/script/sdk/sdk.js",
+    "filename": "../games/happyrabbit/v3.0.0/happyrabbit/assets/aa/script/sdk/sdk.js",
     "groupTitle": "D"
   },
   {
@@ -1325,7 +1357,7 @@ define({ "api": [
       ]
     },
     "version": "0.0.0",
-    "filename": "../games/happyrabbit/v1.0.0/happyrabbit/assets/aa/script/sdk/sdk.js",
+    "filename": "../games/happyrabbit/v3.0.0/happyrabbit/assets/aa/script/sdk/sdk.js",
     "groupTitle": "D"
   },
   {
@@ -1344,7 +1376,7 @@ define({ "api": [
       ]
     },
     "version": "0.0.0",
-    "filename": "../games/happyrabbit/v1.0.0/happyrabbit/assets/aa/script/sdk/sdk.js",
+    "filename": "../games/happyrabbit/v3.0.0/happyrabbit/assets/aa/script/sdk/sdk.js",
     "groupTitle": "D"
   }
 ] });
