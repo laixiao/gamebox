@@ -1,3 +1,4 @@
+[文档首页](https://laixiao.github.io/gamebox/doc/gamebox "文档首页")
 # 盒子sdk集成文档
 
 

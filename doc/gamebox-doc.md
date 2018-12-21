@@ -1,4 +1,4 @@
-
+[文档首页](https://laixiao.github.io/gamebox/doc/gamebox "文档首页")
 # 盒子技术规范
 
 ### 一、文件命名规范：
