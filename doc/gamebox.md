@@ -21,4 +21,4 @@
 
 ## 盒子运行效果图
 
-![](https://laixiao.github.io/gamebox/doc/screen/s01.jpg)
+![](https://laixiao.github.io/gamebox/doc/screen/screen.jpg)
