@@ -60,8 +60,20 @@ if (cc.sys.platform === cc.sys.WECHAT_GAME) {}
 |  大话骰 |  aj |
 |  口红机 |  ak |
 |  极品飞车 |  al |
-|  xx |  am |
+|  跳跳兔 |  am |
 |  xx |  an |
+|  xx |  ao |
+|  xx |  ap |
+|  xx |  aq |
+|  xx |  ar |
+|  xx |  as |
+|  xx |  at |
+|  xx |  au |
+|  xx |  av |
+|  xx |  aw |
+|  xx |  ax |
+|  xx |  ay |
+|  xx |  az |
 
 > 单机版（ 加_ ）：  如"飞刀"唯一标识为： ab_
 
