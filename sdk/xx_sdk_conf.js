@@ -7,7 +7,7 @@ var sdk_conf = {
     bannerAdUnitId: 'adunit-d6b9bab967f2f8b7',  //.banner广告单元id
     videoAdUnitId: 'adunit-3fa34dc8aada52e3',      //.video广告单元id   
 
-    //.测试用户的ID数据可查阅： https://laixiao.github.io/gamebox/doc/sdk-doc
+    //.测试用户的ID数据可查阅： https://laixiao.github.io/gamebox/doc/gamebox
     debugData: {
         user : {                //当前用户信息
             avatarUrl: "https://wx.qlogo.cn/mmopen/vi_32/E31dTdkFnKSFOmmy98kLqJlmDQFjLoRt52KTxohsKFtib2otLWZFOCzyuPXia8A7YR32th1FibqncWra94aAJQicYw/132",
