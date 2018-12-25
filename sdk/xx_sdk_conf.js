@@ -20,7 +20,7 @@ var sdk_conf = {
             language: "zh_CN",
             nickName: "千寻િ😨雨天"
         },  
-        ai: 1,              //是否有ai机器人
+        ai: 1,              //1：机器人  0：真人
         room_id: "room_001",          //房间id
         create_time: new Date().getTime()/1000,      //创建时间
         room_owner: "测试账号1",       //房主uid

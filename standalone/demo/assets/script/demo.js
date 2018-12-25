@@ -11,11 +11,9 @@ cc.Class({
 
     // use this for initialization
     onLoad: function () {
-        if(!window.sdk){
+        if(!window.qx_sdk){
             window.qx_sdk = new sdk({ sdk_conf: require("sdk_conf") });
         }
-
-        this.login();
 
     },
 
@@ -24,7 +22,7 @@ cc.Class({
 
     },
     
-    //微信
+    //登录
     login(){
         var self = this;
         // 1.判断是否登录（登录页）
@@ -42,15 +40,37 @@ cc.Class({
             });
         }
     },
-
-    //.初始化sdk
+    //初始化sdk
     initSdk(){
+        var self = this;
         qx_sdk.init(function(res){
             if(res){
                 console.log('sdk初始化成功')
             }
         })
+    },
+    //拉起分享
+    share(){
+        qx_sdk.shareAppMessage({type: 1});
+    },
+    //输出配置信息
+    game_conf(){
+        //游戏后台配置信息，运营人员使用的通用配置开关
+        console.log("运营配置：", qx_sdk.getConfig1())
+        //游戏后台配置信息，程序员使用的游戏数据开关，可随便自定义数据：例如复活次数等
+        console.log("程序自定义配置：", qx_sdk.getConfig2())
+    },
+    //创建banner广告
+    bannerAd(){
+        this.bannerAd = sdk.createBannerAd({});
+        this.bannerAd.show()
+    },
+    //创建video广告
+    videoAd(){
+        this.videoAd = sdk.createRewardedVideoAd();
+        this.videoAd.load().then(()=>videoAd.show());
     }
+
 
 
 });

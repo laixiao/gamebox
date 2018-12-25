@@ -495,17 +495,6 @@
      * sdk.createImage(sprite, url);
      */
     sdk.prototype.createImage = function(sprite, url) {
-        // if (cc.sys.platform === cc.sys.WECHAT_GAME) {
-        //     var image = wx.createImage();
-        //     image.onload = function () {
-        //         var texture = new cc.Texture2D();
-        //         texture.initWithElement(image);
-        //         texture.handleLoadedTexture();
-        //         sprite.spriteFrame = new cc.SpriteFrame(texture);
-        //     };
-        //     image.src = url;
-        // }
-
         if(url){
             cc.loader.load({url: url, type: 'png'}, function (err, texture) {
                 if(err){

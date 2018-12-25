@@ -1,0 +1,31 @@
+{
+  "ver": "2.2.0",
+  "uuid": "57fcabc7-1ea7-4fd9-92c4-ea5ff4e55aef",
+  "type": "sprite",
+  "wrapMode": "clamp",
+  "filterMode": "bilinear",
+  "premultiplyAlpha": false,
+  "subMetas": {
+    "huangseanniu-T40R25U20L20": {
+      "ver": "1.0.3",
+      "uuid": "8df80d9d-b8d4-4c86-8803-bd7a7c534acf",
+      "rawTextureUuid": "57fcabc7-1ea7-4fd9-92c4-ea5ff4e55aef",
+      "trimType": "auto",
+      "trimThreshold": 1,
+      "rotated": false,
+      "offsetX": 0,
+      "offsetY": 0,
+      "trimX": 0,
+      "trimY": 0,
+      "width": 47,
+      "height": 63,
+      "rawWidth": 47,
+      "rawHeight": 63,
+      "borderTop": 30,
+      "borderBottom": 28,
+      "borderLeft": 17,
+      "borderRight": 26,
+      "subMetas": {}
+    }
+  }
+}

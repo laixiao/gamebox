@@ -1,0 +1,31 @@
+{
+  "ver": "2.2.0",
+  "uuid": "d1bb88ea-1585-4d3f-ad87-c56e010a8f38",
+  "type": "sprite",
+  "wrapMode": "clamp",
+  "filterMode": "bilinear",
+  "premultiplyAlpha": false,
+  "subMetas": {
+    "baisediban-T35R30U35L30": {
+      "ver": "1.0.3",
+      "uuid": "2e58c8b7-da30-485f-8140-bbf5a51b379e",
+      "rawTextureUuid": "d1bb88ea-1585-4d3f-ad87-c56e010a8f38",
+      "trimType": "auto",
+      "trimThreshold": 1,
+      "rotated": false,
+      "offsetX": 0,
+      "offsetY": 0,
+      "trimX": 0,
+      "trimY": 0,
+      "width": 64,
+      "height": 71,
+      "rawWidth": 64,
+      "rawHeight": 71,
+      "borderTop": 31,
+      "borderBottom": 35,
+      "borderLeft": 29,
+      "borderRight": 29,
+      "subMetas": {}
+    }
+  }
+}
