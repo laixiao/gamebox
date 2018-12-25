@@ -273,6 +273,7 @@ aj_sdk.onGameEvent((e)=>{
     xx_sdk.giveUp(function(res){
         if(res == 1){
             //确认
+            console.log("=自己认输了，调用游戏停止逻辑=")
         }else{
             //取消
         }
