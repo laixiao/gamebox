@@ -11,20 +11,22 @@ cc.Class({
 
     // use this for initialization
     onLoad: function () {
-        // if(!window.sdk){
-        //     window.qx_sdk = new sdk({ sdk_conf: require("sdk_conf") });
-        // }
+        if(!window.sdk){
+            window.qx_sdk = new sdk({ sdk_conf: require("sdk_conf") });
+        }
 
-        // //.初始化游戏
-        // sdk.init(function(res){
-        //     if(res){
-        //         console.log('sdk初始化成功')
-        //     }
-        // })
+        this.login();
 
-        var qx_sdk = new sdk({ sdk_conf: require("sdk_conf") });
-        console.log(qx_sdk)
+    },
 
+    // called every frame
+    update: function (dt) {
+
+    },
+    
+    //微信
+    login(){
+        var self = this;
         // 1.判断是否登录（登录页）
         var user = qx_sdk.getUser();
         if(user){
@@ -35,14 +37,20 @@ cc.Class({
             qx_sdk.wechatLogin((d)=>{
                 if(d){
                     console.log("登录成功：", d)
+                    self.initSdk();
                 }
             });
         }
-
     },
 
-    // called every frame
-    update: function (dt) {
+    //.初始化sdk
+    initSdk(){
+        qx_sdk.init(function(res){
+            if(res){
+                console.log('sdk初始化成功')
+            }
+        })
+    }
 
-    },
+
 });

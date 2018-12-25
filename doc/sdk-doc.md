@@ -220,8 +220,7 @@ aj_sdk.onGameEvent((e)=>{
         // }
     }
     if(e.type == "giveUp"){
-        console.log("=对方认输了=")
-        self.stop_game();
+        console.log("=对方认输了，调用游戏停止逻辑=")
     }
 })
 
