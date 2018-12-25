@@ -9,56 +9,63 @@
 (function(window, md5) {
     function sdk(args) {
         var args = args || {};
+        this.sdk_conf = args.sdk_conf || {};
+        this.md5 = md5;
 
+        // 正式服
         this.iphttps = "https://testadmin.90wqiji.com";
         this.iphttps_2 = "https://www.90wqiji.com";
-        this.ipwss = "wss://www.90wqiji.com";
-
-        // 内网测试
+        this.ipwss = "wss://www.90wqiji.com/login";
+        // 内网测试服
         // this.iphttps = "http://192.168.1.173";
-        // this.iphttps_2 = "http://192.168.1.91:8001";
+        // this.iphttps_2 = "http://192.168.1.91";
         // this.ipwss = "ws://192.168.1.91:6336";
-        
+        // 多个内网测试服
         // if(sdk_conf_test){
         //     this.iphttps = sdk_conf_test.iphttps;
         //     this.iphttps_2 = sdk_conf_test.iphttps_2;
         //     this.ipwss = sdk_conf_test.ipwss;
         // }
         
-        this.sdk_conf = args.sdk_conf || {};
-        this.md5 = md5;
-        this.loginBg = args.loginBg || "https://www.90wqiji.com/box/image/singlecolor.png";
-        this.loginBt = args.loginBt || "https://www.90wqiji.com/box/image/happyrabbitlogin.png";
-        this.debug = this.sdk_conf.debug;
+        this.loginBg = "https://cdn.kxt.90wqiji.com/box/image/singlecolor.png";
+        this.loginBt = "https://cdn.kxt.90wqiji.com/box/image/happyrabbitlogin4.png";
+        this.loginBtWidth = 603;
+        this.loginBtHeight = 635;
 
         //一般接口
-        this.login = args.login || "/api/LogHandle/Login";
-        this.Config = args.Config || "/api/Config/GameConfig";
-        this.HzConfig = args.HzConfig || "/api/Config/HzConfig";
-        this.Share = args.Share || "/api/Config/ShareConfig";
-        this.propdata = args.propdata || "/game/propdata";
-
-        this.GameReport = args.GameReport || "/api/Game/GameReport";
-        this.Like = args.Like || "/api/Game/Like";
-        this.GetLikeInfo = args.GetLikeInfo || "/api/Game/GetLikeInfo";
-        this.GetGameReport = args.GetGameReport || "/api/Game/GetGameReport";
-        this.GetEmojiImg = args.GetEmojiImg || "/api/Game/GetEmojiImg";
-        this.playerdata = args.playerdata || "/game/playerdata";
+        this.login = "/api/LogHandle/Login";
+        this.Config = "/api/Config/GameConfig";
+        this.HzConfig = "/api/Config/HzConfig";
+        this.Share = "/api/Config/ShareConfig";
+        this.propdata = "/game/propdata";
+        this.GameReport = "/api/Game/GameReport";
+        this.Like = "/api/Game/Like";
+        this.GetLikeInfo = "/api/Game/GetLikeInfo";
+        this.GetGameReport = "/api/Game/GetGameReport";
+        this.GetEmojiImg = "/api/Game/GetEmojiImg";
+        this.playerdata = "/game/playerdata";
         //统计接口
-        this.loginCount = args.loginCount || "/api/Statistical/loginCount";
-        this.shareCount = args.shareCount || "/api/Statistical/shareCount";
-        this.inviteCount = args.inviteCount || "/api/Statistical/inviteCount";
-        this.fightCount = args.fightCount || "/api/Statistical/fightCount";
-        this.inLoginCount = args.inLoginCount || "/api/Statistical/inLoginCount";
+        this.ChannelCL = "/api/LogHandle/ChannelCL";//公共：渠道导量用户打开游戏记录（有渠道号才调用）
+        this.loginCount = "/api/Statistical/loginCount";
+        this.shareCount = "/api/Statistical/shareCount";
+        this.inviteCount = "/api/Statistical/inviteCount";
+        this.fightCount = "/api/Statistical/fightCount";
+        this.inLoginCount = "/api/Statistical/inLoginCount";
+        this.escapeCount = "/api/Statistical/escapeCount";//盒子：内嵌游戏对局逃跑统计
+        this.TeamRspCount = "/api/Statistical/TeamRspCount";//盒子：世界聊天组队点击数统计（不区分该点击玩家是否成功进入房间，不区分是否重复点击，即重复点击也计入统计）
+        this.FightInviteCount = "/api/Statistical/FightInviteCount";//盒子：好友匹配邀战次数统计（创建房间就调用）
+        this.PerRspCount = "/api/Statistical/PerRspCount";//盒子：好友匹配邀战响应统计（被邀请人点击邀请链接并进入游戏记为一次响应，此时调用此接口）
+        // self.Post(self.iphttps + self.inviteCount, { uid: option.uid, sid: option.sid });
+
         //配置数据
-        this.BannerAd = args.BannerAd || null;//banner广告
-        this.VideoAd = args.VideoAd || null;//video广告
-        this.ConfigData = args.ConfigData || { //游戏配置数据
+        this.BannerAd = null;//banner广告
+        this.VideoAd = null;//video广告
+        this.ConfigData = { //游戏配置数据
             config1: {},//运营配置数据
             config2: {},//程序自定义配置数据
         };
-        this.ShareList = args.ShareList || [];//分享卡片信息列表
-        
+        this.ShareList = [];//分享卡片信息列表
+        this.EmojiList = null;//表情包列表
     }
 
     /**
@@ -512,31 +519,6 @@
      * sdk.createImage(sprite, url);
      */
     sdk.prototype.createImage = function(sprite, url) {
-        // if (cc.sys.platform === cc.sys.WECHAT_GAME) {
-        //     var image = wx.createImage();
-        //     image.onload = function () {
-        //         var texture = new cc.Texture2D();
-        //         texture.initWithElement(image);
-        //         texture.handleLoadedTexture();
-        //         sprite.spriteFrame = new cc.SpriteFrame(texture);
-        //     };
-        //     image.src = url;
-        // }
-
-        if(url){
-            cc.loader.load({url: url, type: 'png'}, function (err, texture) {
-                if(err){
-                    console.log(err)
-                }else{
-                    sprite.spriteFrame = new cc.SpriteFrame(texture);
-                }
-            });
-        }else{
-            console.log("图片地址不能为空")
-        }
-        
-    }
-    sdk.prototype.wxCreateImage = function(sprite, url) {
         if(url){
             if (cc.sys.platform === cc.sys.WECHAT_GAME) {
                 var image = wx.createImage();
@@ -547,6 +529,14 @@
                     sprite.spriteFrame = new cc.SpriteFrame(texture);
                 };
                 image.src = url;
+            }else{
+                cc.loader.load({url: url, type: 'png'}, function (err, texture) {
+                    if(err){
+                        console.log(err)
+                    }else{
+                        sprite.spriteFrame = new cc.SpriteFrame(texture);
+                    }
+                });
             }
         }else{
             console.log("图片地址不能为空")
@@ -1009,8 +999,8 @@
                 }else{
                     wx.getSystemInfo({
                         success(res){
-                            var width = 582/2;
-                            var height = 700/2;
+                            var width = self.loginBtWidth/2;
+                            var height = self.loginBtHeight/2;
                             self.button = wx.createUserInfoButton({
                                 type: 'image',
                                 image: self.loginBt,
@@ -1803,7 +1793,12 @@
         this.setItem("CurrentEmojiSkin", skinId);
     };
     sdk.prototype.getCurrentEmojiSkin = function(){
-        return this.getItem("CurrentEmojiSkin");
+        if(this.EmojiSkinIndex){
+            return this.EmojiSkinIndex;
+        }else{
+            this.EmojiSkinIndex = this.getItem("CurrentEmojiSkin")
+            return this.EmojiSkinIndex;        
+        }
     };
     /**
      * @apiGroup D
@@ -1826,7 +1821,6 @@
      *       // ]
      *   });
      */
-    sdk.prototype.EmojiList = null;
     sdk.prototype.getEmoji = function(callback) {
         var self = this;
         if(this.EmojiList){
