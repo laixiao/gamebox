@@ -520,16 +520,16 @@
      */
     sdk.prototype.createImage = function(sprite, url) {
         if(url){
-            if (cc.sys.platform === cc.sys.WECHAT_GAME) {
-                var image = wx.createImage();
-                image.onload = function () {
-                    var texture = new cc.Texture2D();
-                    texture.initWithElement(image);
-                    texture.handleLoadedTexture();
-                    sprite.spriteFrame = new cc.SpriteFrame(texture);
-                };
-                image.src = url;
-            }else{
+            // if (cc.sys.platform === cc.sys.WECHAT_GAME) {
+            //     var image = wx.createImage();
+            //     image.onload = function () {
+            //         var texture = new cc.Texture2D();
+            //         texture.initWithElement(image);
+            //         texture.handleLoadedTexture();
+            //         sprite.spriteFrame = new cc.SpriteFrame(texture);
+            //     };
+            //     image.src = url;
+            // }else{
                 cc.loader.load({url: url, type: 'png'}, function (err, texture) {
                     if(err){
                         console.log(err)
@@ -537,7 +537,7 @@
                         sprite.spriteFrame = new cc.SpriteFrame(texture);
                     }
                 });
-            }
+            // }
         }else{
             console.log("图片地址不能为空")
         }
