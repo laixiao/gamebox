@@ -281,7 +281,7 @@ aj_sdk.onGameEvent((e)=>{
 
 ```
 
-**3.游戏结束：**
+**3.游戏正常结束：**
 
 ```javascript
     
