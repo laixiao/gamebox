@@ -35,7 +35,6 @@ cc.Class({
             qx_sdk.wechatLogin((d)=>{
                 if(d){
                     console.log("登录成功：", d)
-                    self.initSdk();
                 }
             });
         }
@@ -46,10 +45,12 @@ cc.Class({
         qx_sdk.init(function(res){
             if(res){
                 console.log('sdk初始化成功')
+                // 监听右上角分享按钮
+                qx_sdk.onShareAppMessage({type: 0});
             }
         })
     },
-    //拉起分享
+    //主动拉起分享
     share(){
         qx_sdk.shareAppMessage({type: 1});
     },
@@ -62,12 +63,12 @@ cc.Class({
     },
     //创建banner广告
     bannerAd(){
-        this.bannerAd = sdk.createBannerAd({});
+        this.bannerAd = qx_sdk.createBannerAd({});
         this.bannerAd.show()
     },
     //创建video广告
     videoAd(){
-        this.videoAd = sdk.createRewardedVideoAd();
+        this.videoAd = qx_sdk.createRewardedVideoAd();
         this.videoAd.load().then(()=>videoAd.show());
     }
 
