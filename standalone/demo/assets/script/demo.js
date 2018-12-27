@@ -15,6 +15,10 @@ cc.Class({
             window.qx_sdk = new sdk({ sdk_conf: require("sdk_conf") });
         }
 
+        wx.onShow(function(res){
+            console.log(res)
+        })
+
     },
 
     // called every frame
@@ -70,6 +74,20 @@ cc.Class({
     videoAd(){
         this.videoAd = qx_sdk.createRewardedVideoAd();
         this.videoAd.load().then(()=>videoAd.show());
+    },
+    navigateToMiniProgram(){
+        wx.navigateToMiniProgram({
+            appId: 'wx24444c38676d1845',
+            path: '',
+            extraData: {
+              chl: '327266'
+            },
+            envVersion: 'trial',
+            success(res) {
+                console.log(res)
+                // 打开成功
+            }
+        })
     }
 
 
