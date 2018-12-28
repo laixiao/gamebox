@@ -77,8 +77,8 @@ cc.Class({
     },
     navigateToMiniProgram(){
         wx.navigateToMiniProgram({
-            appId: 'wx24444c38676d1845',
-            path: '',
+            appId: 'wxac25b3855f07cd26',//wx24444c38676d1845
+            path: '?chl=327266',
             extraData: {
               chl: '327266'
             },
