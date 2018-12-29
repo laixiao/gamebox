@@ -143,7 +143,6 @@ var gameData = {
     user : {                //当前用户信息
         avatarUrl: "https://wx.qlogo.cn/mmopen/vi_32/E31dTdkFnKSFOmmy98kLqJlmDQFjLoRt52KTxohsKFtib2otLWZFOCzyuPXia8A7YR32th1FibqncWra94aAJQicYw/132",
         uid: "测试账号1",
-        openid: "测试账号1",
         city: "广州",
         country: "中国",
         province: "广东",
@@ -160,7 +159,6 @@ var gameData = {
     all_player_data: [      //对战数据
         {
             player_data:{
-                openid: "测试账号1",
                 avatarUrl:"https://wx.qlogo.cn/mmopen/vi_32/E31dTdkFnKSFOmmy98kLqJlmDQFjLoRt52KTxohsKFtib2otLWZFOCzyuPXia8A7YR32th1FibqncWra94aAJQicYw/132",
                 city:"广州",
                 country:"中国",
@@ -176,7 +174,6 @@ var gameData = {
         },
         {
             player_data:{
-                openid: "测试账号2",
                 avatarUrl: "https://wx.qlogo.cn/mmopen/vi_32/oNyD409Hg3gHqJtqtKFhhYDiad6pRFiaprwjEheyLra4CEicGPdnn7uBCJL0oxZjqAibW4wrTsbtfnHoY6NolPpz9A/132",
                 city: "河池",
                 country: "中国",
