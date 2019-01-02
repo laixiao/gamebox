@@ -68,12 +68,13 @@ cc.Class({
     //创建banner广告
     bannerAd(){
         this.bannerAd = qx_sdk.createBannerAd({});
+        console.log(this.bannerAd)
         this.bannerAd.show()
     },
     //创建video广告
     videoAd(){
         this.videoAd = qx_sdk.createRewardedVideoAd();
-        this.videoAd.load().then(()=>videoAd.show());
+        this.videoAd.load().then(()=>this.videoAd.show());
     },
     navigateToMiniProgram(){
         wx.navigateToMiniProgram({

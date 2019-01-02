@@ -61,7 +61,7 @@ if (cc.sys.platform === cc.sys.WECHAT_GAME) {}
 |  口红机 |  ak |
 |  极品飞车 |  al |
 |  跳跳兔 |  am |
-|  xx |  an |
+|  黄金矿工 |  an |
 |  xx |  ao |
 |  xx |  ap |
 |  xx |  aq |
