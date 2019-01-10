@@ -10,7 +10,7 @@
 
 ## 接入方
 
-前端接入：
+一、前端接入：
 
  - 1.按照[《盒子技术规范》](https://laixiao.github.io/gamebox/doc/gamebox-doc "《技术规范》")修改相关的 **文件夹** 和 **文件名**；
 
@@ -18,7 +18,7 @@
 
  - 3.把源码上传到gitlab仓库（http://134.175.238.16:8000）。
         
-后端接入：
+二、后端接入：
 
 - 参考后端接入文档[《后端接入文档》](https://laixiao.github.io/gamebox/doc/gamebox-server "《后端接入文档》")
 
