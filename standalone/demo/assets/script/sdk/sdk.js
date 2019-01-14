@@ -13,7 +13,8 @@
         this.md5 = md5;
 
         // 正式服
-        this.iphttps = "https://testadmin.90wqiji.com";
+        this.iphttps = this.sdk_conf.iphttps;
+        this.ipscoket = this.sdk_conf.ipscoket;
 
         //一般接口
         this.login = "/api/LogHandle/OLogin";
@@ -41,7 +42,6 @@
             config2: {},//程序自定义配置数据
         };
         this.ShareList = [];//分享卡片信息列表
-        this.EmojiList = null;//表情包列表
     }
 
     /**
