@@ -11,16 +11,29 @@
         var args = args || {};
         this.sdk_conf = args.sdk_conf || {};
         this.md5 = md5;
-
-        // 正式服
+        this.debug = this.sdk_conf.debug;
         this.iphttps = this.sdk_conf.iphttps;
         this.ipscoket = this.sdk_conf.ipscoket;
 
-        //一般接口
-        this.login = "/api/LogHandle/OLogin";
+        //一般接口：后端
+        this.gameexperience = "/game/gameexperience";//游戏试玩奖励
+        this.playerdata = "/game/playerdata";
+        this.propdata = "/game/propdata";
+        this.gamegetservertime = "/game/getservertime";
+        this.GameUpFile = '/api/Game/UpFile';
+
+        //一般接口：后台
+        this.login = "/api/LogHandle/Login";
         this.Config = "/api/Config/GameConfig";
         this.HzConfig = "/api/Config/HzConfig";
         this.Share = "/api/Config/ShareConfig";
+        this.GameReport = "/api/Game/GameReport";
+        this.Like = "/api/Game/Like";
+        this.GetLikeInfo = "/api/Game/GetLikeInfo";
+        this.GetGameReport = "/api/Game/GetGameReport";
+        this.GetEmojiImg = "/api/Game/GetEmojiImg";
+        this.GgCongif = "/api/Config/GgCongif";//广告配置列表：跳转小程序列表
+        
         //统计接口
         this.ChannelCL = "/api/LogHandle/ChannelCL";//公共：渠道导量用户打开游戏记录（有渠道号才调用）
         this.loginCount = "/api/Statistical/loginCount";
@@ -32,7 +45,12 @@
         this.TeamRspCount = "/api/Statistical/TeamRspCount";//盒子：世界聊天组队点击数统计（不区分该点击玩家是否成功进入房间，不区分是否重复点击，即重复点击也计入统计）
         this.FightInviteCount = "/api/Statistical/FightInviteCount";//盒子：好友匹配邀战次数统计（创建房间就调用）
         this.PerRspCount = "/api/Statistical/PerRspCount";//盒子：好友匹配邀战响应统计（被邀请人点击邀请链接并进入游戏记为一次响应，此时调用此接口）
-        // self.Post(self.iphttps + self.inviteCount, { uid: option.uid, sid: option.sid });
+        this.promoteClick = "/api/promote/click";//公共：关联广告点击统计（成功1次，失败1次）
+        this.jumpout = "/api/promote/jumpout";//公共：关联广告跳出统计（跳转目标小程序10s内退出时触发统计）
+        this.mpviewed = "/api/promote/mpviewed";//公共：激励广告观看统计
+        // self.Post(self.iphttps + self.mpviewed, {uid: user.uid, to_appid: nav_appId, position: nav_position}, function (d) {
+        //     console.log('==mpviewed统计==',  d)
+        // });
 
         //配置数据
         this.BannerAd = null;//banner广告
@@ -85,7 +103,7 @@
                         callback(true)
                     }else{
                         if(self.debug){
-                            console.log("1.初始化分享信息失败，1s后再次初始化：",d)
+                            console.log("1.初始化分享信息失败，2s后再次初始化，请确保后台已经配置：",d)
                         }
                         setTimeout(() => {
                             self.init(callback);
@@ -95,7 +113,7 @@
 
             }else{
                 if(self.debug){
-                    console.log("2.初始化后台配置信息失败，1s后再次初始化：",d)
+                    console.log("2.初始化后台配置信息失败，2s后再次初始化，请确保后台已经配置：",d)
                 }
                 setTimeout(() => {
                     self.init(callback);
@@ -1101,26 +1119,111 @@
      * @apiParam {String} adUnitId 广告单元id	
      * 
      * @apiSuccessExample {json} 示例:
-     * //.参考文档：https://developers.weixin.qq.com/minigame/dev/document/ad/wx.createRewardedVideoAd.html
-     *  var videoAd = sdk.createRewardedVideoAd();
-     *  videoAd.load().then(()=>videoAd.show());
+     *  //.参考文档：https://developers.weixin.qq.com/minigame/dev/document/ad/wx.createRewardedVideoAd.html
+     *  //.调用的时候，SDK会直接拉起广告
+     *  xx_sdk.createRewardedVideoAd({
+     *       onClose: function(res){
+     *           //视频是否是在用户完整观看的情况下被关闭的
+     *           if(res.isEnded){
+     *              //发放奖励
+     *           }else{
+     *              //没看完广告就关了
+     *           }
+     *       }
+     *   });
      * 
      */
-    sdk.prototype.createRewardedVideoAd = function() {
+    sdk.prototype.createRewardedVideoAd = function(obj) {
+        if(!obj){
+            obj = {};
+        }
+        if(!obj.onClose){
+            obj.onClose = function(){};
+        }
+
         if (cc.sys.platform === cc.sys.WECHAT_GAME) {
-            if(this.VideoAd){
-                return this.VideoAd;
-            }else{
-                this.VideoAd = wx.createRewardedVideoAd({ adUnitId: this.sdk_conf.videoAdUnitId })
-                this.VideoAd.onLoad(function(res){
+            var self = this;
+            if(!this.videoAd){
+                this.videoAd = wx.createRewardedVideoAd({ adUnitId: this.sdk_conf.videoAdUnitId })
+                this.videoAd.onLoad(function(res){
                     console.log("VideoAd广告加载事件：", res)
                 });
-                this.VideoAd.onError(function(res){
+                this.videoAd.onError(function(res){
                     console.log("VideoAd广告错误事件：", res)
                 });
-                return this.VideoAd;
             }
+            if(this.videoAdonClose){
+                this.videoAd.offClose(this.videoAdonClose);
+            }
+            this.videoAdonClose = function(res){
+                // console.log("关闭了广告 ",res)
+                let status = 2;//观看状态，1完整观看，2未完整观看
+                let scence = 1;//先传1。场景值，1复活
+                if(res.isEnded){
+                    status = 1;
+                }
+                let reqData = {uid: self.getUser().uid, status: status, scence: scence}
+                self.Post(self.iphttps + self.mpviewed, reqData, function (d) {
+                    console.log(reqData, '==mpviewed统计==',  d)
+                });
+                obj.onClose(res);
+            }
+            this.videoAd.onClose(this.videoAdonClose);
+            this.videoAd.load().then(()=>{ this.videoAd.show() });
         }
+    }
+    //通过 位置 获取小程序列表  （1:侧拉，2: 弹窗）
+    sdk.prototype.getMiniByPos = function(position, callback) {
+        var self = this;
+        //获取跳转小程序列表
+        if(this.adList){
+            //筛选类型
+            let miniAds = [];
+            for (let i = 0; i < self.adList.length; i++) {
+                if(self.adList[i].position == position){
+                    miniAds.push(self.adList[i])
+                }
+            }
+            //根据权重排序
+            miniAds.sort((a,b)=>{
+                return b.msort-a.msort;
+            })
+            callback(miniAds)
+        }
+        this.Get(this.iphttps + this.GgCongif, {}, function (d) {
+            // console.log("初始化跳转小程序列表：", d)
+            if (d && d.code == 1) {
+                self.adList = d.d;
+                //提示开发者  
+                let devAppIds = [];
+                for (let i = 0; i < self.adList.length; i++) {
+                    // 类型 1：直接跳；2：长按识别
+                    if(self.adList[i].type == 1){
+                        devAppIds.push(self.adList[i].appId)
+                    }
+                }
+                console.error("SDK警告：  上传小游戏前，请在game.json文件中添加以下小游戏到navigateToMiniProgramAppIdList数组内：",devAppIds)
+                console.error("参考文档：  https://developers.weixin.qq.com/minigame/dev/framework/config.html ")
+
+                //筛选类型
+                let miniAds = [];
+                for (let i = 0; i < self.adList.length; i++) {
+                    if(self.adList[i].position == position){
+                        miniAds.push(self.adList[i])
+                    }
+                }
+                //根据权重排序
+                miniAds.sort((a,b)=>{
+                    return b.msort-a.msort;
+                })
+                callback(miniAds)
+            }else{
+                console.log("获取跳转小程序列表失败，2s后再次获取，请确保后台已经配置：",d)
+                setTimeout(() => {
+                    self.getMiniByPos(position, callback);
+                }, 2000);
+            }
+        });
     }
     /**
      * @apiGroup B
@@ -1143,6 +1246,8 @@
      *         foo: 'bar'
      *       },
      *       envVersion: 'develop',
+     *       type: 1, //跳转类型： 1直接跳 2长按跳
+     *       position: 1,//跳转位置： 1侧拉  2弹窗
      *       success(res) {
      *         // 打开成功
      *       }
@@ -1151,9 +1256,84 @@
      */
     sdk.prototype.navigateToMiniProgram = function(obj) {
         if (cc.sys.platform === cc.sys.WECHAT_GAME) {
-            wx.navigateToMiniProgram(obj)
+            var self = this;
+            if(!obj.type){
+                obj.type = 1;
+            }
+            if(!obj.position){
+                obj.position = 1;
+            }
+            if(!obj.success){
+                obj.success = function(){}
+            }
+            if(!obj.fail){
+                obj.fail = function(){}
+            }
+            if(!obj.complete){
+                obj.complete = function(){}
+            }
+            wx.navigateToMiniProgram({
+                appId: obj.appId,
+                path: obj.path,
+                extraData: obj.extraData,
+                envVersion: obj.envVersion,
+                success(res) {
+                    // 打开成功
+                    console.log("==打开成功==", res)
+                    //跳转统计
+                    let reqData = {
+                        uid: self.getUser().uid,
+                        to_appid: obj.appId,
+                        status: 1,//跳转状态,1成功，2取消
+                        type: obj.type,
+                        position: obj.position
+                    }
+                    self.Post(self.iphttps + self.promoteClick, reqData);
+
+                    obj.success(res)
+                },
+                fail(res){
+                    console.log("==打开失败,取消了==", res)
+                    let reqData = {
+                        uid: self.getUser().uid,
+                        to_appid: obj.appId,
+                        status: 2,//跳转状态,1成功，2取消
+                        type: obj.type,
+                        position: obj.position
+                    }
+                    self.Post(self.iphttps + self.promoteClick, reqData);
+                    obj.fail(res)
+                },
+                complete(res){
+                    obj.complete(res)
+                }
+            })
         }
     }
+    /**
+     * @apiGroup B
+     * @apiName previewImage
+     * @api {全屏预览图片} 在新页面中全屏预览图片。预览的过程中用户可以进行保存图片、发送给朋友等操作。 previewImage（预览图片）
+     * @apiParam {Array.<string>} urls 需要预览的图片链接列表。2.2.3 起支持云文件ID。
+     * @apiParam {String} [current="urls 的第一张"] 当前显示图片的链接
+     * @apiParam {function} [success] 接口调用成功的回调函数	
+     * @apiParam {function} [fail] 接口调用失败的回调函数
+     * @apiParam {function} [complete] 接口调用结束的回调函数（调用成功、失败都会执行）
+     * 
+     * @apiSuccessExample {json} 示例:
+     *  //.参考文档：https://developers.weixin.qq.com/minigame/dev/api/open-api/miniprogram-navigate/wx.navigateToMiniProgram.html
+     *  sdk.previewImage({
+     *      current: '', // 当前显示图片的http链接
+     *      urls: [] // 需要预览的图片http链接列表
+     *  })
+     * 
+     */
+    sdk.prototype.previewImage = function(obj) {
+        if (cc.sys.platform === cc.sys.WECHAT_GAME) {
+            wx.previewImage(obj)
+        }
+    }
+    
 
     //=================================C===========================
     /**
@@ -2064,133 +2244,6 @@
     }
     
     
-    //============自研游戏：共享盒子scoket================
-    /**
-     *  非盒子环境下需要初始化：
-     *      xx_sdk.notBoxInit();
-     * 
-     *  使用盒子socket发送消息：
-     *      xx_sdk.wsSend(obj)
-     * 
-     *  使用盒子socket接收消息：
-     *      xx_sdk.on("WebSocket", (e) => { });
-     */
-    sdk.prototype.wsSend = function(d) {
-        var self = this;
-
-        if(window.aa_sdk){
-            if(aa_sdk.ws && aa_sdk.ws.readyState == WebSocket.OPEN){
-                aa_sdk.ws.send(JSON.stringify(d));
-            }else{
-                //是否正在重连
-                if(!aa_sdk.isConnect){
-                    aa_sdk.isConnect = true;
-                    aa_sdk.initPK(d);
-                }
-            }
-        }else{
-            if(this.ws && this.ws.readyState == WebSocket.OPEN){
-                this.ws.send(JSON.stringify(d));
-            }else{
-                this.notBoxInit();
-            }
-        }
-    }
-
-    //非盒子环境下初始化（仅供调试）
-    sdk.prototype.notBoxInit = function() {
-        var self = this;
-
-        if(!window.aa_sdk){
-            var userAgent = navigator.userAgent; //取得浏览器的userAgent字符串
-            if (userAgent.indexOf("iPhone") > -1) {
-                console.log("==iPhone机==", this.sdk_conf.debugData)
-            }
-            if (userAgent.indexOf("Android") > -1) {
-                let user1 = this.sdk_conf.debugData.all_player_data[0];
-                let user2 = this.sdk_conf.debugData.all_player_data[1];
-                this.sdk_conf.debugData.user = user2.player_data;
-                this.sdk_conf.debugData.user.uid = user2.uid;
-                this.sdk_conf.debugData.all_player_data[0] = user2;
-                this.sdk_conf.debugData.all_player_data[1] = user1;
-                console.log("==Android机==", this.sdk_conf.debugData)
-            }
-
-            //.WebSocket.CONNECTING    WebSocket.OPEN  WebSocket.CLOSING   WebSocket.CLOSED
-            let toUid = self.getGameData().all_player_data[1].uid;
-            var user = this.getUser();
-            this.ws = null;
-            this.ws = new WebSocket(this.ipwss); 
-            this.ws.onopen = function (e) {  
-                //.登录socket
-                var timestamp = parseInt(new Date().getTime()/1000);
-                var d = {
-                    "id": "c2s_signin",
-                    "uid": user.uid,
-                    "timestamp": timestamp,
-                    "sign": self.md5(user.uid +timestamp +self.sdk_conf.secret)
-                };
-                // console.log( "登录参数：", d, user.uid +timestamp +self.sdk_conf.secret)
-                self.ws.send(JSON.stringify(d));
-            }  
-            this.ws.onmessage = function (e) { 
-                var data = JSON.parse(e.data);
-                //.广播给其它子游戏
-                self.emit("WebSocket", e);
-                //登录
-                if(data.id == "c2s_signin"){
-                    if(data.code == 1){
-                        if(self.getGameData().room_owner == user.uid){
-                            var d = {
-                                "id": "c2s_create_room",
-                                "game_id": "ab",
-                                "player_count": 2,
-                            };
-                            self.ws.send(JSON.stringify(d));
-                        }
-                    }
-                }
-                if(data.id == "c2s_create_room"){
-                    if(data.code == 1){
-                        //房主创建房间
-                        // console.log(user.uid, "房主：", self.getGameData().room_owner)
-                        if(self.getGameData().room_owner == user.uid){
-                            let d = {
-                                id: "c2s_send_msg_to_player",
-                                uid: toUid,
-                                type: "JoinRoom",
-                                room_id: data.room_id
-                            }
-                            setTimeout(() => {
-                                self.ws.send(JSON.stringify(d));
-                            }, 1000);
-                        }
-                    }
-                }
-                if(data.id == "c2s_send_msg_to_player" && data.type == "JoinRoom"){
-                    //非房主才需要加入房间
-                    if(self.getGameData().room_owner != user.uid){
-                        var d = {
-                            id: "c2s_enter_room",
-                            room_id: data.room_id,
-                        };
-                        self.ws.send(JSON.stringify(d));
-                    }
-                }
-                if(data.id == "c2s_enter_room"){
-                    if(data.all_player_data && data.all_player_data.length == data.player_count){
-                        if(self.getGameData().room_owner == user.uid){
-                            console.log("我是房主，进入房间成功")
-                        }else{
-                            console.log("我是房客，进入房间成功")
-                        }
-                    }
-                }
-
-            }
-        }
-    }
-
 
 
     window.sdk = sdk;
