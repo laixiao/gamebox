@@ -1,6 +1,6 @@
 var sdk_conf = { 
     //唯一标识
-    game: 'aj_',
+    game: 'aa',
     //游戏版本 
     version: '1.0.0', 
     //是否开启调试
