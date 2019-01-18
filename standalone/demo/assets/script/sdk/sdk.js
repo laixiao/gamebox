@@ -23,7 +23,7 @@
         this.GameUpFile = '/api/Game/UpFile';
 
         //一般接口：后台
-        this.login = "/api/LogHandle/Login";
+        this.login = "/api/LogHandle/OLogin";
         this.Config = "/api/Config/GameConfig";
         this.HzConfig = "/api/Config/HzConfig";
         this.Share = "/api/Config/ShareConfig";
