@@ -171,6 +171,7 @@ var gameData = {
             state:0,        //玩家状态  0：未准备   1：已准备
             uid:"测试账号1",
             ai: 1,              //是否ai机器人
+            ai_level: 1,        //ai难度  0-1   0最容易  1最难
         },
         {
             player_data:{
@@ -186,6 +187,7 @@ var gameData = {
             state:0,        //玩家状态  0：未准备   1：已准备
             uid: "测试账号2",
             ai: 1,              //是否ai机器人
+            ai_level: 1,        //ai难度  0-1   0最容易  1最难
         },
     ]
 }
