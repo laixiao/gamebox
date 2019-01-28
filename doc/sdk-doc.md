@@ -267,7 +267,6 @@ aj_sdk.onGameEvent((e)=>{
     // （盒子有统一的背景音乐设置开关，子游戏只需根据状态判断是否播放背景音乐即可）
     let switch = xx_sdk.getBbmSwitch();//0：关 1：开
 
-
 // ==弹出认输页面==
     xx_sdk.giveUp(function(res){
         if(res == 1){
@@ -277,6 +276,49 @@ aj_sdk.onGameEvent((e)=>{
             //取消
         }
     })
+
+//==道具接口==
+    //获取道具（根据开心兔后台配置的道具ID）
+    let prop = xx_sdk.getPropById(xxx);
+    //道具格式如下：
+    // {
+    //     description: "黄金兔工炸药道具",
+    //     icon: "https://cdn.kxt.90wqiji.com/gameadmin/201901281526245c4eaea012d9e.png",
+    //     index: 76494184,
+    //     name: "黄金兔工炸药道具",
+    //     param: {},       //自定义参数
+    //     prop_count: 1,   //剩余数量
+    //     type: 102
+    // }
+
+    //使用道具
+    xx_sdk.usePropById({
+        prop_index: 0,  //道具编号
+        prop_count: 1,  //使用数量
+        success(res){
+            if(res.code){
+                console.log("道具使用成功")
+            }else{
+                console.log("道具使用失败")
+            }
+        }
+    });
+
+//==金币接口==
+    //获取金币
+    let gold = xx_sdk.getGold();
+    //使用金币
+    xx_sdk.useGold({
+        gold: 100,  //使用金萝卜数量
+        success(res){
+            if(res.code){
+                console.log("金萝卜使用成功")
+            }else{
+                console.log("金萝卜使用失败")
+            }
+        }
+    });
+
 
 ```
 
