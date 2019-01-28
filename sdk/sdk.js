@@ -11,39 +11,51 @@
         var args = args || {};
         this.sdk_conf = args.sdk_conf || {};
         this.md5 = md5;
+        this.debug = this.sdk_conf.debug;
+        
+        //正式服  https://cdn.kxt.90wqiji.com
+        this.iphttps = "https://kxt.90wqiji.com";
+        this.iphttps_2 = "https://clb.box.90wqiji.com";
+        this.ipwss = "wss://clb.box.90wqiji.com/login";
 
-        // 正式服
+        // 体验服 https://www.90wqiji.com
         this.iphttps = "https://testadmin.90wqiji.com";
         this.iphttps_2 = "https://www.90wqiji.com";
         this.ipwss = "wss://www.90wqiji.com/login";
-        // 内网测试服
+
+        // // 内网测试服
         // this.iphttps = "http://192.168.1.173";
         // this.iphttps_2 = "http://192.168.1.91";
-        // this.ipwss = "ws://192.168.1.91:6336";
-        // 多个内网测试服
-        // if(sdk_conf_test){
-        //     this.iphttps = sdk_conf_test.iphttps;
-        //     this.iphttps_2 = sdk_conf_test.iphttps_2;
-        //     this.ipwss = sdk_conf_test.ipwss;
-        // }
+        // this.ipwss = "ws://192.168.1.91:6336/login";
         
         this.loginBg = "https://cdn.kxt.90wqiji.com/box/image/singlecolor.png";
         this.loginBt = "https://cdn.kxt.90wqiji.com/box/image/happyrabbitlogin4.png";
         this.loginBtWidth = 603;
         this.loginBtHeight = 635;
 
-        //一般接口
+        //一般接口：后端
+        this.gameexperience = "/game/gameexperience";//游戏试玩奖励
+        this.playerdata = "/game/playerdata";
+        this.propdata = "/game/propdata";
+        this.gamegetservertime = "/game/getservertime";
+        this.GameUpFile = '/api/Game/UpFile';
+        this.gameuseprop = "/game/useprop";
+        this.gameusegold = "/game/usegold";
+
+        //一般接口：后台
         this.login = "/api/LogHandle/Login";
         this.Config = "/api/Config/GameConfig";
         this.HzConfig = "/api/Config/HzConfig";
         this.Share = "/api/Config/ShareConfig";
-        this.propdata = "/game/propdata";
         this.GameReport = "/api/Game/GameReport";
         this.Like = "/api/Game/Like";
         this.GetLikeInfo = "/api/Game/GetLikeInfo";
         this.GetGameReport = "/api/Game/GetGameReport";
         this.GetEmojiImg = "/api/Game/GetEmojiImg";
-        this.playerdata = "/game/playerdata";
+        this.GgCongif = "/api/Config/GgCongif";//广告配置列表：跳转小程序列表
+        this.HbWithdrawPay = "/api/HbWithdraw/Pay";//红包提现到零钱
+        
+        
         //统计接口
         this.ChannelCL = "/api/LogHandle/ChannelCL";//公共：渠道导量用户打开游戏记录（有渠道号才调用）
         this.loginCount = "/api/Statistical/loginCount";
@@ -55,17 +67,23 @@
         this.TeamRspCount = "/api/Statistical/TeamRspCount";//盒子：世界聊天组队点击数统计（不区分该点击玩家是否成功进入房间，不区分是否重复点击，即重复点击也计入统计）
         this.FightInviteCount = "/api/Statistical/FightInviteCount";//盒子：好友匹配邀战次数统计（创建房间就调用）
         this.PerRspCount = "/api/Statistical/PerRspCount";//盒子：好友匹配邀战响应统计（被邀请人点击邀请链接并进入游戏记为一次响应，此时调用此接口）
-        // self.Post(self.iphttps + self.inviteCount, { uid: option.uid, sid: option.sid });
+        this.promoteClick = "/api/promote/click";//公共：关联广告点击统计（成功1次，失败1次）
+        this.jumpout = "/api/promote/jumpout";//公共：关联广告跳出统计（跳转目标小程序10s内退出时触发统计）
+        this.mpviewed = "/api/promote/mpviewed";//公共：激励广告观看统计
+        // self.Post(self.iphttps + self.mpviewed, {uid: user.uid, to_appid: nav_appId, position: nav_position}, function (d) {
+        //     console.log('==mpviewed统计==',  d)
+        // });
 
         //配置数据
         this.BannerAd = null;//banner广告
-        this.VideoAd = null;//video广告
+        this.videoAd = null;//video广告
         this.ConfigData = { //游戏配置数据
             config1: {},//运营配置数据
             config2: {},//程序自定义配置数据
         };
         this.ShareList = [];//分享卡片信息列表
         this.EmojiList = null;//表情包列表
+
     }
 
     /**
@@ -108,22 +126,18 @@
                         self.ShareList = d2.d;
                         callback(true)
                     }else{
-                        if(self.debug){
-                            console.log("1.初始化分享信息失败，1s后再次初始化：",d)
-                        }
+                        console.log("1.初始化分享信息失败，2s后再次初始化：",d)
                         setTimeout(() => {
                             self.init(callback);
-                        }, 1000);
+                        }, 2000);
                     }
                 });
 
             }else{
-                if(self.debug){
-                    console.log("2.初始化后台配置信息失败，1s后再次初始化：",d)
-                }
+                console.log("2.初始化后台配置信息失败，2s后再次初始化：",d)
                 setTimeout(() => {
                     self.init(callback);
-                }, 1000);
+                }, 2000);
             }
         });
         
@@ -147,6 +161,7 @@
                 }
             }
         }
+        
         
     }
     /**
@@ -190,18 +205,20 @@
                         var responseJson = JSON.parse(response);
                         callback(responseJson);
                     } else {
-                        if(self.debug){
-                            console.log("返回数据不存在",url)
-                        }
+                        console.log("返回数据不存在：",url)
                         callback(null);
                     }
                 } else {
-                    if(self.debug){
-                        console.log("请求失败",url)
-                    }
+                    console.log("请求失败：",url)
                     callback(null);
                 }
             }
+        };
+        xhr.timeout = 8000; // time in milliseconds
+        xhr.ontimeout = function (e) {
+            // XMLHttpRequest timed out. Do something here.
+            console.log("请求超时：",e)
+            callback(null);
         };
         xhr.open("GET", url, true);
         xhr.send();
@@ -224,15 +241,16 @@
         if(!callback){
             callback = function(){};
         }
-        
         if(!reqData.game_id){
             reqData.game_id = this.sdk_conf.game;
         }
         reqData.version = this.sdk_conf.version;
-        var ts = new Date().getTime();
-        reqData.timestamp = parseInt(ts/1000);
-        reqData.sign = this.md5(reqData.timestamp + this.sdk_conf.secret);
-        
+
+        //签名放url
+        let timestamp = parseInt(new Date().getTime()/1000);
+        let sign = this.md5(timestamp + this.sdk_conf.secret);
+        url+="?timestamp="+timestamp+"&sign="+sign;
+
         //1.拼接请求参数
         // var param = "";
         // for (var item in reqData) {
@@ -268,18 +286,20 @@
                         var responseJson = JSON.parse(response);
                         callback(responseJson);
                     } else {
-                        if(self.debug){
-                            console.log("返回数据不存在")
-                        }
+                        console.log("返回数据不存在：", url)
                         callback(null);
                     }
                 } else {
-                    if(self.debug){
-                        console.log("请求失败",xhr)
-                    }
+                    console.log("请求失败：", url)
                     callback(null);
                 }
             }
+        };
+        xhr.timeout = 8000; // time in milliseconds
+        xhr.ontimeout = function (e) {
+            // XMLHttpRequest timed out. Do something here.
+            console.log("请求超时：",e)
+            callback(null);
         };
         xhr.open("POST", url, true);
         // xhr.setRequestHeader("Access-Control-Allow-Origin", "*");
@@ -287,6 +307,35 @@
         xhr.setRequestHeader("Content-Type", "application/json");
 
         xhr.send(JSON.stringify(reqData));//reqData为json字符串形式
+    }
+
+
+
+    /**
+     * @apiGroup A
+     * @apiName getServerTime
+     * @api {获取服务器时间} 获取服务器时间 getServerTime-服务器时间
+     * @apiParam {callback} callback 回调
+     * 
+     * @apiSuccessExample {json} 示例:
+     *  //.初始化游戏
+     *  xx_sdk.getServerTime(function(time){
+     *      //时间戳 毫秒
+     *      console.log(time)
+     *  })
+     */
+    sdk.prototype.getServerTime = function(callback) {
+        var self = this;
+
+        //1.初始化后台配置信息
+        this.Get(this.iphttps_2 +this.gamegetservertime, {}, function (d) {
+            if (d && d.code == 1) {
+                callback(d.time);
+            }else{
+                console.log("获取服务器时间失败：",d)
+                self.getServerTime(callback);
+            }
+        });
     }
 
     
@@ -426,6 +475,14 @@
     }
     //.根据权重随机获取指定type类型的分享信息。（没有this.ShareList数据不能调用）
     sdk.prototype.getShareByWeight = function(type) {
+        let defaultData = {
+            id: 1,
+            imageUrl: "https://cdn.kxt.90wqiji.com/gameadmin/201901122129505c39ebce05807.jpeg",
+            query: "",
+            title: "开心兔轻游",
+            type: 0,
+            weight: 1
+        }
         if(this.ShareList.length > 0){
             //1.获取某种type的集合
             var tArray = [];
@@ -435,24 +492,84 @@
                     tArray.push(this.ShareList[i]);
                 }
             }
-            //2.根据权重配比：从i集合（权重越大占比越多）中随机获取。
-            var iArray = [];
-            for (var i = 0; i < tArray.length; i++) {
-                for (var j = 0; j < tArray[i].weight; j++) {
-                    iArray.push(i);
+            if(tArray.length > 0){
+                //2.根据权重配比随机获取：权重越大占比越多。
+                var iArray = [];
+                for (var i = 0; i < tArray.length; i++) {
+                    for (var j = 0; j < tArray[i].weight; j++) {
+                        iArray.push(i);
+                    }
                 }
+                var i = iArray[parseInt(Math.random() * iArray.length)];
+                //3.结果处理：正则替换昵称
+                var item = tArray[i];
+                if(item.title.indexOf("&nickName") != -1){
+                    item.title = item.title.replace(/&nickName/g, this.getUser().nickName);
+                }
+                return JSON.parse(JSON.stringify(item));
+            }else{
+                //默认数据
+                return defaultData;
             }
-            var i = iArray[parseInt(Math.random() * iArray.length)];
-            //3.结果处理：正则替换昵称
-            var item = tArray[i];
-            if(item.title.indexOf("&nickName") != -1){
-                item.title = item.title.replace(/&nickName/g, this.getUser().nickName);
-            }
-            return JSON.parse(JSON.stringify(item));
         }else{
-            return null;
+            return defaultData;
         }
     }
+    //通过 位置 获取小程序列表  （1:侧拉，2: 弹窗）
+    sdk.prototype.getMiniByPos = function(position, callback) {
+        var self = this;
+        //获取跳转小程序列表
+        if(this.adList){
+            //筛选类型
+            let miniAds = [];
+            for (let i = 0; i < self.adList.length; i++) {
+                if(self.adList[i].position == position){
+                    miniAds.push(self.adList[i])
+                }
+            }
+            //根据权重排序
+            miniAds.sort((a,b)=>{
+                return b.msort-a.msort;
+            })
+            callback(miniAds)
+        }
+        this.Get(this.iphttps + this.GgCongif, {}, function (d) {
+            // console.log("初始化跳转小程序列表：", d)
+            if (d && d.code == 1) {
+                self.adList = d.d;
+                //提示开发者  
+                let devAppIds = [];
+                for (let i = 0; i < self.adList.length; i++) {
+                    // 类型 1：直接跳；2：长按识别
+                    if(self.adList[i].type == 1){
+                        devAppIds.push(self.adList[i].appId)
+                    }
+                }
+                console.error("SDK警告：  上传小游戏前，请在game.json文件中添加以下小游戏到navigateToMiniProgramAppIdList数组内：",devAppIds)
+                console.error("参考文档：  https://developers.weixin.qq.com/minigame/dev/framework/config.html ")
+
+                //筛选类型
+                let miniAds = [];
+                for (let i = 0; i < self.adList.length; i++) {
+                    if(self.adList[i].position == position){
+                        miniAds.push(self.adList[i])
+                    }
+                }
+                //根据权重排序
+                miniAds.sort((a,b)=>{
+                    return b.msort-a.msort;
+                })
+                callback(miniAds)
+            }else{
+                console.log("获取跳转小程序列表失败，2s后再次获取：",d)
+                setTimeout(() => {
+                    self.getMiniByPos(position, callback);
+                }, 2000);
+            }
+        });
+    }
+
+    
     /**
      * @apiIgnore 
      * @apiGroup C
@@ -534,7 +651,9 @@
                     if(err){
                         console.log(err)
                     }else{
-                        sprite.spriteFrame = new cc.SpriteFrame(texture);
+                        if(sprite && sprite.node && sprite.node.isValid && texture){
+                            sprite.spriteFrame = new cc.SpriteFrame(texture);
+                        }
                     }
                 });
             // }
@@ -553,22 +672,30 @@
      */
     sdk.prototype.getUser = function() {
         if(this.userinfo){
+            //1.先从内存拿
             return this.userinfo;
         }else{
+            //2.没有再从缓存拿
             let userinfo = cc.sys.localStorage.getItem("userinfo");
             if(userinfo){
                 this.userinfo = JSON.parse(userinfo);
                 return this.userinfo;
             }else{
-                // console.log("===使用用户调试数据==", this.sdk_conf)
-                if(this.sdk_conf.debugData && this.sdk_conf.debugData.user){
-                    this.userinfo = this.sdk_conf.debugData.user;
-                    return this.userinfo;
-                }else{
+                //3.没有就登录
+                //盒子环境
+                if(window.aa_sdk){
                     if(aa_sdk.userinfo){
-                        this.userinfo = aa_sdk.userinfo;
-                        return this.userinfo;
+                        return aa_sdk.userinfo;
                     }else{
+                        return null;
+                    }
+                }else{
+                    //非盒子环境
+                    if(this.sdk_conf.debugData && this.sdk_conf.debugData.user){
+                        console.log("===非盒子环境，使用调试数据：==", this.sdk_conf.debugData)
+                        return this.sdk_conf.debugData.user;
+                    }else{
+                        console.log("===非盒子环境，请配置sdk_conf文件下的debugData调试数据==")
                         return null;
                     }
                 }
@@ -605,6 +732,19 @@
     sdk.prototype.getItem = function(key) {
         key = this.sdk_conf.game +"_"+ key;
         return cc.sys.localStorage.getItem(key);
+    }
+    /**
+     * @apiGroup C
+     * @apiName removeItem
+     * @api {移除键值对} 移除键值对 removeItem（移除键值对）
+     * @apiParam {String} key 键
+     * 
+     * @apiSuccessExample {json} 示例:
+     * sdk.removeItem("nick")
+     */
+    sdk.prototype.removeItem = function(key) {
+        key = this.sdk_conf.game +"_"+ key;
+        return cc.sys.localStorage.removeItem(key);
     }
     /**
      * @apiGroup B
@@ -869,6 +1009,31 @@
         });
         return ListData;
     }
+    //cocos坐标 转换成 微信游戏圈坐标
+    sdk.prototype.getGameClubButtonStyle = function(node) {
+        //先把node放在Canvas节点下
+        let canvasNode = cc.director.getScene().getChildByName("Canvas");
+        let p1 = node.parent.convertToWorldSpaceAR(node.getPosition())
+        let p2 = canvasNode.convertToNodeSpaceAR(p1);
+        node.parent = canvasNode;
+        node.setPosition(p2)
+        // node.active = true;
+
+        let canvasHeight = cc.Canvas.instance.node.height;
+        let pos = node.convertToWorldSpaceAR(cc.Vec2.ZERO);
+        pos.y = canvasHeight - pos.y;
+        let scale = wx.getSystemInfoSync().screenHeight / canvasHeight;
+        let style = {
+            left: (pos.x - node.width * 0.5) * scale,
+            top: (pos.y - node.height * 0.5) * scale,
+            width: node.width * scale,
+            height: node.height * scale,
+        };
+        console.log("[WxUtil][getBtnStyle]", canvasHeight, scale, style);
+        return style;
+    }
+
+
     /**
      * @apiIgnore
      * @apiGroup C
@@ -977,6 +1142,23 @@
             var options = wx.getLaunchOptionsSync();
             var user = this.getUser();
 
+            //渠道统计  chl=327266
+            var option = wx.getLaunchOptionsSync();
+            let chl = 0;
+            if(option.query.chl){
+                chl = option.query.chl;
+            }
+            if(option.referrerInfo && option.referrerInfo.extraData && option.referrerInfo.extraData.chl){
+                chl = option.referrerInfo.extraData.chl;
+            }
+            if(option.query.scene){
+                let scene = decodeURIComponent(option.query.scene);
+                if(cc.sdk.GameUtil.getQueryString(scene, "chl")){
+                    chl = cc.sdk.GameUtil.getQueryString(scene, "chl");
+                }
+            }
+            console.log("wechatLogin获取的渠道参数：", chl)
+
             if(user){
                 callback(user)
             }else{
@@ -1012,7 +1194,7 @@
                                 // if (res1.errMsg.indexOf('auth deny') > -1 || res1.errMsg.indexOf('auth denied') > -1 ) {
                                 //     wx.showToast();
                                 // }
-                                wx.showToast({title: '登录中...',icon:'loading',duration: 8});
+                                wx.showToast({title: '登录中...',icon:'loading',mask: true,duration: 1500});
                                 wx.getSetting({
                                     success(auths){
                                         if(auths.authSetting["scope.userInfo"]){
@@ -1025,7 +1207,8 @@
                                                         iv: res1.iv,
                                                         encryptedData: res1.encryptedData,
                                                         signature: res1.signature,
-                                                        from_uid: options.query.uid
+                                                        from_uid: options.query.uid,
+                                                        chl: chl
                                                     }
                                                     // console.log('==登录参数==', reqData)
                                                     self.Post(self.iphttps + self.login, reqData, function(data){
@@ -1130,25 +1313,60 @@
      * @apiParam {String} adUnitId 广告单元id	
      * 
      * @apiSuccessExample {json} 示例:
-     * //.参考文档：https://developers.weixin.qq.com/minigame/dev/document/ad/wx.createRewardedVideoAd.html
-     *  var videoAd = sdk.createRewardedVideoAd();
-     *  videoAd.load().then(()=>videoAd.show());
+     *  //.参考文档：https://developers.weixin.qq.com/minigame/dev/document/ad/wx.createRewardedVideoAd.html
+     *  //.调用的时候，SDK会直接拉起广告
+     *  xx_sdk.createRewardedVideoAd({
+     *       onClose: function(res){
+     *           //视频是否是在用户完整观看的情况下被关闭的
+     *           if(res.isEnded){
+     *              //发放奖励
+     *           }else{
+     *              //没看完广告就关了
+     *           }
+     *       }
+     *   });
      * 
      */
-    sdk.prototype.createRewardedVideoAd = function() {
+    sdk.prototype.createRewardedVideoAd = function(obj) {
+        if(!obj){
+            obj = {};
+        }
+        if(!obj.onClose){
+            obj.onClose = function(){};
+        }
+
         if (cc.sys.platform === cc.sys.WECHAT_GAME) {
-            if(this.VideoAd){
-                return this.VideoAd;
-            }else{
-                this.VideoAd = wx.createRewardedVideoAd({ adUnitId: this.sdk_conf.videoAdUnitId })
-                this.VideoAd.onLoad(function(res){
+            var self = this;
+            if(!this.videoAd){
+                wx.showToast({title: '正在拉起广告...',icon:'loading',mask: true,duration: 1500});
+                this.videoAd = wx.createRewardedVideoAd({ adUnitId: this.sdk_conf.videoAdUnitId })
+                this.videoAd.onLoad(function(res){
                     console.log("VideoAd广告加载事件：", res)
                 });
-                this.VideoAd.onError(function(res){
+                this.videoAd.onError(function(res){
                     console.log("VideoAd广告错误事件：", res)
+                    
+                    // wx.showToast({title: '正在拉起广告...',icon:'loading',mask: true,duration: 1500});
                 });
-                return this.VideoAd;
             }
+            if(this.videoAdonClose){
+                this.videoAd.offClose(this.videoAdonClose);
+            }
+            this.videoAdonClose = function(res){
+                // console.log("关闭了广告 ",res)
+                let status = 2;//观看状态，1完整观看，2未完整观看
+                let scence = 1;//先传1。场景值，1复活
+                if(res.isEnded){
+                    status = 1;
+                }
+                let reqData = {uid: self.getUser().uid, status: status, scence: scence}
+                self.Post(self.iphttps + self.mpviewed, reqData, function (d) {
+                    console.log(reqData, '==mpviewed统计==',  d)
+                });
+                obj.onClose(res);
+            }
+            this.videoAd.onClose(this.videoAdonClose);
+            this.videoAd.load().then(()=>{ this.videoAd.show() });
         }
     }
     /**
@@ -1172,6 +1390,8 @@
      *         foo: 'bar'
      *       },
      *       envVersion: 'develop',
+     *       type: 1, //跳转类型： 1直接跳 2长按跳
+     *       position: 1,//跳转位置： 1侧拉  2弹窗
      *       success(res) {
      *         // 打开成功
      *       }
@@ -1180,9 +1400,84 @@
      */
     sdk.prototype.navigateToMiniProgram = function(obj) {
         if (cc.sys.platform === cc.sys.WECHAT_GAME) {
-            wx.navigateToMiniProgram(obj)
+            var self = this;
+            if(!obj.type){
+                obj.type = 1;
+            }
+            if(!obj.position){
+                obj.position = 1;
+            }
+            if(!obj.success){
+                obj.success = function(){}
+            }
+            if(!obj.fail){
+                obj.fail = function(){}
+            }
+            if(!obj.complete){
+                obj.complete = function(){}
+            }
+            wx.navigateToMiniProgram({
+                appId: obj.appId,
+                path: obj.path,
+                extraData: obj.extraData,
+                envVersion: obj.envVersion,
+                success(res) {
+                    // 打开成功
+                    console.log("==打开成功==", res)
+                    //跳转统计
+                    let reqData = {
+                        uid: self.getUser().uid,
+                        to_appid: obj.appId,
+                        status: 1,//跳转状态,1成功，2取消
+                        type: obj.type,
+                        position: obj.position
+                    }
+                    self.Post(self.iphttps + self.promoteClick, reqData);
+
+                    obj.success(res)
+                },
+                fail(res){
+                    console.log("==打开失败,取消了==", res)
+                    let reqData = {
+                        uid: self.getUser().uid,
+                        to_appid: obj.appId,
+                        status: 2,//跳转状态,1成功，2取消
+                        type: obj.type,
+                        position: obj.position
+                    }
+                    self.Post(self.iphttps + self.promoteClick, reqData);
+                    obj.fail(res)
+                },
+                complete(res){
+                    obj.complete(res)
+                }
+            })
         }
     }
+    /**
+     * @apiGroup B
+     * @apiName previewImage
+     * @api {全屏预览图片} 在新页面中全屏预览图片。预览的过程中用户可以进行保存图片、发送给朋友等操作。 previewImage（预览图片）
+     * @apiParam {Array} urls 需要预览的图片链接列表。2.2.3 起支持云文件ID。
+     * @apiParam {String} [current="urls 的第一张"] 当前显示图片的链接
+     * @apiParam {function} [success] 接口调用成功的回调函数	
+     * @apiParam {function} [fail] 接口调用失败的回调函数
+     * @apiParam {function} [complete] 接口调用结束的回调函数（调用成功、失败都会执行）
+     * 
+     * @apiSuccessExample {json} 示例:
+     *  //.参考文档：https://developers.weixin.qq.com/minigame/dev/api/open-api/miniprogram-navigate/wx.navigateToMiniProgram.html
+     *  sdk.previewImage({
+     *      current: '', // 当前显示图片的http链接
+     *      urls: [] // 需要预览的图片http链接列表
+     *  })
+     * 
+     */
+    sdk.prototype.previewImage = function(obj) {
+        if (cc.sys.platform === cc.sys.WECHAT_GAME) {
+            wx.previewImage(obj)
+        }
+    }
+    
 
     //=================================C===========================
     /**
@@ -1342,18 +1637,41 @@
      * @api {注册game的特定事件类型回调} 注册game的特定事件类型回调 on（注册game监听器）
      * 
      * @apiSuccessExample {json} 示例:
-     *   //注册 game 的特定事件类型回调
-     *   sdk.on("xxx", (e)=>{
+     *   //注册 cc.game.on 的特定事件类型回调
+     *   xx_sdk.on("xxx", (e)=>{
      *      console.log("xxx")
      *   }, this);
      * 
      */
     sdk.prototype.on = function(type, callback, target) {
         if (!callback || !target) {
-            console.log("事件注册失败，缺少参数callback, target")
+            console.log("事件注册失败，缺少参数callback 或 target")
             return;
         }
+        if(type != "WebSocket"){
+            type = this.sdk_conf.game +"_"+ type;
+        }
         cc.game.on(type, callback, target)
+    },
+    /**
+     * @apiGroup C
+     * @apiName once
+     * @api {注册game的特定事件类型回调，回调会在第一时间被触发后删除自身。} 注册game的特定事件类型回调，回调会在第一时间被触发后删除自身。 once（game监听器）
+     * 
+     * @apiSuccessExample {json} 示例:
+     *   //注册 cc.game.once 的特定事件类型回调，回调会在第一时间被触发后删除自身。
+     *   xx_sdk.once("xxx", (e)=>{
+     *      console.log("xxx")
+     *   }, this);
+     * 
+     */
+    sdk.prototype.once = function(type, callback, target) {
+        if (!callback || !target) {
+            console.log("事件注册失败，缺少参数callback 或 target")
+            return;
+        }
+        type = this.sdk_conf.game +"_"+ type;
+        cc.game.once(type, callback, target)
     },
     /**
      * @apiGroup C
@@ -1365,6 +1683,9 @@
      *   sdk.off("xxx");
      */
     sdk.prototype.off = function(type, callback, target) {
+        if(type != "WebSocket"){
+            type = this.sdk_conf.game +"_"+ type;
+        }
         if (!callback || !target) {
             cc.game.off(type);
         }else{
@@ -1382,6 +1703,9 @@
      *   //sdk.emit("xxx", {nick:"xxx"});
      */
     sdk.prototype.emit = function(type, message) {
+        if(type != "WebSocket"){
+            type = this.sdk_conf.game +"_"+ type;
+        }
         if (!message) {
             cc.game.emit(type);
         }else{
@@ -1499,11 +1823,17 @@
             var room = JSON.parse(gameData);
             return room;
         }else{
-            if(this.sdk_conf.debugData){
-                return this.sdk_conf.debugData;
-            }else{
-                console.log("==getGameData=数据不存在")
+            //盒子环境
+            if(window.aa_sdk){
                 return null;
+            }else{
+                //非盒子环境
+                if(this.sdk_conf.debugData){
+                    return this.sdk_conf.debugData;
+                }else{
+                    console.log("==sdk_conf文件下的debugData数据不存在==")
+                    return null;
+                }
             }
         }
     },
@@ -1548,7 +1878,7 @@
                     reqData.scence = 1;
                     reqData.uid = self.getUser().uid;
                     wx.uploadFile({
-                        url: 'https://testadmin.90wqiji.com/api/Game/UpFile', //仅为示例，非真实的接口地址
+                        url: self.iphttps+ self.GameUpFile, //仅为示例，非真实的接口地址
                         filePath: res.savedFilePath,
                         name: 'file',
                         formData: reqData,
@@ -1595,13 +1925,24 @@
                 this.recorderManager.onStart(()=>{
                     console.log('recorder 开始')
                     startTime = new Date().getTime();
+                    //暂停播放音乐
+                    cc.audioEngine.pauseAll();
+                    cc.audioEngine.pauseAllEffects();
+                    cc.audioEngine.pauseMusic()
+                    cc.sdk.ResUtil.show({ conf: cc.sdk.ResConf["aa_recording"] })
                 })
                 this.recorderManager.onPause(()=>{
                     console.log('recorder 暂停')
+                    cc.sdk.ResUtil.hide({ conf: cc.sdk.ResConf["aa_recording"] })
                 })
                 this.recorderManager.onStop((res)=>{
                     console.log('recorder 停止', res)
                     time = new Date().getTime() - startTime;
+                    //恢复播放音乐
+                    cc.audioEngine.resumeAll();
+                    cc.audioEngine.resumeAllEffects();
+                    cc.audioEngine.resumeMusic()
+                    cc.sdk.ResUtil.hide({ conf: cc.sdk.ResConf["aa_recording"] })
                     if(self.isUse && time > 1000){
                         //3.发送语音文件并在房间内广播
                         self.uploadSound({
@@ -1680,13 +2021,24 @@
                 this.recorderManager.onStart(()=>{
                     console.log('recorder 开始')
                     startTime = new Date().getTime();
+                    //暂停播放音乐
+                    cc.audioEngine.pauseAll();
+                    cc.audioEngine.pauseAllEffects();
+                    cc.audioEngine.pauseMusic()
+                    cc.sdk.ResUtil.show({ conf: cc.sdk.ResConf["aa_recording"] })
                 })
                 this.recorderManager.onPause(()=>{
                     console.log('recorder 暂停')
+                    cc.sdk.ResUtil.hide({ conf: cc.sdk.ResConf["aa_recording"] })
                 })
                 this.recorderManager.onStop((res)=>{
                     console.log('recorder 停止', res)
                     time = new Date().getTime() - startTime;
+                    //恢复播放音乐
+                    cc.audioEngine.resumeAll();
+                    cc.audioEngine.resumeAllEffects();
+                    cc.audioEngine.resumeMusic()
+                    cc.sdk.ResUtil.hide({ conf: cc.sdk.ResConf["aa_recording"] })
                     if(isUse && time > 1000){
                         //3.发送语音文件并在房间内广播
                         self.uploadSound({
@@ -1910,7 +2262,7 @@
      * 
      * @apiSuccessExample {json} 示例:
      *   // 监听全局游戏事件
-     *   aj_sdk.onGameEvent((e)=>{
+     *   xx_sdk.onGameEvent((e)=>{
      *       if(e.type == "emoji"){
      *           console.log("=收到一个表情=", e.emoji)
      *           // 表情格式如下
@@ -1934,8 +2286,7 @@
      *           // }
      *       }
      *       if(e.type == "giveUp"){
-     *           console.log("=对方认输了=")
-     *           self.stop_game();
+     *           console.log("=对方认输了，调用游戏停止逻辑=")
      *       }
      *   })
      */
@@ -1996,11 +2347,13 @@
             uid: this.getUser().uid,
             result: obj.result,  //.0负 1平 2胜
             opponent_uid: obj.opponent_uid, //.对手uid
+            match_type: obj.match_type,
+            game_type: obj.game_type
         }
         if(obj.game_id){
             reqData.game_id = obj.game_id;
         }
-        console.log("==SDK上传战报==", reqData)
+        console.log("==SDK上传战报数据：==", reqData)
         this.Post(this.iphttps + this.GameReport, reqData, callback)
     }
     /**
@@ -2091,11 +2444,118 @@
      *  //.背景音乐开关
      *  xx_sdk.getBbmSwitch();//0：关 1：开
      */
-    sdk.prototype.getBbmSwitch = function(data) {
-        let key = 'AudioSwitch';
-        let bgswitch = aa_sdk.getItem(key);
+    sdk.prototype.getBbmSwitch = function() {
+        let bgswitch = aa_sdk.getItem('AudioSwitch');
         return parseInt(bgswitch);
     }
+
+    /**
+     * @apiGroup D
+     * @apiName getPropById
+     * @api {通过道具ID获取我的道具} 通过道具ID获取我的道具 getPropById-获取道具
+     * 
+     * @apiSuccessExample {json} 示例:
+     *  //通过道具ID获取我的道具，没有则返回null
+     *  let prop = xx_sdk.getPropById(xxx);
+     *  //道具格式如下：
+     *  // {
+     *  //     description: "黄金兔工炸药道具",
+     *  //     icon: "https://cdn.kxt.90wqiji.com/gameadmin/201901281526245c4eaea012d9e.png",
+     *  //     index: 76494184,
+     *  //     name: "黄金兔工炸药道具",
+     *  //     param: {},
+     *  //     prop_count: 1,
+     *  //     type: 102
+     *  // }
+     */
+    sdk.prototype.getPropById = function(id) {
+        if(window.aa_sdk){
+            return cc.sdk.GameUtil.getPropById(id);
+        }else{
+            console.log("getPropById 接口只在盒子内生效")
+            return null;
+        }
+    }
+    /**
+     * @apiGroup D
+     * @apiName usePropById
+     * @api {通过道具ID使用道具} 通过道具ID使用道具 usePropById-使用道具
+     * 
+     * @apiSuccessExample {json} 示例:
+     *  xx_sdk.usePropById({
+     *       prop_index: 0,  //道具编号
+     *       prop_count: 1,  //使用数量
+     *       success(res){
+     *           if(res.code){
+     *               console.log("道具使用成功")
+     *           }else{
+     *               console.log("道具使用失败")
+     *           }
+     *       }
+     *   });
+     */
+    sdk.prototype.usePropById = function(obj) {
+        if(window.aa_sdk){
+            if(!obj.success){
+                obj.success = function(){}
+            }
+            obj.uid = this.getUser().uid;
+            this.Post(this.iphttps_2 + this.gameuseprop, obj, function (d) {
+                console.log('道具使用结果：',  d)
+                obj.success(d);
+            });
+        }else{
+            console.log("usePropById 接口只在盒子内生效")
+        }
+    }
+    /**
+     * @apiGroup D
+     * @apiName getGold
+     * @api {获取当前用户剩余金萝卜} 获取当前用户剩余金萝卜 getGold-获取金萝卜
+     * 
+     * @apiSuccessExample {json} 示例:
+     *  let gold = xx_sdk.getGold();
+     */ 
+    sdk.prototype.getGold = function() {
+        if(window.aa_sdk){
+            return aa_sdk.box_role_attr.gold;
+        }else{
+            console.log("getGold 接口只在盒子内生效")
+            return 0;
+        }
+    }
+    /**
+     * @apiGroup D
+     * @apiName useGold
+     * @api {使用金萝卜} 使用金萝卜 useGold-使用金萝卜
+     * 
+     * @apiSuccessExample {json} 示例:
+     *  xx_sdk.useGold({
+     *       gold: 100,  //使用金萝卜数量
+     *       success(res){
+     *           if(res.code){
+     *               console.log("金萝卜使用成功")
+     *           }else{
+     *               console.log("金萝卜使用失败")
+     *           }
+     *       }
+     *   });
+     */
+    sdk.prototype.useGold = function(obj) {
+        if(window.aa_sdk){
+            if(!obj.success){
+                obj.success = function(){}
+            }
+            obj.uid = this.getUser().uid;
+            this.Post(this.iphttps_2 + this.gameusegold, obj, function (d) {
+                console.log('金币使用结果：',  d)
+                obj.success(d);
+            });
+        }else{
+            console.log("useGold 接口只在盒子内生效")
+        }
+    }
+    
     
     
     //============自研游戏：共享盒子scoket================
@@ -2105,6 +2565,11 @@
      * 
      *  使用盒子socket发送消息：
      *      xx_sdk.wsSend(obj)
+            // var d = {
+            //     id: "c2s_room_broadcast",//房间内广播
+            //     uid: "xxx", //传uid则单播，缺省则广播
+            // };
+            // xx_sdk.wsSend(d)
      * 
      *  使用盒子socket接收消息：
      *      xx_sdk.on("WebSocket", (e) => { });
