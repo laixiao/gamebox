@@ -162,7 +162,24 @@
             }
         }
         
-        
+    }
+
+    sdk.prototype.getXmlHttp = function() {
+        var xmlhttp = null;
+        if (window.XMLHttpRequest) {
+            xmlhttp = new XMLHttpRequest();
+        } else {
+            try {
+                xmlhttp = new ActiveXObject("Msxml2.XMLHTTP");
+            } catch (e) {
+                try {
+                    xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+                } catch (e) {
+                    return null;
+                }
+            }
+        }
+        return xmlhttp;
     }
     /**
      * @apiGroup C
@@ -196,7 +213,10 @@
         for (var item in reqData) {
             url += item + "=" + reqData[item] + "&";
         }
-        var xhr = new XMLHttpRequest();
+
+        //2.发起请求
+        var xhr = this.getXmlHttp();
+        // var xhr = new XMLHttpRequest();
         xhr.onreadystatechange = function () {
             if (xhr.readyState == 4) {
                 if (xhr.status >= 200 && xhr.status < 400) {
@@ -214,7 +234,7 @@
                 }
             }
         };
-        xhr.timeout = 8000; // time in milliseconds
+        xhr.timeout = 60000; // time in milliseconds
         xhr.ontimeout = function (e) {
             // XMLHttpRequest timed out. Do something here.
             console.log("请求超时：",e)
@@ -256,26 +276,9 @@
         // for (var item in reqData) {
         //     param += item + "=" + reqData[item] + "&";
         // }
-        //2.发起请求
-        var getXmlHttp = function() {
-            var xmlhttp = null;
-            if (window.XMLHttpRequest) {
-                xmlhttp = new XMLHttpRequest();
-            } else {
-                try {
-                    xmlhttp = new ActiveXObject("Msxml2.XMLHTTP");
-                } catch (e) {
-                    try {
-                        xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
-                    } catch (e) {
-                        return null;
-                    }
-                }
-            }
-            return xmlhttp;
-        }
-        var xhr = getXmlHttp();
 
+        //2.发起请求
+        var xhr = this.getXmlHttp();
         // var xhr = new XMLHttpRequest();
         xhr.onreadystatechange = function () {
             if (xhr.readyState == 4) {
@@ -295,7 +298,7 @@
                 }
             }
         };
-        xhr.timeout = 8000; // time in milliseconds
+        xhr.timeout = 60000; // time in milliseconds
         xhr.ontimeout = function (e) {
             // XMLHttpRequest timed out. Do something here.
             console.log("请求超时：",e)
@@ -1923,7 +1926,7 @@
             if(!this.recorderManager){
                 this.recorderManager = wx.getRecorderManager()
                 this.recorderManager.onStart(()=>{
-                    console.log('recorder 开始')
+                    console.log('recorder 开始1')
                     startTime = new Date().getTime();
                     //暂停播放音乐
                     cc.audioEngine.pauseAll();
@@ -1932,11 +1935,11 @@
                     cc.sdk.ResUtil.show({ conf: cc.sdk.ResConf["aa_recording"] })
                 })
                 this.recorderManager.onPause(()=>{
-                    console.log('recorder 暂停')
+                    console.log('recorder 暂停1')
                     cc.sdk.ResUtil.hide({ conf: cc.sdk.ResConf["aa_recording"] })
                 })
                 this.recorderManager.onStop((res)=>{
-                    console.log('recorder 停止', res)
+                    console.log('recorder 停止1', res)
                     time = new Date().getTime() - startTime;
                     //恢复播放音乐
                     cc.audioEngine.resumeAll();
@@ -1948,7 +1951,7 @@
                         self.uploadSound({
                             tempFilePath: res.tempFilePath,
                             success: function(url){
-                                console.log("语音文件播放地址：", url)
+                                console.log("语音文件播放地址1：", url)
                                 //4.房间内广播语音
                                 var d = {
                                     id: "c2s_room_broadcast",
@@ -1963,18 +1966,18 @@
                                 }
                             },
                             fail: function(err){
-                                console.log("发送语音文件失败：", err)
+                                console.log("发送语音文件失败1：", err)
                             }
                         });
                     }else{
-                        console.log("录音时间过短")
+                        console.log("录音时间过短1")
                     }
                 })
             }
 
             //2.Cocos录音控制
             node.on(cc.Node.EventType.TOUCH_START, function(){
-                console.log("开始录音")
+                console.log("开始录音1")
                 cc.audioEngine.pauseAll();
                 cc.audioEngine.pauseAllEffects();
                 cc.audioEngine.pauseMusic()
@@ -1989,14 +1992,14 @@
                 })
             }, this);
             node.on(cc.Node.EventType.TOUCH_END, function(){
-                console.log("结束录音")
+                console.log("结束录音1")
                 this.recorderManager.stop()
                 cc.audioEngine.resumeAll();
                 cc.audioEngine.resumeAllEffects();
                 cc.audioEngine.resumeMusic()
             }, this);
             node.on(cc.Node.EventType.TOUCH_CANCEL, function(){
-                console.log("结束录音，不使用")
+                console.log("结束录音，不使用1")
                 this.isUse = false;
                 this.recorderManager.stop()
                 cc.audioEngine.resumeAll();
