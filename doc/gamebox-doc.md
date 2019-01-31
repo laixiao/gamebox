@@ -64,9 +64,9 @@ if (cc.sys.platform === cc.sys.WECHAT_GAME) {}
 |  黄金矿工 |  an |
 |  金猪接红包 |  ao |
 |  切皮革 |  ap |
-|  xx |  aq |
-|  xx |  ar |
-|  xx |  as |
+|  推广游戏1 |  aq |
+|  推广游戏2 |  ar |
+|  推广游戏3 |  as |
 |  xx |  at |
 |  xx |  au |
 |  xx |  av |
