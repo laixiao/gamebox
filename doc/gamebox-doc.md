@@ -67,9 +67,9 @@ if (cc.sys.platform === cc.sys.WECHAT_GAME) {}
 |  推广游戏1 |  aq |
 |  推广游戏2 |  ar |
 |  推广游戏3 |  as |
-|  xx |  at |
-|  xx |  au |
-|  xx |  av |
+|  射击 |  at |
+|  俄罗斯方块 |  au |
+|  堆积木 |  av |
 |  xx |  aw |
 |  xx |  ax |
 |  xx |  ay |
